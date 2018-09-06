@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Net;
+using System.Drawing;
 using System.Windows.Forms;
-using Newtonsoft.Json.Linq;
 
 namespace uSight
 {
@@ -13,23 +12,40 @@ namespace uSight
         Label[] labelsOwners = new Label[10]; //Kiekviename puslapyje bus po 10 irasu
         Label[] licensePlates = new Label[10];
 
+        PictureBox[] delete = new PictureBox[10];
+
+        dynamic obj;
+
         public ControlPanel()
         {
             InitializeComponent();
+            refrestView();
+          }
+
+        public void refrestView() {
+
+            labelsOwners = new Label[10];
+            licensePlates = new Label[10];
+            delete = new PictureBox[10];
+
+            records1 = new List<PlateRecord>();
 
             DataExtraction de = new DataExtraction();
-            dynamic obj = de.getJson();
+            obj = de.GetJsonFromDisk();
 
-            foreach (var json in obj.plates) {
+            foreach (var json in obj.plates)
+            {
                 records1.Add(new PlateRecord((String)json.owner, (String)json.id, (String)json.p_number, (String)json.e_number, (String)json.b_number));
             }
 
-            for (int a = 0; a < 10; a++) {
-                if (records1.Count > a) {
+            for (int a = 0; a < 10; a++)
+            {
+                if (records1.Count > a)
+                {
                     labelsOwners[a] = new Label
                     {
                         Text = records1[a].Owner,
-                        Location = new System.Drawing.Point(165, a * 19 + 38),
+                        Location = new System.Drawing.Point(165, a * 25 + 38),
                         Font = new System.Drawing.Font("Verdana", 14)
                     };
                     this.Controls.Add(labelsOwners[a]);
@@ -37,10 +53,29 @@ namespace uSight
                     licensePlates[a] = new Label
                     {
                         Text = records1[a].P_number,
-                        Location = new System.Drawing.Point(10, a * 19 + 38),
+                        Location = new System.Drawing.Point(10, a * 25 + 38),
                         Font = new System.Drawing.Font("Verdana", 14)
                     };
                     this.Controls.Add(licensePlates[a]);
+
+                    delete[a] = new PictureBox
+                    {
+                        Location = new System.Drawing.Point(280, a * 25 + 38),
+                        Image = Image.FromFile("../../../Resources/trashbin.png"),
+                        Size = new Size(20, 20),
+                        SizeMode = PictureBoxSizeMode.StretchImage,
+                        Name = a.ToString()
+                    };
+                    this.Controls.Add(delete[a]);
+
+                    delete[a].Click += (e, s) => {
+                        PictureBox p = (PictureBox)e;
+                        obj.plates[Int32.Parse(p.Name)].Remove();
+                        de.writeToJson(obj.ToString());
+
+                        this.Close();
+                        (new ControlPanel()).Show();
+                    };
                 }
             }
         }
@@ -48,6 +83,11 @@ namespace uSight
         private void ControlPanel_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            refrestView();
         }
     }
 }
