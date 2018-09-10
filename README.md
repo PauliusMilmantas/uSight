@@ -1,5 +1,5 @@
 Grupės pavadinimas: uSight
 
 Grupės nariai:
-Paulius Milmantas
+Paulius Milmantas,
 Arnas Kelpša
