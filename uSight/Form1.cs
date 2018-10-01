@@ -1,6 +1,6 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Emgu.CV;
+using Emgu.CV.Structure;
 using System;
-using System.IO;
 using System.Windows.Forms;
 
 namespace uSight
@@ -8,6 +8,7 @@ namespace uSight
     public partial class Form1 : Form
     {
         dynamic json;
+        Image<Bgr, byte> image;
 
         public Form1()
         {
@@ -49,6 +50,24 @@ namespace uSight
         private void Form1_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog1 = new OpenFileDialog();
+            openFileDialog1.Filter = "Image Files|*.jpg";
+            openFileDialog1.Title = "Select image file";
+
+            if (openFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                image = new Image<Bgr, byte>(openFileDialog1.FileName);
+                pictureBox1.Image = image.Bitmap;
+            }
+        }
+
+        private void toolStripLabel1_Click(object sender, EventArgs e)
+        {
+            pictureBox1.Image = LicenesePlateDetector.ShowContours(image);
         }
     }
 }
