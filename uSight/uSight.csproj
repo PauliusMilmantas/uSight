@@ -86,6 +86,7 @@
     <Compile Include="AddRecord.Designer.cs">
       <DependentUpon>AddRecord.cs</DependentUpon>
     </Compile>
+    <Compile Include="ImageSource.cs" />
     <Compile Include="LicensePlateDetector.cs" />
     <Compile Include="PlateRecord.cs" />
     <Compile Include="Program.cs" />

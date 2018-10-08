@@ -37,8 +37,10 @@
             this.button2 = new System.Windows.Forms.Button();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
+            this.frameSelector = new System.Windows.Forms.TrackBar();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.toolStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.frameSelector)).BeginInit();
             this.SuspendLayout();
             // 
             // login
@@ -56,21 +58,21 @@
             this.pictureBox1.BackColor = System.Drawing.SystemColors.ButtonShadow;
             this.pictureBox1.Location = new System.Drawing.Point(12, 28);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(763, 518);
+            this.pictureBox1.Size = new System.Drawing.Size(1264, 745);
             this.pictureBox1.TabIndex = 1;
             this.pictureBox1.TabStop = false;
             // 
             // statusStrip1
             // 
-            this.statusStrip1.Location = new System.Drawing.Point(0, 549);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 827);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(909, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(1412, 22);
             this.statusStrip1.TabIndex = 2;
             this.statusStrip1.Text = "statusStrip1";
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(784, 484);
+            this.button1.Location = new System.Drawing.Point(1282, 489);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(116, 36);
             this.button1.TabIndex = 3;
@@ -80,7 +82,7 @@
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(784, 526);
+            this.textBox1.Location = new System.Drawing.Point(1282, 531);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(113, 20);
             this.textBox1.TabIndex = 4;
@@ -96,7 +98,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(784, 80);
+            this.button2.Location = new System.Drawing.Point(1282, 78);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(116, 36);
             this.button2.TabIndex = 6;
@@ -110,7 +112,7 @@
             this.toolStripLabel1});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(909, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(1412, 25);
             this.toolStrip1.TabIndex = 7;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -121,11 +123,20 @@
             this.toolStripLabel1.Text = "Show contours";
             this.toolStripLabel1.Click += new System.EventHandler(this.toolStripLabel1_Click);
             // 
+            // frameSelector
+            // 
+            this.frameSelector.Location = new System.Drawing.Point(12, 779);
+            this.frameSelector.Name = "frameSelector";
+            this.frameSelector.Size = new System.Drawing.Size(1264, 45);
+            this.frameSelector.TabIndex = 8;
+            this.frameSelector.Scroll += new System.EventHandler(this.frameSelector_Scroll);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(909, 571);
+            this.ClientSize = new System.Drawing.Size(1412, 849);
+            this.Controls.Add(this.frameSelector);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.label1);
@@ -140,6 +151,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.frameSelector)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -156,6 +168,7 @@
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripLabel toolStripLabel1;
+        private System.Windows.Forms.TrackBar frameSelector;
     }
 }
 
