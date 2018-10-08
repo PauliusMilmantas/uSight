@@ -37,7 +37,12 @@
             this.button2 = new System.Windows.Forms.Button();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
+<<<<<<< HEAD
             this.frameSelector = new System.Windows.Forms.TrackBar();
+=======
+            this.toolStripLabel2 = new System.Windows.Forms.ToolStripLabel();
+            this.toolStripLabel3 = new System.Windows.Forms.ToolStripLabel();
+>>>>>>> Development
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.frameSelector)).BeginInit();
@@ -109,7 +114,9 @@
             // toolStrip1
             // 
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripLabel1});
+            this.toolStripLabel1,
+            this.toolStripLabel2,
+            this.toolStripLabel3});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(1412, 25);
@@ -123,6 +130,7 @@
             this.toolStripLabel1.Text = "Show contours";
             this.toolStripLabel1.Click += new System.EventHandler(this.toolStripLabel1_Click);
             // 
+<<<<<<< HEAD
             // frameSelector
             // 
             this.frameSelector.Location = new System.Drawing.Point(12, 779);
@@ -130,6 +138,21 @@
             this.frameSelector.Size = new System.Drawing.Size(1264, 45);
             this.frameSelector.TabIndex = 8;
             this.frameSelector.Scroll += new System.EventHandler(this.frameSelector_Scroll);
+=======
+            // toolStripLabel2
+            // 
+            this.toolStripLabel2.Name = "toolStripLabel2";
+            this.toolStripLabel2.Size = new System.Drawing.Size(75, 22);
+            this.toolStripLabel2.Text = "Find number";
+            this.toolStripLabel2.Click += new System.EventHandler(this.toolStripLabel2_Click);
+            // 
+            // toolStripLabel3
+            // 
+            this.toolStripLabel3.Name = "toolStripLabel3";
+            this.toolStripLabel3.Size = new System.Drawing.Size(33, 22);
+            this.toolStripLabel3.Text = "FIlter";
+            this.toolStripLabel3.Click += new System.EventHandler(this.toolStripLabel3_Click);
+>>>>>>> Development
             // 
             // Form1
             // 
@@ -168,7 +191,12 @@
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripLabel toolStripLabel1;
+<<<<<<< HEAD
         private System.Windows.Forms.TrackBar frameSelector;
+=======
+        private System.Windows.Forms.ToolStripLabel toolStripLabel2;
+        private System.Windows.Forms.ToolStripLabel toolStripLabel3;
+>>>>>>> Development
     }
 }
 

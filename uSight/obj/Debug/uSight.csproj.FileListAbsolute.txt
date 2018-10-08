@@ -506,6 +506,7 @@ C:\Users\lenovo\Desktop\uSight-master\uSight\bin\Debug\sv\ZedGraph.resources.dll
 C:\Users\lenovo\Desktop\uSight-master\uSight\bin\Debug\tr\ZedGraph.resources.dll
 C:\Users\lenovo\Desktop\uSight-master\uSight\bin\Debug\zh-cn\ZedGraph.resources.dll
 C:\Users\lenovo\Desktop\uSight-master\uSight\bin\Debug\zh-tw\ZedGraph.resources.dll
+<<<<<<< HEAD
 C:\Projects\uSight\uSight\bin\Debug\x64\concrt140.dll
 C:\Projects\uSight\uSight\bin\Debug\x64\cvextern.dll
 C:\Projects\uSight\uSight\bin\Debug\x64\msvcp140.dll
@@ -651,3 +652,6 @@ C:\Projects\uSight\uSight\obj\Debug\uSight.csproj.CoreCompileInputs.cache
 C:\Projects\uSight\uSight\obj\Debug\uSight.csproj.CopyComplete
 C:\Projects\uSight\uSight\obj\Debug\uSight.exe
 C:\Projects\uSight\uSight\obj\Debug\uSight.pdb
+=======
+C:\Users\lenovo\Desktop\uSight-master\uSight\obj\Debug\uSight.DataForm.resources
+>>>>>>> Development
