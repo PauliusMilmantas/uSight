@@ -1,6 +1,8 @@
 ﻿using Emgu.CV;
+using Emgu.CV.CvEnum;
 using Emgu.CV.Structure;
 using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace uSight
@@ -8,7 +10,8 @@ namespace uSight
     public partial class Form1 : Form
     {
         dynamic json;
-        Image<Bgr, byte> image;
+        //Image<Bgr, byte> image;
+        Mat image;
 
         public Form1()
         {
@@ -60,14 +63,34 @@ namespace uSight
 
             if (openFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                image = new Image<Bgr, byte>(openFileDialog1.FileName);
+                //image = new Image<Bgr, byte>(openFileDialog1.FileName);
+                //pictureBox1.Image = image.Bitmap;
+
+                image = CvInvoke.Imread(openFileDialog1.FileName);
                 pictureBox1.Image = image.Bitmap;
             }
         }
 
         private void toolStripLabel1_Click(object sender, EventArgs e)
         {
-            pictureBox1.Image = LicenesePlateDetector.ShowContours(image);
+            //pictureBox1.Image = LicenesePlateDetector.ShowContours(image);
+        }
+
+        public void setImage(Image<Bgr, Byte> t) {
+            pictureBox1.Image = t.Bitmap;
+        }
+
+        private void toolStripLabel2_Click(object sender, EventArgs e)
+        {
+            UtilFunctions f = new UtilFunctions(this);
+            UMat uImg = image.GetUMat(AccessType.ReadWrite);
+            f.ProcessImage(uImg);
+        }
+        
+        private void toolStripLabel3_Click(object sender, EventArgs e)
+        {
+            //UtilFunctions f = new UtilFunctions(this);
+            //f.filterImage(pictureBox1.Image);
         }
     }
 }
