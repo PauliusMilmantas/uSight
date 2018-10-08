@@ -1,6 +1,7 @@
 ﻿using Emgu.CV;
 using Emgu.CV.Structure;
 using System;
+using System.IO;
 using System.Windows.Forms;
 
 namespace uSight
@@ -8,7 +9,10 @@ namespace uSight
     public partial class Form1 : Form
     {
         dynamic json;
-        Image<Bgr, byte> image;
+        //The current media stream
+        ImageSource currentImageSource;
+        //Frame index, updated by trackbar scroll
+        int currentFrame = 0;
 
         public Form1()
         {
@@ -55,19 +59,36 @@ namespace uSight
         private void button2_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog1 = new OpenFileDialog();
-            openFileDialog1.Filter = "Image Files|*.jpg";
-            openFileDialog1.Title = "Select image file";
+            openFileDialog1.Filter = "Media files|*.jpg;*.mp4";
+            openFileDialog1.Title = "Select media file";
 
             if (openFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                image = new Image<Bgr, byte>(openFileDialog1.FileName);
-                pictureBox1.Image = image.Bitmap;
+                if (Path.GetExtension(openFileDialog1.FileName) == ".jpg")
+                {
+                    currentImageSource = new ImageSource(new Image<Bgr, byte>(openFileDialog1.FileName));
+                }
+                else if (Path.GetExtension(openFileDialog1.FileName) == ".mp4")
+                {
+                    currentImageSource = new ImageSource(new VideoCapture(openFileDialog1.FileName));
+                }
+                pictureBox1.Image = currentImageSource[currentFrame].Bitmap;
+                frameSelector.Maximum = currentImageSource.Count - 1;
             }
         }
 
         private void toolStripLabel1_Click(object sender, EventArgs e)
         {
-            pictureBox1.Image = LicenesePlateDetector.ShowContours(image);
+            pictureBox1.Image = LicenesePlateDetector.ShowContours(currentImageSource[currentFrame]);
+        }
+
+        private void frameSelector_Scroll(object sender, EventArgs e)
+        {
+            if (currentImageSource != null)
+            {
+                currentFrame = frameSelector.Value;
+                pictureBox1.Image = currentImageSource[currentFrame].Bitmap;
+            }
         }
     }
 }

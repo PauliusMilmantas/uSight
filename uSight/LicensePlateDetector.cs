@@ -26,7 +26,7 @@ namespace uSight
             Mat hier = new Mat();
 
             CvInvoke.FindContours(imageOutput, contours, hier, Emgu.CV.CvEnum.RetrType.External, Emgu.CV.CvEnum.ChainApproxMethod.ChainApproxSimple);
-            CvInvoke.DrawContours(image, contours, -1, new MCvScalar(255, 0, 0));
+            CvInvoke.DrawContours(imageOutput, contours, -1, new MCvScalar(255, 0, 0));
 
             return imageOutput.Bitmap;
         }
