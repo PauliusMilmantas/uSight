@@ -14,7 +14,8 @@ namespace uSight
         private LicenesePlateDetector _licensePlateDetector;
         private Form1 form;
 
-        public UtilFunctions(Form1 form) {
+        public UtilFunctions(Form1 form)
+        {
             _licensePlateDetector = new LicenesePlateDetector("");
 
             this.form = form;

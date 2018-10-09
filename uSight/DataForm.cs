@@ -20,9 +20,10 @@ namespace uSight
 
             this.words = words;
 
-            foreach (string t in words) {
+            foreach (string t in words)
+            {
                 textBox1.Text += t;
-            }            
+            }
         }
 
         private void DataForm_Load(object sender, EventArgs e)
