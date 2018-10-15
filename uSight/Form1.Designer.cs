@@ -37,8 +37,8 @@
             this.button2 = new System.Windows.Forms.Button();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
-            this.frameSelector = new System.Windows.Forms.TrackBar();
             this.toolStripLabel2 = new System.Windows.Forms.ToolStripLabel();
+            this.frameSelector = new System.Windows.Forms.TrackBar();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.frameSelector)).BeginInit();
@@ -125,6 +125,13 @@
             this.toolStripLabel1.Text = "Show contours";
             this.toolStripLabel1.Click += new System.EventHandler(this.toolStripLabel1_Click);
             // 
+            // toolStripLabel2
+            // 
+            this.toolStripLabel2.Name = "toolStripLabel2";
+            this.toolStripLabel2.Size = new System.Drawing.Size(64, 22);
+            this.toolStripLabel2.Text = "Find plates";
+            this.toolStripLabel2.Click += new System.EventHandler(this.toolStripLabel2_Click);
+            // 
             // frameSelector
             // 
             this.frameSelector.Location = new System.Drawing.Point(12, 779);
@@ -132,13 +139,6 @@
             this.frameSelector.Size = new System.Drawing.Size(1264, 45);
             this.frameSelector.TabIndex = 8;
             this.frameSelector.Scroll += new System.EventHandler(this.frameSelector_Scroll);
-            // 
-            // toolStripLabel2
-            // 
-            this.toolStripLabel2.Name = "toolStripLabel2";
-            this.toolStripLabel2.Size = new System.Drawing.Size(64, 22);
-            this.toolStripLabel2.Text = "Find plates";
-            this.toolStripLabel2.Click += new System.EventHandler(this.toolStripLabel2_Click);
             // 
             // Form1
             // 

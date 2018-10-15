@@ -943,3 +943,4 @@ C:\Users\lenovo\Desktop\gdfg\345\uSight\uSight\obj\Debug\uSight.csproj.CoreCompi
 C:\Users\lenovo\Desktop\gdfg\345\uSight\uSight\obj\Debug\uSight.csproj.CopyComplete
 C:\Users\lenovo\Desktop\gdfg\345\uSight\uSight\obj\Debug\uSight.exe
 C:\Users\lenovo\Desktop\gdfg\345\uSight\uSight\obj\Debug\uSight.pdb
+C:\Projects\uSight\uSight\obj\Debug\uSight.DataForm.resources

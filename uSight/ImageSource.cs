@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace uSight
 {
+    //Represents a source of images. Does not work with live VideoCapture yet.
     class ImageSource
     {
         Image<Bgr, byte> Frame = null;
