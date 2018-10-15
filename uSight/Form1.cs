@@ -2,6 +2,7 @@
 using Emgu.CV.CvEnum;
 using Emgu.CV.Structure;
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
@@ -70,11 +71,11 @@ namespace uSight
             {
                 if (Path.GetExtension(openFileDialog1.FileName) == ".jpg")
                 {
-                    currentImageSource = new ImageSource(new Image<Bgr, byte>(openFileDialog1.FileName));
+                    currentImageSource = new ImageSource(new Image<Bgr, byte>(openFileDialog1.FileName), File.GetCreationTime(openFileDialog1.FileName));
                 }
                 else if (Path.GetExtension(openFileDialog1.FileName) == ".mp4")
                 {
-                    currentImageSource = new ImageSource(new VideoCapture(openFileDialog1.FileName));
+                    currentImageSource = new ImageSource(new VideoCapture(openFileDialog1.FileName), File.GetCreationTime(openFileDialog1.FileName));
                 }
                 pictureBox1.Image = currentImageSource[currentFrame].Bitmap;
                 thisFrame = currentImageSource[currentFrame].Bitmap;
@@ -105,12 +106,13 @@ namespace uSight
 
             UMat uImg = img.GetUMat(AccessType.ReadWrite);
 
-            f.ProcessImage(uImg);
+            List<string> words = f.ProcessImage(uImg);
+            (new DataForm(words)).Show();
         }
 
         private void statisticsButton_Click(object sender, EventArgs e)
         {
-            Form stats = new StatisticsForm();
+            Form stats = new StatisticsForm(currentImageSource);
             stats.Show();
         }
     }

@@ -64,7 +64,7 @@ namespace uSight
             return cvImage.Mat;
         }
 
-        public void ProcessImage(IInputOutputArray image)
+        public List<string> ProcessImage(IInputOutputArray image)
         {
             List<IInputOutputArray> licensePlateImagesList = new List<IInputOutputArray>();
             List<IInputOutputArray> filteredLicensePlateImagesList = new List<IInputOutputArray>();
@@ -77,7 +77,7 @@ namespace uSight
                filteredLicensePlateImagesList,
                licenseBoxList);
 
-            (new DataForm(words)).Show();
+            return words;
         }
     }
 }
