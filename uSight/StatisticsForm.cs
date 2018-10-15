@@ -24,13 +24,22 @@ namespace uSight
         {
             currentImageSource = imgSource;
             InitializeComponent();
+            StatisticsForm_Load(null, null);
         }
 
         private dynamic GetJsonFromDisk()
         {
+            dynamic tmpObj;
+            try
+            {
+                string data = File.ReadAllText("stats.json");
+                tmpObj = JObject.Parse(data);
+            }
+            catch (Exception e)
+            {
+                tmpObj = new JObject();
+            }
 
-            string data = File.ReadAllText("stats.json");
-            dynamic tmpObj = JObject.Parse(data);
 
             return tmpObj;
         }
