@@ -39,6 +39,7 @@
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripLabel2 = new System.Windows.Forms.ToolStripLabel();
             this.frameSelector = new System.Windows.Forms.TrackBar();
+            this.statisticsButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.frameSelector)).BeginInit();
@@ -140,11 +141,22 @@
             this.frameSelector.TabIndex = 8;
             this.frameSelector.Scroll += new System.EventHandler(this.frameSelector_Scroll);
             // 
+            // statisticsButton
+            // 
+            this.statisticsButton.Location = new System.Drawing.Point(1282, 138);
+            this.statisticsButton.Name = "statisticsButton";
+            this.statisticsButton.Size = new System.Drawing.Size(113, 36);
+            this.statisticsButton.TabIndex = 9;
+            this.statisticsButton.Text = "Statistics";
+            this.statisticsButton.UseVisualStyleBackColor = true;
+            this.statisticsButton.Click += new System.EventHandler(this.statisticsButton_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1412, 849);
+            this.Controls.Add(this.statisticsButton);
             this.Controls.Add(this.frameSelector);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.button2);
@@ -179,6 +191,7 @@
         private System.Windows.Forms.ToolStripLabel toolStripLabel1;
         private System.Windows.Forms.TrackBar frameSelector;
         private System.Windows.Forms.ToolStripLabel toolStripLabel2;
+        private System.Windows.Forms.Button statisticsButton;
     }
 }
 

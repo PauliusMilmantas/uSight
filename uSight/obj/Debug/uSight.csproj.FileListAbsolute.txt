@@ -944,3 +944,4 @@ C:\Users\lenovo\Desktop\gdfg\345\uSight\uSight\obj\Debug\uSight.csproj.CopyCompl
 C:\Users\lenovo\Desktop\gdfg\345\uSight\uSight\obj\Debug\uSight.exe
 C:\Users\lenovo\Desktop\gdfg\345\uSight\uSight\obj\Debug\uSight.pdb
 C:\Projects\uSight\uSight\obj\Debug\uSight.DataForm.resources
+C:\Projects\uSight\uSight\obj\Debug\uSight.StatisticsForm.resources

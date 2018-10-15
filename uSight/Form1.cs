@@ -107,5 +107,11 @@ namespace uSight
 
             f.ProcessImage(uImg);
         }
+
+        private void statisticsButton_Click(object sender, EventArgs e)
+        {
+            Form stats = new StatisticsForm();
+            stats.Show();
+        }
     }
 }
