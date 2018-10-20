@@ -2,7 +2,7 @@
 
 namespace uSight
 {
-    partial class ControlPanel
+    partial class FormWantedList
     {
         /// <summary>
         /// Required designer variable.
@@ -76,7 +76,7 @@ namespace uSight
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
-            // ControlPanel
+            // FormWantedList
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -85,8 +85,8 @@ namespace uSight
             this.Controls.Add(this.button1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.p_number);
-            this.Name = "ControlPanel";
-            this.Text = "ControlPanel";
+            this.Name = "FormWantedList";
+            this.Text = "Wanted Plates List";
             this.Load += new System.EventHandler(this.ControlPanel_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -100,7 +100,7 @@ namespace uSight
 
         private void button1_Click(object sender, EventArgs e)
         {
-            (new AddRecord(this)).Show();
+            (new FormAddRecord(this)).Show();
         }
 
         #endregion

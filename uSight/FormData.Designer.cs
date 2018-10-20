@@ -1,6 +1,6 @@
 ﻿namespace uSight
 {
-    partial class DataForm
+    partial class FormData
     {
         /// <summary>
         /// Required designer variable.

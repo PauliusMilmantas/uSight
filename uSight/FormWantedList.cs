@@ -5,7 +5,7 @@ using System.Windows.Forms;
 
 namespace uSight
 {
-    public partial class ControlPanel : Form
+    public partial class FormWantedList : Form
     {
         List<PlateRecord> records1 = new List<PlateRecord>();
 
@@ -16,7 +16,7 @@ namespace uSight
 
         dynamic obj;
 
-        public ControlPanel()
+        public FormWantedList()
         {
             InitializeComponent();
             refrestView();
@@ -35,7 +35,7 @@ namespace uSight
 
             foreach (var json in obj.plates)
             {
-                records1.Add(new PlateRecord((String)json.owner, (String)json.id, (String)json.p_number, (String)json.e_number, (String)json.b_number));
+                records1.Add(new PlateRecord((String)json.owner, (String)json.id, (String)json.plate_number, (String)json.engine_number, (String)json.vehicle_number));
             }
 
             for (int a = 0; a < 10; a++)
@@ -74,7 +74,7 @@ namespace uSight
                         de.writeToJson(obj.ToString());
 
                         this.Close();
-                        (new ControlPanel()).Show();
+                        (new FormWantedList()).Show();
                     };
                 }
             }

@@ -2,27 +2,54 @@
 using Emgu.CV.CvEnum;
 using Emgu.CV.Structure;
 using System;
+using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 
 namespace uSight
 {
-    public partial class Form1 : Form
+    public partial class FormMain : Form
     {
         dynamic json;
         //The current media stream
         ImageSource currentImageSource;
         //Frame index, updated by trackbar scroll
         int currentFrame = 0;
+        string textBox1WM = "Enter plates";             // Searchbaro watermarkas
 
-        public Form1()
+        public FormMain()
         {
             InitializeComponent();
+
+
+            textBox1.ForeColor = SystemColors.GrayText;
+            textBox1.Text = textBox1WM;
+            this.textBox1.Leave += new System.EventHandler(this.textBox1_Leave);
+            this.textBox1.Enter += new System.EventHandler(this.textBox1_Enter);
+        }
+
+        private void textBox1_Leave(object sender, EventArgs e)
+        {
+            if (textBox1.Text.Length == 0)
+            {
+                textBox1.Text = textBox1WM;
+                textBox1.ForeColor = SystemColors.GrayText;
+                label1.Text = "";
+            }
+        }
+
+        private void textBox1_Enter(object sender, EventArgs e)
+        {
+            if (textBox1.Text == textBox1WM)
+            {
+                textBox1.Text = "";
+                textBox1.ForeColor = SystemColors.WindowText;
+            }
         }
 
         private void login_Click(object sender, EventArgs e)
         {
-            ControlPanel forma = new ControlPanel();
+            FormWantedList forma = new FormWantedList();
             forma.Show();
         }
 
@@ -36,23 +63,28 @@ namespace uSight
 
             bool found = false;
             foreach (var obj in json.plates) {
-                if (obj.p_number == plate_number) {
+                if (obj.plate_number == plate_number) {
                     found = true;
                 }
             }
 
-            if (found)
+            if (textBox1.Text.Equals(textBox1WM))
+            {
+                label1.Text = "";
+            }
+            else if (found)
             {
                 label1.Text = "Vehicle wanted";
                 label1.ForeColor = System.Drawing.Color.Red;
             }
-            else {
+            else
+            {
                 label1.Text = "No records found";
                 label1.ForeColor = System.Drawing.Color.Black;
             }
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        private void FormMain_Load(object sender, EventArgs e)
         {
 
         }
@@ -101,6 +133,16 @@ namespace uSight
             UMat uImg = img.GetUMat(AccessType.ReadWrite);
 
             f.ProcessImage(uImg);
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -1,10 +1,10 @@
 {
   "plates": [
     {
-      "owner": "Test",
-      "p_number": "JMN234",
-      "e_number": "sfsadf",
-      "b_number": "23123",
+      "owner": "Jonas",
+      "plate_number": "ABC123",
+      "engine_number": "VW12345U123456P",
+      "vehicle_number": "1N6AD0EV7BC423878",
       "id": 1
     }
   ]

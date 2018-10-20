@@ -11,11 +11,11 @@ using System.Windows.Forms;
 
 namespace uSight
 {
-    public partial class AddRecord : Form
+    public partial class FormAddRecord : Form
     {
-        ControlPanel cp;
+        FormWantedList cp;
 
-        public AddRecord(ControlPanel cp)
+        public FormAddRecord(FormWantedList cp)
         {
             this.cp = cp;
 
@@ -34,9 +34,9 @@ namespace uSight
 
             JObject record = new JObject();
             record["owner"] = owner;
-            record["p_number"] = license_plate;
-            record["e_number"] = engine_number;
-            record["b_number"] = body_number;
+            record["plate_number"] = license_plate;
+            record["engine_number"] = engine_number;
+            record["vehicle_number"] = body_number;
             record["id"] = json.plates.Count + 1;
 
             json.plates.Add(record);

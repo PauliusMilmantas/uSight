@@ -12,9 +12,9 @@ namespace uSight
     class UtilFunctions
     {
         private LicenesePlateDetector _licensePlateDetector;
-        private Form1 form;
+        private FormMain form; 
 
-        public UtilFunctions(Form1 form)
+        public UtilFunctions(FormMain form)
         {
             _licensePlateDetector = new LicenesePlateDetector("");
 
@@ -73,7 +73,7 @@ namespace uSight
                filteredLicensePlateImagesList,
                licenseBoxList);
 
-            (new DataForm(words)).Show();
+            (new FormData(words)).Show();
         }
     }
 }

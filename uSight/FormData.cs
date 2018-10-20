@@ -10,11 +10,11 @@ using System.Windows.Forms;
 
 namespace uSight
 {
-    public partial class DataForm : Form
+    public partial class FormData : Form
     {
         List<string> words;
 
-        public DataForm(List<string> words)
+        public FormData(List<string> words)
         {
             InitializeComponent();
 

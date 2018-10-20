@@ -1,6 +1,6 @@
 ﻿namespace uSight
 {
-    partial class AddRecord
+    partial class FormAddRecord
     {
         /// <summary>
         /// Required designer variable.
@@ -82,9 +82,9 @@
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.Location = new System.Drawing.Point(172, 73);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(114, 20);
+            this.label4.Size = new System.Drawing.Size(39, 20);
             this.label4.TabIndex = 4;
-            this.label4.Text = "Body number";
+            this.label4.Text = "VIN";
             // 
             // textBox2
             // 
@@ -118,7 +118,7 @@
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
-            // AddRecord
+            // FormAddRecord
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -132,8 +132,8 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.textBox1);
-            this.Name = "AddRecord";
-            this.Text = "Form2";
+            this.Name = "FormAddRecord";
+            this.Text = "Add Record";
             this.Load += new System.EventHandler(this.AddRecord_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
