@@ -54,8 +54,8 @@ namespace uSight
         }
 
         private void button1_Click(object sender, EventArgs e)
-        {
-            string plate_number = textBox1.Text;
+        { 
+            string plate_number = textBox1.Text.ToUpper();
 
             //JSON is disko
             DataExtraction de = new DataExtraction();

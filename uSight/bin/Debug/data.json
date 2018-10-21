@@ -2,10 +2,87 @@
   "plates": [
     {
       "owner": "Jonas",
-      "plate_number": "ABC123",
+      "license_plate": "ABC123",
       "engine_number": "VW12345U123456P",
-      "vehicle_number": "1N6AD0EV7BC423878",
+      "vin": "1N6AD0EV7BC423878",
       "id": 1
+    },
+    {
+      "owner": "Paulius Vaicekauskas",
+      "license_plate": "ASD 123",
+      "engine_number": "VW12345U123456P",
+      "vin": "1N6AD0EV7BC423878",
+      "id": 2
+    },
+    {
+      "owner": "Jonas",
+      "license_plate": "ABC123",
+      "engine_number": "VW12345U123456P",
+      "vin": "1N6AD0EV7BC423878",
+      "id": 3
+    },
+    {
+      "owner": "Jonas",
+      "license_plate": "ABC123",
+      "engine_number": "VW12345U123456P",
+      "vin": "1N6AD0EV7BC423878",
+      "id": 4
+    },
+    {
+      "owner": "Jonas",
+      "license_plate": "ABC123",
+      "engine_number": "VW12345U123456P",
+      "vin": "1N6AD0EV7BC423878",
+      "id": 5
+    },
+    {
+      "owner": "Jonas",
+      "license_plate": "ABC123",
+      "engine_number": "VW12345U123456P",
+      "vin": "1N6AD0EV7BC423878",
+      "id": 6
+    },
+    {
+      "owner": "Jonas",
+      "license_plate": "ABC123",
+      "engine_number": "VW12345U123456P",
+      "vin": "1N6AD0EV7BC423878",
+      "id": 7
+    },
+    {
+      "owner": "Jonas",
+      "license_plate": "ABC123",
+      "engine_number": "VW12345U123456P",
+      "vin": "1N6AD0EV7BC423878",
+      "id": 8
+    },
+    {
+      "owner": "Jonas",
+      "license_plate": "ABC123",
+      "engine_number": "VW12345U123456P",
+      "vin": "1N6AD0EV7BC423878",
+      "id": 9
+    },
+    {
+      "owner": "sdasd",
+      "license_plate": "asasdasd",
+      "engine_number": "asdasd",
+      "vin": "asd",
+      "id": 10
+    },
+    {
+      "owner": "dasdasdasd",
+      "license_plate": "asdasd",
+      "engine_number": "asdasd",
+      "vin": "asdasd",
+      "id": 11
+    },
+    {
+      "owner": "ssss",
+      "license_plate": "sssss",
+      "engine_number": "ssssss",
+      "vin": "sss",
+      "id": 12
     }
   ]
 }

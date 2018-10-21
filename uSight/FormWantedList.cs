@@ -9,8 +9,10 @@ namespace uSight
     {
         List<PlateRecord> records1 = new List<PlateRecord>();
 
-        Label[] labelsOwners = new Label[10]; //Kiekviename puslapyje bus po 10 irasu
-        Label[] licensePlates = new Label[10];
+        Label[] ownersLabel = new Label[10];         //Kiekviename puslapyje bus po 10 irasu
+        Label[] licensePlateLabel = new Label[10];
+        Label[] engineNoLabel = new Label[10];
+        Label[] vinLabel = new Label[10];
 
         PictureBox[] delete = new PictureBox[10];
 
@@ -19,13 +21,15 @@ namespace uSight
         public FormWantedList()
         {
             InitializeComponent();
-            refrestView();
+            refreshView();
           }
 
-        public void refrestView() {
+        public void refreshView() {
 
-            labelsOwners = new Label[10];
-            licensePlates = new Label[10];
+            ownersLabel = new Label[10];
+            licensePlateLabel = new Label[10];
+            engineNoLabel = new Label[10];
+            vinLabel = new Label[10];
             delete = new PictureBox[10];
 
             records1 = new List<PlateRecord>();
@@ -35,34 +39,60 @@ namespace uSight
 
             foreach (var json in obj.plates)
             {
-                records1.Add(new PlateRecord((String)json.owner, (String)json.id, (String)json.plate_number, (String)json.engine_number, (String)json.vehicle_number));
+                records1.Add(new PlateRecord((String)json.owner, (String)json.id, (String)json.license_plate, (String)json.engine_number, (String)json.vin));
             }
 
             for (int a = 0; a < 10; a++)
             {
                 if (records1.Count > a)
                 {
-                    labelsOwners[a] = new Label
+                    int width = 23;
+                    
+                    licensePlateLabel[a] = new Label        // License plate
+                    {
+                        Text = records1[a].License_Plate,
+                        Location = new System.Drawing.Point(12, a * 25 + 38),
+                        Font = new System.Drawing.Font("Verdana", 14),
+                        Size = new Size(154, width)
+                    };
+                    this.Controls.Add(licensePlateLabel[a]);
+
+
+                    ownersLabel[a] = new Label          // Owner
                     {
                         Text = records1[a].Owner,
-                        Location = new System.Drawing.Point(165, a * 25 + 38),
-                        Font = new System.Drawing.Font("Verdana", 14)
+                        Location = new System.Drawing.Point(185, a * 25 + 38),
+                        Font = new System.Drawing.Font("Verdana", 14),
+                        Size = new Size(244, width)
                     };
-                    this.Controls.Add(labelsOwners[a]);
+                    this.Controls.Add(ownersLabel[a]); 
 
-                    licensePlates[a] = new Label
+
+                    engineNoLabel[a] = new Label            // Engine number
                     {
-                        Text = records1[a].P_number,
-                        Location = new System.Drawing.Point(10, a * 25 + 38),
-                        Font = new System.Drawing.Font("Verdana", 14)
+                        Text = records1[a].Engine_number,
+                        Location = new System.Drawing.Point(435, a * 25 + 38),
+                        Font = new System.Drawing.Font("Verdana", 14),
+                        Size = new Size(229,width)
                     };
-                    this.Controls.Add(licensePlates[a]);
+                    this.Controls.Add(engineNoLabel[a]);
 
-                    delete[a] = new PictureBox
+
+                    vinLabel[a] = new Label             // Vin
                     {
-                        Location = new System.Drawing.Point(280, a * 25 + 38),
+                        Text = records1[a].Vin,
+                        Location = new System.Drawing.Point(705, a * 25 + 38),
+                        Font = new System.Drawing.Font("Verdana", 14),
+                        Size = new Size(253, width)
+                    };
+                    this.Controls.Add(vinLabel[a]);
+                    
+
+                    delete[a] = new PictureBox          // delete picture
+                    {
+                        Location = new System.Drawing.Point(965, a * 25 + 40),
                         Image = Image.FromFile("../../../Resources/trashbin.png"),
-                        Size = new Size(20, 20),
+                        Size = new Size(17, 17),
                         SizeMode = PictureBoxSizeMode.StretchImage,
                         Name = a.ToString()
                     };
@@ -87,7 +117,12 @@ namespace uSight
 
         private void button2_Click(object sender, EventArgs e)
         {
-            refrestView();
+            refreshView();
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

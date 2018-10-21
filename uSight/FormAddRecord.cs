@@ -27,23 +27,23 @@ namespace uSight
             string license_plate = textBox1.Text;
             string owner = textBox3.Text;
             string engine_number = textBox2.Text;
-            string body_number = textBox4.Text;
+            string vin = textBox4.Text;
 
             DataExtraction de = new DataExtraction();
             dynamic json = de.GetJsonFromDisk();
 
             JObject record = new JObject();
             record["owner"] = owner;
-            record["plate_number"] = license_plate;
+            record["license_plate"] = license_plate;
             record["engine_number"] = engine_number;
-            record["vehicle_number"] = body_number;
+            record["vin"] = vin;
             record["id"] = json.plates.Count + 1;
 
             json.plates.Add(record);
             de.writeToJson(json.ToString());
 
             this.Close();
-            cp.refrestView();
+            cp.refreshView();
         }
 
         private void AddRecord_Load(object sender, EventArgs e)
