@@ -210,7 +210,6 @@ namespace uSight
             foreach (var x in allTimeBreakdownQuery)
             {
                 allTimeBreakdown.Points.AddXY(x.number, x.count);
-                Console.WriteLine(x.number + ";;" + x.count);
             }
 
             if (thisJson != null)
@@ -243,6 +242,26 @@ namespace uSight
                     thisTimeBreakdown.Points.AddXY(x.number, x.count);
                 }
             }
+
+            allStolenChart.ChartAreas[allTimeAll.ChartArea].AxisX.ScrollBar.Enabled = true;
+            allStolenChart.ChartAreas[allTimeAll.ChartArea].AxisX.ScrollBar.ButtonStyle = ScrollBarButtonStyles.SmallScroll;
+            allStolenChart.ChartAreas[allTimeAll.ChartArea].AxisX.ScaleView.Zoomable = false;
+            allStolenChart.ChartAreas[allTimeAll.ChartArea].AxisX.ScaleView.Size = 4;
+
+            thisSourceStolenChart.ChartAreas[thisTimeAll.ChartArea].AxisX.ScrollBar.Enabled = true;
+            thisSourceStolenChart.ChartAreas[thisTimeAll.ChartArea].AxisX.ScrollBar.ButtonStyle = ScrollBarButtonStyles.SmallScroll;
+            thisSourceStolenChart.ChartAreas[thisTimeAll.ChartArea].AxisX.ScaleView.Zoomable = false;
+            thisSourceStolenChart.ChartAreas[thisTimeAll.ChartArea].AxisX.ScaleView.Size = 4;
+
+            allBreakdownChart.ChartAreas[allTimeBreakdown.ChartArea].AxisX.ScrollBar.Enabled = true;
+            allBreakdownChart.ChartAreas[allTimeBreakdown.ChartArea].AxisX.ScrollBar.ButtonStyle = ScrollBarButtonStyles.SmallScroll;
+            allBreakdownChart.ChartAreas[allTimeBreakdown.ChartArea].AxisX.ScaleView.Zoomable = false;
+            allBreakdownChart.ChartAreas[allTimeBreakdown.ChartArea].AxisX.ScaleView.Size = 4;
+
+            thisSourceBreakdownChart.ChartAreas[thisTimeBreakdown.ChartArea].AxisX.ScrollBar.Enabled = true;
+            thisSourceBreakdownChart.ChartAreas[thisTimeBreakdown.ChartArea].AxisX.ScrollBar.ButtonStyle = ScrollBarButtonStyles.SmallScroll;
+            thisSourceBreakdownChart.ChartAreas[thisTimeBreakdown.ChartArea].AxisX.ScaleView.Zoomable = false;
+            thisSourceBreakdownChart.ChartAreas[thisTimeBreakdown.ChartArea].AxisX.ScaleView.Size = 4;
 
             allStolenChart.Invalidate();
             thisSourceStolenChart.Invalidate();
