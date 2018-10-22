@@ -35,7 +35,7 @@ namespace uSight
                 string data = File.ReadAllText("stats.json");
                 tmpObj = JObject.Parse(data);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 tmpObj = new JObject();
                 tmpObj.Add("plates", new JArray());
@@ -64,56 +64,31 @@ namespace uSight
                 thisJson = new JObject();
                 thisJson.Add("plates", new JArray());
                 DateTime date = currentImageSource.Date;
-                for (int frame = 0; frame < currentImageSource.Count; frame++)
+
+                var thisSourcePlatesQuery =
+                    from img in currentImageSource
+                    from number in f.ProcessImage(UtilFunctions.GetMatFromImage(img.Bitmap).GetUMat(AccessType.ReadWrite))
+                    join wanted in (wantedJson as JObject)["plates"] on number equals wanted["p_number"].ToObject<string>() into g
+                    select new { number, date, stolen = g.Any()};
+                var thisSourcePlatesList = thisSourcePlatesQuery.Select(o => { JObject plate = new JObject(); plate["time"] = o.date; plate["number"] = o.number; plate["stolen"] = o.stolen; return plate; }).ToList();
+                foreach (JObject plate in thisSourcePlatesList)
                 {
-                    List<string> numbers = f.ProcessImage(UtilFunctions.GetMatFromImage(currentImageSource[frame].Bitmap).GetUMat(AccessType.ReadWrite));
-                    foreach (string number in numbers)
+                    thisJson.plates.Add(plate);
+                    bool found = false;
+                    foreach (var statsPlate in statsJson.plates)
                     {
-                        bool found = false;
-                        foreach (var obj in statsJson.plates)
+                        if (statsPlate.time == plate["time"].ToObject<DateTime>() && statsPlate.number == plate["number"].ToObject<string>())
                         {
-                            if (obj.time == date && obj.number == number)
-                            {
-                                found = true;
-                            }
-                        }
-                        if (!found)
-                        {
-                            bool stolen = false;
-                            foreach (var obj in wantedJson.plates)
-                            {
-                                if (obj.p_number == number)
-                                {
-                                    stolen = true;
-                                    break;
-                                }
-                            }
-                            JObject plate = new JObject();
-                            plate["time"] = date;
-                            plate["number"] = number;
-                            plate["stolen"] = stolen;
-                            statsJson.plates.Add(plate);
-                            thisJson.plates.Add(plate);
-                        }
-                        else
-                        {
-                            bool stolen = false;
-                            foreach (var obj in wantedJson.plates)
-                            {
-                                if (obj.p_number == number)
-                                {
-                                    stolen = true;
-                                    break;
-                                }
-                            }
-                            JObject plate = new JObject();
-                            plate["time"] = date;
-                            plate["number"] = number;
-                            plate["stolen"] = stolen;
-                            thisJson.plates.Add(plate);
+                            found = true;
+                            break;
                         }
                     }
+                    if(!found)
+                    {
+                        statsJson.plates.Add(plate);
+                    }
                 }
+
                 writeToJson(statsJson.ToString());
             }
             statsJson = GetJsonFromDisk();
