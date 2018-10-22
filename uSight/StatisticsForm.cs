@@ -38,6 +38,7 @@ namespace uSight
             catch (Exception e)
             {
                 tmpObj = new JObject();
+                tmpObj.Add("plates", new JArray());
             }
 
 
@@ -56,8 +57,12 @@ namespace uSight
             DataExtraction de = new DataExtraction();
             dynamic wantedJson = de.GetJsonFromDisk();
 
+            dynamic thisJson = null;
+
             if (currentImageSource != null)
             {
+                thisJson = new JObject();
+                thisJson.Add("plates", new JArray());
                 DateTime date = currentImageSource.Date;
                 for (int frame = 0; frame < currentImageSource.Count; frame++)
                 {
@@ -74,25 +79,44 @@ namespace uSight
                         }
                         if (!found)
                         {
-                            found = false;
+                            bool stolen = false;
                             foreach (var obj in wantedJson.plates)
                             {
                                 if (obj.p_number == number)
                                 {
-                                    found = true;
+                                    stolen = true;
                                     break;
                                 }
                             }
                             JObject plate = new JObject();
                             plate["time"] = date;
                             plate["number"] = number;
-                            plate["stolen"] = found;
+                            plate["stolen"] = stolen;
                             statsJson.plates.Add(plate);
+                            thisJson.plates.Add(plate);
+                        }
+                        else
+                        {
+                            bool stolen = false;
+                            foreach (var obj in wantedJson.plates)
+                            {
+                                if (obj.p_number == number)
+                                {
+                                    stolen = true;
+                                    break;
+                                }
+                            }
+                            JObject plate = new JObject();
+                            plate["time"] = date;
+                            plate["number"] = number;
+                            plate["stolen"] = stolen;
+                            thisJson.plates.Add(plate);
                         }
                     }
                 }
                 writeToJson(statsJson.ToString());
             }
+            statsJson = GetJsonFromDisk();
 
             allStolenChart.Series.Clear();
             thisSourceStolenChart.Series.Clear();
@@ -123,7 +147,7 @@ namespace uSight
                 Color = System.Drawing.Color.Green,
                 IsVisibleInLegend = true,
                 IsXValueIndexed = true,
-                ChartType = SeriesChartType.Line
+                ChartType = SeriesChartType.Column
             };
 
             Series thisTimeStolen = new Series
@@ -132,7 +156,7 @@ namespace uSight
                 Color = System.Drawing.Color.Red,
                 IsVisibleInLegend = true,
                 IsXValueIndexed = true,
-                ChartType = SeriesChartType.Line
+                ChartType = SeriesChartType.Column
             };
 
             Series allTimeBreakdown = new Series
@@ -140,8 +164,8 @@ namespace uSight
                 Name = "Count",
                 Color = System.Drawing.Color.Blue,
                 IsVisibleInLegend = true,
-                IsXValueIndexed = false,
-                ChartType = SeriesChartType.Bar
+                IsXValueIndexed = true,
+                ChartType = SeriesChartType.Column
             };
 
             Series thisTimeBreakdown = new Series
@@ -150,8 +174,80 @@ namespace uSight
                 Color = System.Drawing.Color.Blue,
                 IsVisibleInLegend = true,
                 IsXValueIndexed = true,
-                ChartType = SeriesChartType.Bar
+                ChartType = SeriesChartType.Column
             };
+
+            allStolenChart.Series.Add(allTimeAll);
+            allStolenChart.Series.Add(allTimeStolen);
+            thisSourceStolenChart.Series.Add(thisTimeAll);
+            thisSourceStolenChart.Series.Add(thisTimeStolen);
+            allBreakdownChart.Series.Add(allTimeBreakdown);
+            thisSourceBreakdownChart.Series.Add(thisTimeBreakdown);
+
+            var allTimeAllQuery =
+                from plate in (statsJson as JObject)["plates"]
+                group plate by plate["time"].ToObject<DateTime>() into p
+                select new { time = p.Key, count = p.Count() };
+            foreach(var x in allTimeAllQuery)
+            {
+                allTimeAll.Points.AddXY(x.time, x.count);
+            }
+
+            var allTimeStolenQuery =
+                from plate in (statsJson as JObject)["plates"]
+                where plate["stolen"].ToObject<bool>()
+                group plate by plate["time"].ToObject<DateTime>() into p
+                select new { time = p.Key, count = p.Count() };
+            foreach (var x in allTimeStolenQuery)
+            {
+                allTimeStolen.Points.AddXY(x.time, x.count);
+            }
+
+            var allTimeBreakdownQuery =
+                from plate in (statsJson as JObject)["plates"]
+                group plate by plate["number"].ToObject<string>() into p
+                select new { number = p.Key, count = p.Count() };
+            foreach (var x in allTimeBreakdownQuery)
+            {
+                allTimeBreakdown.Points.AddXY(x.number, x.count);
+                Console.WriteLine(x.number + ";;" + x.count);
+            }
+
+            if (thisJson != null)
+            {
+                var thisTimeAllQuery =
+                    from plate in (thisJson as JObject)["plates"]
+                    group plate by plate["time"].ToObject<DateTime>() into p
+                    select new { time = p.Key, count = p.Count() };
+                foreach (var x in thisTimeAllQuery)
+                {
+                    thisTimeAll.Points.AddXY(x.time, x.count);
+                }
+
+                var thisTimeStolenQuery =
+                    from plate in (thisJson as JObject)["plates"]
+                    where plate["stolen"].ToObject<bool>()
+                    group plate by plate["time"].ToObject<DateTime>() into p
+                    select new { time = p.Key, count = p.Count() };
+                foreach (var x in thisTimeStolenQuery)
+                {
+                    thisTimeStolen.Points.AddXY(x.time, x.count);
+                }
+
+                var thisTimeBreakdownQuery =
+                    from plate in (thisJson as JObject)["plates"]
+                    group plate by plate["number"].ToObject<string>() into p
+                    select new { number = p.Key, count = p.Count() };
+                foreach (var x in thisTimeBreakdownQuery)
+                {
+                    thisTimeBreakdown.Points.AddXY(x.number, x.count);
+                }
+            }
+
+            allStolenChart.Invalidate();
+            thisSourceStolenChart.Invalidate();
+            allBreakdownChart.Invalidate();
+            thisSourceBreakdownChart.Invalidate();
         }
     }
 }
