@@ -11,12 +11,27 @@ namespace uSight
 {
     class DBConnect
     {
+        struct vehicle
+        {
+            private string id;
+            private string plate_number;
+            private string vin;
+            private string owner;
+
+            public string Id { get => id; set => id = value; }
+            public string Plate_number { get => plate_number; set => plate_number = value; }
+            public string Vin { get => vin; set => vin = value; }
+            public string Owner { get => owner; set => owner = value; }
+        };
+
         private MySqlConnection connection;
         private string server;
         private string database;
         private string uid;
         private string password;
         private string port;
+
+        private List<vehicle> vehicles;
 
         //Constructor
         public DBConnect()
@@ -82,13 +97,6 @@ namespace uSight
             }
         }
 
-        struct vehicles {
-            string id;
-            string plate_number;
-            string vin;
-            string owner;
-        };
-
         public void updateWantedListJSON() {
             if (connection != null) {
                 DataExtraction e = new DataExtraction();
@@ -97,13 +105,20 @@ namespace uSight
 
                 MySqlDataReader dataReader = myCommand.ExecuteReader();
 
-                List<vehicles> vehicles;
+                vehicles = new List<vehicle>();
 
                 e.writeToJson("{\"plates\":[]}");
                 dynamic json = e.GetJsonFromDisk();
 
                 while (dataReader.Read()) {
                     JObject record = new JObject();
+
+                    vehicle vr = new vehicle();                    
+
+                    vr.Id = (String)dataReader["id"];
+                    vr.Owner = (String)dataReader["owner"];
+                    vr.Plate_number = (String)dataReader["license_plate"];
+                    vr.Vin = (String)dataReader["vin"];
 
                     record["id"] = (String)dataReader["id"];
                     record["owner"] = (String)dataReader["owner"];
