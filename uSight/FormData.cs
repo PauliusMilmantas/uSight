@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -12,7 +13,8 @@ namespace uSight
 {
     public partial class FormData : Form
     {
-        List<string> words;
+        List <string> words;
+        private string licensePlate = "";
 
         public FormData(List<string> words)
         {
@@ -24,6 +26,22 @@ namespace uSight
             {
                 textBox1.Text += t;
             }
+
+            licensePlate = GetFilteredLicensePlate(textBox1.Text.ToString());
+        }
+
+        private string GetFilteredLicensePlate (string input)
+        {
+            string pattern = "[A-Z]{3} *[0-9]{3}";
+            Match match = Regex.Match(input, pattern);
+
+            //Console.WriteLine("|" + match.ToString() + "|");
+            return match.ToString();
+        }
+
+        public string GetLicensePlate()
+        {
+            return licensePlate;
         }
 
         private void DataForm_Load(object sender, EventArgs e)

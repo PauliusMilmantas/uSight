@@ -33,20 +33,21 @@
             // 
             // textBox1
             // 
+            this.textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(186)));
             this.textBox1.Location = new System.Drawing.Point(12, 7);
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(268, 264);
+            this.textBox1.Size = new System.Drawing.Size(407, 406);
             this.textBox1.TabIndex = 0;
             // 
-            // DataForm
+            // FormData
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(287, 283);
+            this.ClientSize = new System.Drawing.Size(431, 425);
             this.Controls.Add(this.textBox1);
-            this.Name = "DataForm";
-            this.Text = "DataForm";
+            this.Name = "FormData";
+            this.Text = "Scan Result";
             this.Load += new System.EventHandler(this.DataForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
