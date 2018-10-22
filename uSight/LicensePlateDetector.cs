@@ -41,7 +41,7 @@ namespace uSight
                 CvInvoke.Canny(gray, canny, 100, 50, 3, false);
                 int[,] hierachy = CvInvoke.FindContourTree(canny, contours, ChainApproxMethod.ChainApproxSimple);
 
-                FindLicensePlate(contours, hierachy, 0, gray, canny, licensePlateImagesList, filteredLicensePlateImagesList, detectedLicensePlateRegionList, licenses);
+                FindLicensePlate(contours, hierachy, gray, canny, licensePlateImagesList, filteredLicensePlateImagesList, detectedLicensePlateRegionList, licenses);
             } catch (Exception) {
                 return null;
             }
@@ -117,10 +117,10 @@ namespace uSight
         }
 
         private void FindLicensePlate(
-           VectorOfVectorOfPoint contours, int[,] hierachy, int idx, IInputArray gray, IInputArray canny,
+           VectorOfVectorOfPoint contours, int[,] hierachy, IInputArray gray, IInputArray canny,
            List<IInputOutputArray> licensePlateImagesList, List<IInputOutputArray> filteredLicensePlateImagesList, List<RotatedRect> detectedLicensePlateRegionList,
-           List<String> licenses)
-        {
+           List<String> licenses, int idx = 0) {          
+
             for (; idx >= 0; idx = hierachy[idx, 0])
             {
                 int lettersCount = GetNumberOfChildren(hierachy, idx);
@@ -135,8 +135,8 @@ namespace uSight
                         {
                             //If the contour has less than 3 children, it is not a license plate (assuming license plate has at least 3 charactor)
                             //However we should search the children of this contour to see if any of them is a license plate
-                            FindLicensePlate(contours, hierachy, hierachy[idx, 2], gray, canny, licensePlateImagesList,
-                               filteredLicensePlateImagesList, detectedLicensePlateRegionList, licenses);
+                            FindLicensePlate(contours, hierachy, gray, canny, licensePlateImagesList,
+                               filteredLicensePlateImagesList, detectedLicensePlateRegionList, licenses, hierachy[idx, 2]);
                             continue;
                         }
 
@@ -177,7 +177,6 @@ namespace uSight
                             double scale = Math.Min(approxSize.Width / box.Size.Width, approxSize.Height / box.Size.Height);
                             Size newSize = new Size((int)Math.Round(box.Size.Width * scale), (int)Math.Round(box.Size.Height * scale));
                             CvInvoke.Resize(tmp1, tmp2, newSize, 0, 0, Inter.Cubic);
-
 
                             //removes some pixels from the edge
                             int edgePixelSize = 3;

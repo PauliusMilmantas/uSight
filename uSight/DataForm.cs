@@ -20,9 +20,11 @@ namespace uSight
 
             this.words = words;
 
-            foreach (string t in words)
-            {
-                textBox1.Text += t;
+            if (words != null) {
+                foreach (string t in words)
+                {
+                    textBox1.Text += t;
+                }
             }
         }
 
