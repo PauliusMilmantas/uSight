@@ -9,10 +9,13 @@ using System.Threading.Tasks;
 
 namespace uSight
 {
-    class ImageSource
+    //Represents a source of images. Does not work with live VideoCapture yet.
+    public class ImageSource
     {
         Image<Bgr, byte> Frame = null;
         VideoCapture stream;
+        public DateTime Date { get; set; }
+
         public int Count
         {
             get
@@ -40,14 +43,16 @@ namespace uSight
             set { }
         }
 
-        public ImageSource(VideoCapture capture)
+        public ImageSource(VideoCapture capture, DateTime date)
         {
             stream = capture;
+            Date = date;
         }
 
-        public ImageSource(Image<Bgr, byte> image)
+        public ImageSource(Image<Bgr, byte> image, DateTime date)
         {
             Frame = image.Clone();
+            Date = date;
         }
     }
 }

@@ -37,8 +37,9 @@
             this.button2 = new System.Windows.Forms.Button();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
-            this.frameSelector = new System.Windows.Forms.TrackBar();
             this.toolStripLabel2 = new System.Windows.Forms.ToolStripLabel();
+            this.frameSelector = new System.Windows.Forms.TrackBar();
+            this.statisticsButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.frameSelector)).BeginInit();
@@ -125,6 +126,13 @@
             this.toolStripLabel1.Text = "Show contours";
             this.toolStripLabel1.Click += new System.EventHandler(this.toolStripLabel1_Click);
             // 
+            // toolStripLabel2
+            // 
+            this.toolStripLabel2.Name = "toolStripLabel2";
+            this.toolStripLabel2.Size = new System.Drawing.Size(64, 22);
+            this.toolStripLabel2.Text = "Find plates";
+            this.toolStripLabel2.Click += new System.EventHandler(this.toolStripLabel2_Click);
+            // 
             // frameSelector
             // 
             this.frameSelector.Location = new System.Drawing.Point(12, 779);
@@ -133,18 +141,22 @@
             this.frameSelector.TabIndex = 8;
             this.frameSelector.Scroll += new System.EventHandler(this.frameSelector_Scroll);
             // 
-            // toolStripLabel2
+            // statisticsButton
             // 
-            this.toolStripLabel2.Name = "toolStripLabel2";
-            this.toolStripLabel2.Size = new System.Drawing.Size(64, 22);
-            this.toolStripLabel2.Text = "Find plates";
-            this.toolStripLabel2.Click += new System.EventHandler(this.toolStripLabel2_Click);
+            this.statisticsButton.Location = new System.Drawing.Point(1282, 138);
+            this.statisticsButton.Name = "statisticsButton";
+            this.statisticsButton.Size = new System.Drawing.Size(113, 36);
+            this.statisticsButton.TabIndex = 9;
+            this.statisticsButton.Text = "Statistics";
+            this.statisticsButton.UseVisualStyleBackColor = true;
+            this.statisticsButton.Click += new System.EventHandler(this.statisticsButton_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1412, 849);
+            this.Controls.Add(this.statisticsButton);
             this.Controls.Add(this.frameSelector);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.button2);
@@ -179,6 +191,7 @@
         private System.Windows.Forms.ToolStripLabel toolStripLabel1;
         private System.Windows.Forms.TrackBar frameSelector;
         private System.Windows.Forms.ToolStripLabel toolStripLabel2;
+        private System.Windows.Forms.Button statisticsButton;
     }
 }
 

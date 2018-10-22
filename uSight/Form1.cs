@@ -2,6 +2,8 @@
 using Emgu.CV.CvEnum;
 using Emgu.CV.Structure;
 using System;
+using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 
@@ -14,6 +16,8 @@ namespace uSight
         ImageSource currentImageSource;
         //Frame index, updated by trackbar scroll
         int currentFrame = 0;
+        //Current frame without modifications
+        Image thisFrame = null;
 
         public Form1()
         {
@@ -54,7 +58,7 @@ namespace uSight
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
+            
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -67,20 +71,21 @@ namespace uSight
             {
                 if (Path.GetExtension(openFileDialog1.FileName) == ".jpg")
                 {
-                    currentImageSource = new ImageSource(new Image<Bgr, byte>(openFileDialog1.FileName));
+                    currentImageSource = new ImageSource(new Image<Bgr, byte>(openFileDialog1.FileName), File.GetCreationTime(openFileDialog1.FileName));
                 }
                 else if (Path.GetExtension(openFileDialog1.FileName) == ".mp4")
                 {
-                    currentImageSource = new ImageSource(new VideoCapture(openFileDialog1.FileName));
+                    currentImageSource = new ImageSource(new VideoCapture(openFileDialog1.FileName), File.GetCreationTime(openFileDialog1.FileName));
                 }
                 pictureBox1.Image = currentImageSource[currentFrame].Bitmap;
+                thisFrame = currentImageSource[currentFrame].Bitmap;
                 frameSelector.Maximum = currentImageSource.Count - 1;
             }
         }
 
         private void toolStripLabel1_Click(object sender, EventArgs e)
         {
-            //pictureBox1.Image = LicenesePlateDetector.ShowContours(currentImageSource[currentFrame]);
+            pictureBox1.Image = UtilFunctions.ShowContours(currentImageSource[currentFrame]);
         }
 
         private void frameSelector_Scroll(object sender, EventArgs e)
@@ -89,6 +94,7 @@ namespace uSight
             {
                 currentFrame = frameSelector.Value;
                 pictureBox1.Image = currentImageSource[currentFrame].Bitmap;
+                thisFrame = currentImageSource[currentFrame].Bitmap;
             }
         }
 
@@ -96,11 +102,18 @@ namespace uSight
         {
             UtilFunctions f = new UtilFunctions(this);
 
-            Mat img = UtilFunctions.GetMatFromImage(pictureBox1.Image);
+            Mat img = UtilFunctions.GetMatFromImage(thisFrame);
 
             UMat uImg = img.GetUMat(AccessType.ReadWrite);
 
-            f.ProcessImage(uImg);
+            List<string> words = f.ProcessImage(uImg);
+            (new DataForm(words)).Show();
+        }
+
+        private void statisticsButton_Click(object sender, EventArgs e)
+        {
+            Form stats = new StatisticsForm(currentImageSource);
+            stats.Show();
         }
     }
 }

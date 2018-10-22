@@ -24,13 +24,17 @@ namespace uSight
         public static Image ShowContours(Image<Bgr, byte> image)
         {
 
-            Image<Gray, byte> imageOutput = image.Convert<Gray, Byte>().ThresholdBinary(new Gray(100), new Gray(255));
+            Image<Gray, byte> imageOutput = image.Convert<Gray, Byte>();
             Emgu.CV.Util.VectorOfVectorOfPoint contours = new Emgu.CV.Util.VectorOfVectorOfPoint();
 
             Mat hier = new Mat();
 
+            CvInvoke.BitwiseNot(imageOutput, imageOutput);
+            CvInvoke.AdaptiveThreshold(imageOutput, imageOutput, 255, Emgu.CV.CvEnum.AdaptiveThresholdType.GaussianC, Emgu.CV.CvEnum.ThresholdType.Binary, 15, -26);
             CvInvoke.FindContours(imageOutput, contours, hier, Emgu.CV.CvEnum.RetrType.External, Emgu.CV.CvEnum.ChainApproxMethod.ChainApproxSimple);
-            CvInvoke.DrawContours(image, contours, -1, new MCvScalar(255, 0, 0));
+            CvInvoke.DrawContours(imageOutput, contours, -1, new MCvScalar(255, 0, 0));
+            CvInvoke.BitwiseNot(imageOutput, imageOutput);
+
 
             return imageOutput.Bitmap;
         }
@@ -60,7 +64,7 @@ namespace uSight
             return cvImage.Mat;
         }
 
-        public void ProcessImage(IInputOutputArray image)
+        public List<string> ProcessImage(IInputOutputArray image)
         {
             List<IInputOutputArray> licensePlateImagesList = new List<IInputOutputArray>();
             List<IInputOutputArray> filteredLicensePlateImagesList = new List<IInputOutputArray>();
@@ -73,7 +77,7 @@ namespace uSight
                filteredLicensePlateImagesList,
                licenseBoxList);
 
-            (new DataForm(words)).Show();
+            return words;
         }
     }
 }
