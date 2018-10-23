@@ -141,6 +141,7 @@
             this.Controls.Add(this.allStolenChart);
             this.Name = "StatisticsForm";
             this.Text = "Statistics";
+            this.Load += new System.EventHandler(this.StatisticsForm_Load_1);
             ((System.ComponentModel.ISupportInitialize)(this.allStolenChart)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.thisSourceStolenChart)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.allBreakdownChart)).EndInit();

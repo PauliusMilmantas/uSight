@@ -26,6 +26,16 @@ namespace uSight
             set { }
         }
 
+        public ImageSource(Image<Bgr, byte> image)
+        {
+            Frame = image.Clone();
+        }
+
+        public ImageSource(VideoCapture capture)
+        {
+            stream = capture;
+        }
+
         //Gets either the single frame or the specified one from the stream
         public Image<Bgr, byte> this[int index]
         {

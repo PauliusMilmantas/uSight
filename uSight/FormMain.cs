@@ -2,6 +2,7 @@
 using Emgu.CV.CvEnum;
 using Emgu.CV.Structure;
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Text.RegularExpressions;
@@ -133,7 +134,10 @@ namespace uSight
             UMat uImg = img.GetUMat(AccessType.ReadWrite);
 
             UtilFunctions f = new UtilFunctions(this);
-            string foundLP = f.ProcessImage(uImg);      // Rasti numeriai
+            //string foundLP = f.ProcessImage(uImg);      // Rasti numeriai
+
+            List<String> strings = f.ProcessImage(uImg);
+            string foundLP = new FormData(strings).GetLicensePlate();
 
             textBox1.Text = foundLP;
             textBox1.ForeColor = SystemColors.WindowText;
@@ -163,5 +167,21 @@ namespace uSight
 
         private void label1_Click(object sender, EventArgs e)
         {}
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            Form stats = new StatisticsForm(currentImageSource);
+            stats.Show();
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            (new DBConnect()).updateWantedListJSON();
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            (new DBConnect()).updateWantedListDB();
+        }
     }
 }

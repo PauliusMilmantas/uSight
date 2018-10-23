@@ -68,8 +68,9 @@ namespace uSight
                 var thisSourcePlatesQuery =
                     from img in currentImageSource
                     from number in f.ProcessImage(UtilFunctions.GetMatFromImage(img.Bitmap).GetUMat(AccessType.ReadWrite))
-                    join wanted in (wantedJson as JObject)["plates"] on number equals wanted["p_number"].ToObject<string>() into g
-                    select new { number, date, stolen = g.Any()};
+                                                                                            //p_number -> license_place del naujo formato
+                    join wanted in (wantedJson as JObject)["plates"] on number equals wanted["license_plate"].ToObject<string>() into g
+                    select new { number, date, stolen = g.Any() };
                 var thisSourcePlatesList = thisSourcePlatesQuery.Select(o => { JObject plate = new JObject(); plate["time"] = o.date; plate["number"] = o.number; plate["stolen"] = o.stolen; return plate; }).ToList();
                 foreach (JObject plate in thisSourcePlatesList)
                 {
@@ -83,7 +84,7 @@ namespace uSight
                             break;
                         }
                     }
-                    if(!found)
+                    if (!found)
                     {
                         statsJson.plates.Add(plate);
                     }
@@ -163,7 +164,7 @@ namespace uSight
                 from plate in (statsJson as JObject)["plates"]
                 group plate by plate["time"].ToObject<DateTime>() into p
                 select new { time = p.Key, count = p.Count() };
-            foreach(var x in allTimeAllQuery)
+            foreach (var x in allTimeAllQuery)
             {
                 allTimeAll.Points.AddXY(x.time, x.count);
             }
@@ -242,6 +243,11 @@ namespace uSight
             thisSourceStolenChart.Invalidate();
             allBreakdownChart.Invalidate();
             thisSourceBreakdownChart.Invalidate();
+        }
+
+        private void StatisticsForm_Load_1(object sender, EventArgs e)
+        {
+
         }
     }
 }

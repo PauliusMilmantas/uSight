@@ -1,76 +1,67 @@
 {
   "plates": [
     {
-      "id": "1",
       "owner": "Jonas",
+      "license_plate": "ABC123",
+      "engine_number": "VW12345U123456P",
       "vin": "1N6AD0EV7BC423878",
-      "plate_number": "ABC123"
+      "id": 1
     },
     {
-      "id": "2",
       "owner": "Paulius Vaicekauskas",
+      "license_plate": "ASD 123",
+      "engine_number": "VW12345U123456P",
       "vin": "1N6AD0EV7BC423878",
-      "plate_number": "ASD 123"
+      "id": 2
     },
     {
-      "id": "3",
       "owner": "Jonas",
+      "license_plate": "ABC123",
+      "engine_number": "VW12345U123456P",
       "vin": "1N6AD0EV7BC423878",
-      "plate_number": "ABC123"
+      "id": 3
     },
     {
-      "id": "4",
       "owner": "Jonas",
+      "license_plate": "ABC123",
+      "engine_number": "VW12345U123456P",
       "vin": "1N6AD0EV7BC423878",
-      "plate_number": "ABC123"
+      "id": 4
     },
     {
-      "id": "5",
       "owner": "Jonas",
+      "license_plate": "ABC123",
+      "engine_number": "VW12345U123456P",
       "vin": "1N6AD0EV7BC423878",
-      "plate_number": "ABC123"
+      "id": 5
     },
     {
-      "id": "6",
       "owner": "Jonas",
+      "license_plate": "ABC123",
+      "engine_number": "VW12345U123456P",
       "vin": "1N6AD0EV7BC423878",
-      "plate_number": "ABC123"
+      "id": 6
     },
     {
-      "id": "7",
       "owner": "Jonas",
+      "license_plate": "ABC123",
+      "engine_number": "VW12345U123456P",
       "vin": "1N6AD0EV7BC423878",
-      "plate_number": "ABC123"
+      "id": 7
     },
     {
-      "id": "8",
       "owner": "Jonas",
+      "license_plate": "ABC123",
+      "engine_number": "VW12345U123456P",
       "vin": "1N6AD0EV7BC423878",
-      "plate_number": "ABC123"
+      "id": 8
     },
     {
-      "id": "9",
-      "owner": "Jonas",
-      "vin": "1N6AD0EV7BC423878",
-      "plate_number": "ABC123"
-    },
-    {
-      "id": "10",
-      "owner": "sdasd",
-      "vin": "asd",
-      "plate_number": "asasdasd"
-    },
-    {
-      "id": "11",
-      "owner": "dasdasdasd",
-      "vin": "asdasd",
-      "plate_number": "asdasd"
-    },
-    {
-      "id": "12",
-      "owner": "ssss",
-      "vin": "sss",
-      "plate_number": "sssss"
+      "owner": "",
+      "license_plate": "HVH222",
+      "engine_number": "",
+      "vin": "",
+      "id": 9
     }
   ]
 }

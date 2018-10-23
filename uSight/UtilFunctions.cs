@@ -12,7 +12,7 @@ namespace uSight
     class UtilFunctions
     {
         private LicenesePlateDetector _licensePlateDetector;
-        private FormMain form; 
+        private FormMain form;
 
         public UtilFunctions(FormMain form)
         {
@@ -64,7 +64,7 @@ namespace uSight
             return cvImage.Mat;
         }
 
-        public string ProcessImage(IInputOutputArray image)
+        public List<string> ProcessImage(IInputOutputArray image)
         {
             List<IInputOutputArray> licensePlateImagesList = new List<IInputOutputArray>();
             List<IInputOutputArray> filteredLicensePlateImagesList = new List<IInputOutputArray>();
@@ -77,9 +77,7 @@ namespace uSight
                filteredLicensePlateImagesList,
                licenseBoxList);
 
-            FormData fd = new FormData(words);
-            //fd.Show();
-            return fd.GetLicensePlate();
+            return words;
         }
     }
 }

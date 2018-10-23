@@ -81,31 +81,31 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ControlPanel.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ControlPanel.Designer.cs">
-      <DependentUpon>ControlPanel.cs</DependentUpon>
-    </Compile>
     <Compile Include="DataExtraction.cs" />
-    <Compile Include="DataForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="DataForm.Designer.cs">
-      <DependentUpon>DataForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="DBConnect.cs" />
-    <Compile Include="Form1.cs">
+    <Compile Include="FormAddRecord.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="FormAddRecord.Designer.cs">
+      <DependentUpon>FormAddRecord.cs</DependentUpon>
     </Compile>
-    <Compile Include="AddRecord.cs">
+    <Compile Include="FormData.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AddRecord.Designer.cs">
-      <DependentUpon>AddRecord.cs</DependentUpon>
+    <Compile Include="FormData.Designer.cs">
+      <DependentUpon>FormData.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormMain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormMain.Designer.cs">
+      <DependentUpon>FormMain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormWantedList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormWantedList.Designer.cs">
+      <DependentUpon>FormWantedList.cs</DependentUpon>
     </Compile>
     <Compile Include="ImageSource.cs" />
     <Compile Include="LicensePlateDetector.cs" />
@@ -119,17 +119,17 @@
       <DependentUpon>StatisticsForm.cs</DependentUpon>
     </Compile>
     <Compile Include="UtilFunctions.cs" />
-    <EmbeddedResource Include="ControlPanel.resx">
-      <DependentUpon>ControlPanel.cs</DependentUpon>
+    <EmbeddedResource Include="FormAddRecord.resx">
+      <DependentUpon>FormAddRecord.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="DataForm.resx">
-      <DependentUpon>DataForm.cs</DependentUpon>
+    <EmbeddedResource Include="FormData.resx">
+      <DependentUpon>FormData.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="FormMain.resx">
+      <DependentUpon>FormMain.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="AddRecord.resx">
-      <DependentUpon>AddRecord.cs</DependentUpon>
+    <EmbeddedResource Include="FormWantedList.resx">
+      <DependentUpon>FormWantedList.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
