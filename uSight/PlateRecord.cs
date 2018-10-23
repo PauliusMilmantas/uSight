@@ -9,27 +9,27 @@ namespace uSight
     class PlateRecord
     {
         string owner;
-        string p_number;
-        string e_number;
-        string b_number;
+        string license_plate;
+        string engine_number;
+        string vin;
         string id;
 
         public PlateRecord()
         {
         }
 
-        public PlateRecord(string owner, string id, string p_number, string e_number, string b_number)  //Ieskomu masinu duomenys
+        public PlateRecord(string owner, string id, string license_plate, string engine_number, string vin)  //Ieskomu masinu duomenys
         {
             this.owner = owner;
             this.id = id;
-            this.p_number = p_number;
-            this.e_number = e_number;
-            this.b_number = b_number;
+            this.license_plate = license_plate;
+            this.engine_number = engine_number;
+            this.vin = vin;
         }
 
         public string Owner { get => owner; set => owner = value; }
-        public string P_number { get => p_number; set => p_number = value; }
-        public string E_number { get => e_number; set => e_number = value; }
-        public string B_number { get => b_number; set => b_number = value; }
+        public string License_Plate { get => license_plate; set => license_plate = value; }
+        public string Engine_number { get => engine_number; set => engine_number = value; }
+        public string Vin { get => vin; set => vin = value; }
     }
 }

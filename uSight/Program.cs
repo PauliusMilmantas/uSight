@@ -16,7 +16,10 @@ namespace uSight
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+
+            FormMain FM = new FormMain();
+            FM.StartPosition = FormStartPosition.CenterScreen;
+            Application.Run(FM);
         }
     }
 }
