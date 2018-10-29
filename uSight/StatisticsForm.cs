@@ -1,4 +1,6 @@
-﻿using Emgu.CV.CvEnum;
+﻿using Emgu.CV;
+using Emgu.CV.CvEnum;
+using Emgu.CV.Structure;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
@@ -50,6 +52,49 @@ namespace uSight
             System.IO.File.WriteAllText("stats.json", json);
         }
 
+        public static List<JObject> GetPlatesList(ImageSource imgSource, DateTime date, JObject wantedJson, Func<Image<Bgr, byte>, List<string>> ProcessImage)
+        {
+            var thisSourcePlatesQuery =
+                   from img in imgSource
+                   from number in ProcessImage(img)
+                       //p_number -> license_place del naujo formato
+                   join wanted in (wantedJson as JObject)["plates"] on number equals wanted["license_plate"].ToObject<string>() into g
+                   select new { number, date, stolen = g.Any() };
+            var thisSourcePlatesList = thisSourcePlatesQuery.Select(o => { JObject plate = new JObject(); plate["time"] = o.date; plate["number"] = o.number; plate["stolen"] = o.stolen; return plate; }).ToList();
+            return thisSourcePlatesList;
+        }
+
+        public static List<Tuple<DateTime, int>> GetAllList(JObject json)
+        {
+            var allQuery =
+                from plate in (json as JObject)["plates"]
+                group plate by plate["time"].ToObject<DateTime>() into p
+                orderby p.Key
+                select new Tuple<DateTime, int>(p.Key, p.Count());
+            return allQuery.ToList();
+        }
+
+        public static List<Tuple<DateTime, int>> GetStolenList(JObject json)
+        {
+            var stolenQuery =
+                from plate in (json as JObject)["plates"]
+                where plate["stolen"].ToObject<bool>()
+                group plate by plate["time"].ToObject<DateTime>() into p
+                orderby p.Key
+                select new Tuple<DateTime, int>(p.Key, p.Count());
+            return stolenQuery.ToList();
+        }
+
+        public static List<Tuple<string, int>> GetBreakdownList(JObject json)
+        {
+            var breakdownQuery =
+                from plate in (json as JObject)["plates"]
+                group plate by plate["number"].ToObject<string>() into p
+                orderby p.Key
+                select new Tuple<string, int>(p.Key, p.Count());
+            return breakdownQuery.ToList();
+        }
+
         private void StatisticsForm_Load(object sender, EventArgs e)
         {
             UtilFunctions f = new UtilFunctions(null);
@@ -65,12 +110,7 @@ namespace uSight
                 thisJson.Add("plates", new JArray());
                 DateTime date = currentImageSource.Date;
 
-                var thisSourcePlatesQuery =
-                    from img in currentImageSource
-                    from number in f.ProcessImage(UtilFunctions.GetMatFromImage(img.Bitmap).GetUMat(AccessType.ReadWrite))
-                    join wanted in (wantedJson as JObject)["plates"] on number equals wanted["p_number"].ToObject<string>() into g
-                    select new { number, date, stolen = g.Any()};
-                var thisSourcePlatesList = thisSourcePlatesQuery.Select(o => { JObject plate = new JObject(); plate["time"] = o.date; plate["number"] = o.number; plate["stolen"] = o.stolen; return plate; }).ToList();
+                var thisSourcePlatesList = GetPlatesList(currentImageSource, date, wantedJson as JObject, img => f.ProcessImage(UtilFunctions.GetMatFromImage(img.Bitmap).GetUMat(AccessType.ReadWrite)));
                 foreach (JObject plate in thisSourcePlatesList)
                 {
                     thisJson.plates.Add(plate);
@@ -83,7 +123,7 @@ namespace uSight
                             break;
                         }
                     }
-                    if(!found)
+                    if (!found)
                     {
                         statsJson.plates.Add(plate);
                     }
@@ -159,62 +199,42 @@ namespace uSight
             allBreakdownChart.Series.Add(allTimeBreakdown);
             thisSourceBreakdownChart.Series.Add(thisTimeBreakdown);
 
-            var allTimeAllQuery =
-                from plate in (statsJson as JObject)["plates"]
-                group plate by plate["time"].ToObject<DateTime>() into p
-                select new { time = p.Key, count = p.Count() };
-            foreach(var x in allTimeAllQuery)
+            var allTimeAllQuery = GetAllList(statsJson as JObject);
+            foreach (var x in allTimeAllQuery)
             {
-                allTimeAll.Points.AddXY(x.time, x.count);
+                allTimeAll.Points.AddXY(x.Item1, x.Item2);
             }
 
-            var allTimeStolenQuery =
-                from plate in (statsJson as JObject)["plates"]
-                where plate["stolen"].ToObject<bool>()
-                group plate by plate["time"].ToObject<DateTime>() into p
-                select new { time = p.Key, count = p.Count() };
+            var allTimeStolenQuery = GetStolenList(statsJson as JObject);
             foreach (var x in allTimeStolenQuery)
             {
-                allTimeStolen.Points.AddXY(x.time, x.count);
+                allTimeStolen.Points.AddXY(x.Item1, x.Item2);
             }
 
-            var allTimeBreakdownQuery =
-                from plate in (statsJson as JObject)["plates"]
-                group plate by plate["number"].ToObject<string>() into p
-                select new { number = p.Key, count = p.Count() };
+            var allTimeBreakdownQuery = GetBreakdownList(statsJson as JObject);
             foreach (var x in allTimeBreakdownQuery)
             {
-                allTimeBreakdown.Points.AddXY(x.number, x.count);
+                allTimeBreakdown.Points.AddXY(x.Item1, x.Item2);
             }
 
             if (thisJson != null)
             {
-                var thisTimeAllQuery =
-                    from plate in (thisJson as JObject)["plates"]
-                    group plate by plate["time"].ToObject<DateTime>() into p
-                    select new { time = p.Key, count = p.Count() };
+                var thisTimeAllQuery = GetAllList(thisJson as JObject);
                 foreach (var x in thisTimeAllQuery)
                 {
-                    thisTimeAll.Points.AddXY(x.time, x.count);
+                    thisTimeAll.Points.AddXY(x.Item1, x.Item2);
                 }
 
-                var thisTimeStolenQuery =
-                    from plate in (thisJson as JObject)["plates"]
-                    where plate["stolen"].ToObject<bool>()
-                    group plate by plate["time"].ToObject<DateTime>() into p
-                    select new { time = p.Key, count = p.Count() };
+                var thisTimeStolenQuery = GetStolenList(thisJson as JObject);
                 foreach (var x in thisTimeStolenQuery)
                 {
-                    thisTimeStolen.Points.AddXY(x.time, x.count);
+                    thisTimeStolen.Points.AddXY(x.Item1, x.Item2);
                 }
 
-                var thisTimeBreakdownQuery =
-                    from plate in (thisJson as JObject)["plates"]
-                    group plate by plate["number"].ToObject<string>() into p
-                    select new { number = p.Key, count = p.Count() };
+                var thisTimeBreakdownQuery = GetBreakdownList(thisJson as JObject);
                 foreach (var x in thisTimeBreakdownQuery)
                 {
-                    thisTimeBreakdown.Points.AddXY(x.number, x.count);
+                   thisTimeBreakdown.Points.AddXY(x.Item1, x.Item2);
                 }
             }
 
@@ -242,6 +262,11 @@ namespace uSight
             thisSourceStolenChart.Invalidate();
             allBreakdownChart.Invalidate();
             thisSourceBreakdownChart.Invalidate();
+        }
+
+        private void StatisticsForm_Load_1(object sender, EventArgs e)
+        {
+
         }
     }
 }

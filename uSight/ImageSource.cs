@@ -17,7 +17,7 @@ namespace uSight
         VideoCapture stream;
         public DateTime Date { get; set; }
 
-        public int Count
+        public virtual int Count
         {
             get
             {
@@ -26,8 +26,23 @@ namespace uSight
             set { }
         }
 
+        protected ImageSource()
+        {
+
+        }
+
+        public ImageSource(Image<Bgr, byte> image)
+        {
+            Frame = image.Clone();
+        }
+
+        public ImageSource(VideoCapture capture)
+        {
+            stream = capture;
+        }
+
         //Gets either the single frame or the specified one from the stream
-        public Image<Bgr, byte> this[int index]
+        public virtual Image<Bgr, byte> this[int index]
         {
             get
             {

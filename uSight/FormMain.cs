@@ -117,11 +117,11 @@ namespace uSight
             {
                 if (Path.GetExtension(openFileDialog1.FileName) == ".jpg" || Path.GetExtension(openFileDialog1.FileName) == ".png")
                 {
-                    currentImageSource = new ImageSource(new Image<Bgr, byte>(openFileDialog1.FileName));
+                    currentImageSource = new ImageSource(new Image<Bgr, byte>(openFileDialog1.FileName), File.GetCreationTime(openFileDialog1.FileName));
                 }
                 else if (Path.GetExtension(openFileDialog1.FileName) == ".mp4")
                 {
-                    currentImageSource = new ImageSource(new VideoCapture(openFileDialog1.FileName));
+                    currentImageSource = new ImageSource(new VideoCapture(openFileDialog1.FileName), File.GetCreationTime(openFileDialog1.FileName));
                 }
 
                 var image = currentImageSource[currentFrame].Bitmap;
