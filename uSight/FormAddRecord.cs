@@ -6,6 +6,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -18,32 +19,35 @@ namespace uSight
         public FormAddRecord(FormWantedList cp)
         {
             this.cp = cp;
-
+            InitializeComponent();
+        }
+        public FormAddRecord()
+        {
             InitializeComponent();
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            string license_plate = textBox1.Text;
-            string owner = textBox3.Text;
-            string engine_number = textBox2.Text;
-            string vin = textBox4.Text;
+            SaveRecord(textBox1.Text, textBox2.Text, textBox3.Text, textBox4.Text);
+            this.Close();
+            cp.refreshView();
+        }
+        public void SaveRecord(string licensePlate, string engineNumber, string owner, string vin)
+        { 
+            licensePlate = Regex.Replace(licensePlate, @"\s+", "");
 
             DataExtraction de = new DataExtraction();
             dynamic json = de.GetJsonFromDisk();
 
             JObject record = new JObject();
+            record["license_plate"] = licensePlate;
+            record["engine_number"] = engineNumber;
             record["owner"] = owner;
-            record["license_plate"] = license_plate;
-            record["engine_number"] = engine_number;
             record["vin"] = vin;
             record["id"] = json.plates.Count + 1;
 
             json.plates.Add(record);
             de.writeToJson(json.ToString());
-
-            this.Close();
-            cp.refreshView();
         }
 
         private void AddRecord_Load(object sender, EventArgs e)

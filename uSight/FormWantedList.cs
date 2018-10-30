@@ -22,7 +22,11 @@ namespace uSight
         {
             InitializeComponent();
             refreshView();
-          }
+        }
+        public FormWantedList(string x)
+        {
+            InitializeComponent();
+        }
 
         public void refreshView() {
 
@@ -108,6 +112,26 @@ namespace uSight
                     };
                 }
             }
+        }
+
+        public void RemoveRecord(int number)       
+        {
+            number--;               // recordai prasideda nuo 0
+            DataExtraction de = new DataExtraction();
+            obj = de.GetJsonFromDisk();
+
+            obj.plates[Int32.Parse(number.ToString())].Remove();
+            de.writeToJson(obj.ToString());
+        }
+        public int GetRecordCount ()
+        {
+            DataExtraction de = new DataExtraction();
+            obj = de.GetJsonFromDisk();
+
+            int count = 0;
+            foreach (var json in obj.plates) count++;
+
+            return count;
         }
 
         private void ControlPanel_Load(object sender, EventArgs e)

@@ -12,16 +12,21 @@ namespace UnitTests
         public void ImageScan()
         {
             Image img = Image.FromFile("..\\..\\..\\Test Photos\\Unit Tests\\test1.jpg");
-            string plate = new FormMain().ScanImage(img);
-            Console.WriteLine(plate);
+            string foundPlate = new FormMain().ScanImage(img);
+            Assert.AreEqual("HVH222", foundPlate);
         }
 
         [TestMethod]
-        public void WantedListSearch()
+        public void AddSearchRemove()
         {
-            string plate = "HVH 222";
+            string plate = "GGG123";
+            new FormAddRecord().SaveRecord(plate, "", "", "");
+
             string result = new FormMain(plate).SearchInWantedList(plate);
-            Console.WriteLine(result);
+            Assert.AreEqual("Vehicle " + plate + " is wanted", result);
+
+            FormWantedList fwl = new FormWantedList("");
+            fwl.RemoveRecord(fwl.GetRecordCount());
         }
 
     }

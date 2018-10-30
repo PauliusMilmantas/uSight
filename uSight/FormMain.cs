@@ -69,8 +69,7 @@ namespace uSight
 
         public string SearchInWantedList (string licensePlate)
         {
-            string original = licensePlate;
-            
+            string original = Regex.Replace(licensePlate, @"\s+", " ");
             licensePlate = Regex.Replace(licensePlate, @"\s+", "");
 
             //JSON is disko
@@ -102,7 +101,7 @@ namespace uSight
             }
             else
             {
-                label1.Text = "Vehicle " + original + " not wanted";
+                label1.Text = "Vehicle " + original + " is not wanted";
                 label1.ForeColor = System.Drawing.Color.Green;
             }
 

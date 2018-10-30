@@ -34,9 +34,7 @@ namespace uSight
         {
             string pattern = "[A-Z]{3} *[0-9]{3}";
             Match match = Regex.Match(input, pattern);
-
-            //Console.WriteLine("|" + match.ToString() + "|");
-            return match.ToString();
+            return Regex.Replace(match.ToString(), @"\s+", "");
         }
 
         public string GetLicensePlate()
