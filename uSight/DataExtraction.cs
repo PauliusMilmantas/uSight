@@ -8,14 +8,14 @@ namespace uSight
     {
         public dynamic GetJsonFromDisk() {
 
-            string data = File.ReadAllText("data.json");
+            string data = File.ReadAllText("..\\..\\..\\uSight\\bin\\Debug\\data.json");
             dynamic tmpObj = JObject.Parse(data);
 
             return tmpObj;
         }
 
         public void writeToJson(string json) {
-            System.IO.File.WriteAllText("data.json", json);
+            System.IO.File.WriteAllText("..\\..\\..\\uSight\\bin\\Debug\\data.json", json);
         }
     }
 }

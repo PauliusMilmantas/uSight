@@ -28,6 +28,11 @@ namespace uSight
             this.textBox1.Leave += new System.EventHandler(this.textBox1_Leave);
             this.textBox1.Enter += new System.EventHandler(this.textBox1_Enter);
         }
+        public FormMain(string text)                           // Konstruktorius
+        {
+            InitializeComponent();
+            textBox1.Text = text;
+        }
 
         private void textBox1_Leave(object sender, EventArgs e)
         {
@@ -62,13 +67,11 @@ namespace uSight
             SearchInWantedList(plate_number);
         }
 
-        private void SearchInWantedList (string licensePlate)
+        public string SearchInWantedList (string licensePlate)
         {
             string original = licensePlate;
             
             licensePlate = Regex.Replace(licensePlate, @"\s+", "");
-            
-            
 
             //JSON is disko
             DataExtraction de = new DataExtraction();
@@ -77,7 +80,6 @@ namespace uSight
             bool found = false;
             foreach (var obj in json.plates)
             {
-
                 if (obj.license_plate == licensePlate)
                 {
                     found = true;
@@ -103,6 +105,8 @@ namespace uSight
                 label1.Text = "Vehicle " + original + " not wanted";
                 label1.ForeColor = System.Drawing.Color.Green;
             }
+
+            return label1.Text;
         }
 
         private void FormMain_Load(object sender, EventArgs e)
@@ -113,6 +117,7 @@ namespace uSight
             OpenFileDialog openFileDialog1 = new OpenFileDialog();
             openFileDialog1.Filter = "Media files|*.png;*.jpg;*.mp4";
             openFileDialog1.Title = "Select media file";
+            string foundLP = "";
 
             if (openFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
@@ -126,22 +131,26 @@ namespace uSight
                 }
 
                 var image = currentImageSource[currentFrame].Bitmap;
-                pictureBox1.Image = ScaleImage(image, 1255, 745);               // Sumazina foto dydi pixeliais kad tilptu i forma
+                foundLP = ScanImage(image);
+
                 //frameSelector.Maximum = currentImageSource.Count - 1;
             }
-
-            var img = UtilFunctions.GetMatFromImage(pictureBox1.Image);
-            UMat uImg = img.GetUMat(AccessType.ReadWrite);
-
-            UtilFunctions f = new UtilFunctions(this);
-            //string foundLP = f.ProcessImage(uImg);      // Rasti numeriai
-
-            List<String> strings = f.ProcessImage(uImg);
-            string foundLP = new FormData(strings).GetLicensePlate();
 
             textBox1.Text = foundLP;
             textBox1.ForeColor = SystemColors.WindowText;
             SearchInWantedList(foundLP);
+        }
+
+        public string ScanImage (Image image)
+        {
+            pictureBox1.Image = ScaleImage(image, 1255, 745);               // Sumazina foto dydi pixeliais kad tilptu i forma
+            var img = UtilFunctions.GetMatFromImage(pictureBox1.Image);
+            UMat uImg = img.GetUMat(AccessType.ReadWrite);
+
+            UtilFunctions f = new UtilFunctions(this);
+            List<String> strings = f.ProcessImage(uImg);
+
+            return new FormData(strings).GetLicensePlate();
         }
 
         private Image ScaleImage(Image image, int maxWidth, int maxHeight)              

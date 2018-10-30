@@ -16,7 +16,8 @@ namespace uSight
 
         public UtilFunctions(FormMain form)
         {
-            _licensePlateDetector = new LicenesePlateDetector("");
+            _licensePlateDetector = 
+                new LicenesePlateDetector("..\\..\\..\\..\\uSight\\uSight\\bin\\Debug\\tessdata");
 
             this.form = form;
         }

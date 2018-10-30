@@ -19,7 +19,7 @@ namespace uSight
 
         public LicenesePlateDetector(String dataPath)
         {
-            ocr = new Tesseract("", "eng", OcrEngineMode.TesseractLstmCombined);
+            ocr = new Tesseract(dataPath, "eng", OcrEngineMode.TesseractLstmCombined);
 
             ocr.SetVariable("tessedit_char_whitelist", "ABCDEFGHIJKLMNOPQRSTUVWXYZ-1234567890");
         }
