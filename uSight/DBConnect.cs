@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace uSight
 {
-    class DBConnect
+    public class DBConnect
     {
         struct vehicle
         {
@@ -62,7 +62,7 @@ namespace uSight
         }
 
         //Close connection
-        private bool CloseConnection()
+        public bool CloseConnection()
         {
             try
             {

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace uSight
 {
-    class PlateRecord
+    public class PlateRecord
     {
         string owner;
         string license_plate;
@@ -31,5 +32,26 @@ namespace uSight
         public string License_Plate { get => license_plate; set => license_plate = value; }
         public string Engine_number { get => engine_number; set => engine_number = value; }
         public string Vin { get => vin; set => vin = value; }
+
+        public JObject PlateRecordJSON() {
+            JObject record = new JObject();
+            record["license_plate"] = license_plate;
+            record["engine_number"] = engine_number;
+            record["owner"] = owner;
+            record["vin"] = vin;
+            record["id"] = id;
+
+            return record;
+        }
+
+        public void writeToJson() {
+            DataExtraction de = new DataExtraction();
+
+            dynamic json = de.GetJsonFromDisk();
+
+            json.plates.Add(PlateRecordJSON());
+
+            de.writeToJson(json.toString());
+        }
     }
 }
