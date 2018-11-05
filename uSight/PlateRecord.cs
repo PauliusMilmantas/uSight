@@ -44,7 +44,7 @@ namespace uSight
             DataExtraction de = new DataExtraction();
             dynamic json = de.GetJsonFromDisk();
             json.plates.Add(PlateRecordJSON());
-            de.writeToJson(json.toString());
+            de.writeToJson(json.ToString());
         }
 
         public string Owner { get => owner; set => owner = value; }

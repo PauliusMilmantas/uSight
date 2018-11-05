@@ -62,6 +62,13 @@
       "engine_number": "",
       "vin": "",
       "id": 9
+    },
+    {
+      "license_plate": "TES123",
+      "engine_number": "asdg",
+      "owner": "own",
+      "vin": "sdfgrth",
+      "id": "1"
     }
   ]
 }
