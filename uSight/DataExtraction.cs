@@ -4,7 +4,7 @@ using Newtonsoft.Json.Linq;
 
 namespace uSight
 {
-    class DataExtraction
+    public class DataExtraction
     {
         public dynamic GetJsonFromDisk() {
 
