@@ -7,9 +7,11 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 
+    <link href="@Href("~/Content/styles.css")" rel="stylesheet" type="text/css" />
+    @RenderSection("styles", false)
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar navbar-default navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -32,8 +34,8 @@
     </div>
     <div class="container body-content">
         @RenderBody()
-        <hr />
-        <footer>
+        <footer class="fixed_footer">
+            <hr />
             <p>&copy; @DateTime.Now.Year - uSight</p>
         </footer>
     </div>
