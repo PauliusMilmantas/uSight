@@ -21,6 +21,9 @@ namespace uSight_Web
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js"));
+            bundles.Add(new ScriptBundle("~/bundles/charts").Include(
+                      "~/Scripts/chart.bundle.min.js").Include(
+                      "~/Scripts/chart-renderer.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap-flatly.css",
