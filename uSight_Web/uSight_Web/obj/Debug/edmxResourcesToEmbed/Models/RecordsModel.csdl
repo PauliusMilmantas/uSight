@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="RecordsModel1" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Record">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="license_plate" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="times_searched" Type="Int32" />
+    <Property Name="lastest_time" Type="Time" Precision="7" />
+    <Property Name="searched_by" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+  </EntityType>
+  <EntityContainer Name="RecordsEntities1" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Records" EntityType="Self.Record" />
+  </EntityContainer>
+</Schema>

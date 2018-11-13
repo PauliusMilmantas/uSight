@@ -11,7 +11,9 @@ namespace uSight_Web.Controllers
         // GET: Data
         public ActionResult Index()
         {
-            return View();
+            var entities = new Models.RecordsEntities1();
+
+            return View(entities.Records.ToList());
         }
 
         // GET: Data
