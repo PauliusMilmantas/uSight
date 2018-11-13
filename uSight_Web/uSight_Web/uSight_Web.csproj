@@ -405,9 +405,7 @@
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Account\Records.cshtml" />
-    <Content Include="Views\Data\Records.cshtml" />
     <Content Include="Views\Data\AddRecord.cshtml" />
-    <Content Include="Views\Data\ViewRecords.cshtml" />
     <Content Include="Views\Data\DeleteRecord.cshtml" />
     <Content Include="Views\Data\Index.cshtml" />
   </ItemGroup>

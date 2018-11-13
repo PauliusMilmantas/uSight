@@ -16,24 +16,15 @@ namespace uSight_Web.Controllers
             return View(entities.Records.ToList());
         }
 
-        // GET: Data
-        public ActionResult Records()
-        {
-            return View();
-        }
-
         public ActionResult AddRecord()
-        {
-            return View();
-        }
-
-        public ActionResult ViewRecords()
         {
             return View();
         }
 
         public ActionResult DeleteRecord()
         {
+            var entities = new Models.RecordsEntities1();
+
             return View();
         }
     }
