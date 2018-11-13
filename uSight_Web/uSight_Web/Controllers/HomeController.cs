@@ -15,7 +15,7 @@ namespace uSight_Web.Controllers
                 try
                 {
                     //string path = Path.Combine(Server.MapPath("~/Content/Uploaded_files"), Path.GetFileName(file.FileName));
-                    string path = Path.Combine(Server.MapPath("~/Content/Uploaded_files"), "1.jpg");
+                    string path = Path.Combine(Server.MapPath("~/Content/Uploaded_files"), "upload1.jpg");
                     file.SaveAs(path);
                     ViewBag.Message = "File uploaded successfully";
                 }
