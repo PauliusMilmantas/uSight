@@ -209,6 +209,7 @@
     <Compile Include="Entities\ChartData.cs" />
     <Compile Include="Entities\ImageSource.cs" />
     <Compile Include="Entities\LicensePlateDetector.cs" />
+    <Compile Include="Entities\PoliceAPI.cs" />
     <Compile Include="Entities\UtilFunctions.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
