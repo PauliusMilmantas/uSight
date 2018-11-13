@@ -412,7 +412,7 @@
     <Content Include="Views\Shared\_ChartRadar.cshtml" />
     <Content Include="Views\Shared\_ChartBar.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
     <Content Include="Views\Account\Records.cshtml" />
     <Content Include="Views\Data\AddRecord.cshtml" />
     <Content Include="Views\Data\DeleteRecord.cshtml" />
