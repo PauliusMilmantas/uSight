@@ -1,0 +1,51 @@
+﻿@model IEnumerable<uSight_Web.Models.Record>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "AddRecord")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.license_plate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.times_searched)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.lastest_time)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.searched_by)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.license_plate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.times_searched)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.lastest_time)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.searched_by)
+        </td>
+        <td>
+            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+            @Html.ActionLink("Delete", "DeleteRecord", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>
