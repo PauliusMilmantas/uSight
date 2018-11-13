@@ -96,7 +96,7 @@
 
 .inputfile-1 + label {
     color: #f1e5e6;
-    background-color: #18bc9c;
+    background-color: #d3394c;
 }
 
 .inputfile-1:focus + label,
@@ -109,7 +109,7 @@
 /* style 2 */
 
 .inputfile-2 + label {
-    color: #18bc9c;
+    color: #d3394c;
     border: 2px solid currentColor;
 }
 
@@ -123,7 +123,7 @@
 /* style 3 */
 
 .inputfile-3 + label {
-    color: #18bc9c;
+    color: #d3394c;
 }
 
 .inputfile-3:focus + label,
@@ -136,7 +136,7 @@
 /* style 4 */
 
 .inputfile-4 + label {
-    color: #18bc9c;
+    color: #d3394c;
 }
 
 .inputfile-4:focus + label,
@@ -149,7 +149,7 @@
     width: 100px;
     height: 100px;
     border-radius: 50%;
-    background-color: #18bc9c;
+    background-color: #d3394c;
     display: block;
     padding: 20px;
     margin: 0 auto 10px;
@@ -171,19 +171,19 @@
 /* style 5 */
 
 .inputfile-5 + label {
-    color: #18bc9c;
+    color: #d3394c;
 }
 
 .inputfile-5:focus + label,
 .inputfile-5.has-focus + label,
 .inputfile-5 + label:hover {
-    color: #18bc9c;
+    color: #722040;
 }
 
 .inputfile-5 + label figure {
     width: 100px;
     height: 135px;
-    background-color: #18bc9c;
+    background-color: #d3394c;
     display: block;
     position: relative;
     padding: 30px;
@@ -193,7 +193,7 @@
 .inputfile-5:focus + label figure,
 .inputfile-5.has-focus + label figure,
 .inputfile-5 + label:hover figure {
-    background-color: #18bc9c;
+    background-color: #722040;
 }
 
 .inputfile-5 + label figure::before,
@@ -212,14 +212,14 @@
 }
 
 .inputfile-5 + label figure::after {
-    border-bottom: 20px solid #18bc9c;
+    border-bottom: 20px solid #722040;
     border-right: 20px solid transparent;
 }
 
 .inputfile-5:focus + label figure::after,
 .inputfile-5.has-focus + label figure::after,
 .inputfile-5 + label:hover figure::after {
-    border-bottom-color: #18bc9c;
+    border-bottom-color: #d3394c;
 }
 
 .inputfile-5 + label svg {
@@ -232,11 +232,11 @@
 /* style 6 */
 
 .inputfile-6 + label {
-    color: #18bc9c;
+    color: #d3394c;
 }
 
 .inputfile-6 + label {
-    border: 1px solid #18bc9c;
+    border: 1px solid #d3394c;
     background-color: #f1e5e6;
     padding: 0;
 }
@@ -244,7 +244,7 @@
 .inputfile-6:focus + label,
 .inputfile-6.has-focus + label,
 .inputfile-6 + label:hover {
-    border-color: #18bc9c;
+    border-color: #722040;
 }
 
 .inputfile-6 + label span,
@@ -266,14 +266,14 @@
 .inputfile-6 + label strong {
     height: 100%;
     color: #f1e5e6;
-    background-color: #18bc9c;
+    background-color: #d3394c;
     display: inline-block;
 }
 
 .inputfile-6:focus + label strong,
 .inputfile-6.has-focus + label strong,
 .inputfile-6 + label:hover strong {
-    background-color: #18bc9c;
+    background-color: #722040;
 }
 
 @media screen and (max-width: 50em) {
