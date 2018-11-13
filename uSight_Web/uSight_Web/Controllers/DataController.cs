@@ -63,21 +63,26 @@ namespace uSight_Web.Controllers
             return RedirectToAction("Index");            
         }
 
-        /*
-        [HttpPost]
-        public ActionResult DeleteRecord()
-        {
-            int id = int.Parse(this.RouteData.Values["id"].ToString());
+        public ActionResult Details() {
+            int id;
+
+            try
+            {
+                id = int.Parse(this.RouteData.Values["id"].ToString());
+            }
+            catch (Exception)
+            {
+                id = 0;
+
+                return RedirectToAction("Index");
+            }
 
             entities = new Models.RecordsEntities1();
 
             List<Models.Record> rec = entities.Records.ToList();
             Models.Record rrr = rec.Find(x => x.Id == id);
-
-            entities.Records.Remove(rrr);
-            entities.SaveChanges();
-
-            return RedirectToAction("Index");
-        }*/
+            
+            return View(rrr);
+        }
     }
 }

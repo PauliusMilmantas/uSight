@@ -408,6 +408,7 @@
     <Content Include="Views\Data\AddRecord.cshtml" />
     <Content Include="Views\Data\DeleteRecord.cshtml" />
     <Content Include="Views\Data\Index.cshtml" />
+    <Content Include="Views\Data\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Record\" />
