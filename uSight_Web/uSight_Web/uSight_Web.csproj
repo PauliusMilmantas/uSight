@@ -210,6 +210,7 @@
     <Compile Include="Entities\ImageSource.cs" />
     <Compile Include="Entities\LicensePlateDetector.cs" />
     <Compile Include="Entities\PoliceAPI.cs" />
+    <Compile Include="Controllers\DataController.cs" />
     <Compile Include="Entities\UtilFunctions.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -218,9 +219,24 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Record.cs">
-      <DependentUpon>RecordsSearchedModels.tt</DependentUpon>
+      <DependentUpon>RecordsModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Records.cs" />
+    <Compile Include="Models\RecordsModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RecordsModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\RecordsModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RecordsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\RecordsModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RecordsModel.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Models\RecordsSearchedModels.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -258,6 +274,16 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="License-LGPL.txt" />
+    <Content Include="Models\RecordsModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>RecordsModel.edmx</DependentUpon>
+      <LastGenOutput>RecordsModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\RecordsModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>RecordsModel.edmx</DependentUpon>
+      <LastGenOutput>RecordsModel.cs</LastGenOutput>
+    </Content>
     <Content Include="Models\RecordsSearchedModels.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>RecordsSearchedModels.edmx</DependentUpon>
@@ -310,6 +336,13 @@
     </EntityDeploy>
     <Content Include="Models\RecordsSearchedModels.edmx.diagram">
       <DependentUpon>RecordsSearchedModels.edmx</DependentUpon>
+    </Content>
+    <EntityDeploy Include="Models\RecordsModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>RecordsModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\RecordsModel.edmx.diagram">
+      <DependentUpon>RecordsModel.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
@@ -380,6 +413,15 @@
     <Content Include="Views\Shared\_ChartBar.cshtml" />
   </ItemGroup>
   <ItemGroup />
+    <Content Include="Views\Account\Records.cshtml" />
+    <Content Include="Views\Data\AddRecord.cshtml" />
+    <Content Include="Views\Data\DeleteRecord.cshtml" />
+    <Content Include="Views\Data\Index.cshtml" />
+    <Content Include="Views\Data\Details.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Views\Record\" />
+  </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
