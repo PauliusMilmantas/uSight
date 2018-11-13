@@ -11,16 +11,27 @@ using Emgu.CV.Util;
 using Emgu.Util;
 using System.IO;
 
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+using uSight_Web.Entities;
+using Emgu.CV;
+using Emgu.CV.CvEnum;
+using Emgu.CV.Structure;
+using System.Drawing;
+
 namespace uSight_Web
 {
     public class LicenesePlateDetector
     {
         private Emgu.CV.OCR.Tesseract ocr;
 
-        public LicenesePlateDetector(String dataPath)
+        public LicenesePlateDetector(String path)
         {
-            ocr = new Emgu.CV.OCR.Tesseract("", "eng", OcrEngineMode.TesseractLstmCombined);
-
+            ocr = new Emgu.CV.OCR.Tesseract(path, "eng", OcrEngineMode.TesseractLstmCombined);
             ocr.SetVariable("tessedit_char_whitelist", "ABCDEFGHIJKLMNOPQRSTUVWXYZ-1234567890");
         }
 
