@@ -10,9 +10,9 @@ namespace uSight_Web.Entities
     {
         private LicenesePlateDetector _licensePlateDetector;
 
-        public UtilFunctions()
+        public UtilFunctions(string path)
         {
-            _licensePlateDetector = new LicenesePlateDetector("");
+            _licensePlateDetector = new LicenesePlateDetector(path);
         }
 
         public static Image ShowContours(Image<Bgr, byte> image)

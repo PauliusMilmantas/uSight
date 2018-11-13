@@ -206,6 +206,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\StatisticsController.cs" />
+    <Compile Include="Entities\FormData.cs" />
     <Compile Include="Entities\ImageSource.cs" />
     <Compile Include="Entities\LicensePlateDetector.cs" />
     <Compile Include="Entities\UtilFunctions.cs" />
