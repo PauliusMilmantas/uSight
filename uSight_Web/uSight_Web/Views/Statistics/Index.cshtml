@@ -6,4 +6,18 @@
 
 <h2>Statistics</h2>
 <h2>(Some Data)</h2 >
-<canvas class="chart-bar" data-labels='["a", "b", "c"]' data-sets='[{"label": "Series A", "data": [10, 20, 30]}, {"label": "Series B", "data": [20, 30, 10]}]' width="400" height="400"></canvas>
+@{ 
+    var cd = new uSight_Web.Entities.ChartData(
+        new List<string>() { "aa", "bb", "cc"},
+        new List<string>() { "SeriesA", "SeriesB", "SeriesC"},
+        new List<List<int>>()
+        {
+            new List<int>(){ 14, 16, 22},
+            new List<int>(){ 29, 5, 32},
+            new List<int>(){ 37, 58, 12}
+        }
+    );
+    Html.RenderPartial("_ChartLine", cd);
+    Html.RenderPartial("_ChartBar", cd);
+    Html.RenderPartial("_ChartRadar", cd);
+}

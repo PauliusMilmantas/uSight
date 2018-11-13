@@ -206,6 +206,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\StatisticsController.cs" />
+    <Compile Include="Entities\ChartData.cs" />
     <Compile Include="Entities\ImageSource.cs" />
     <Compile Include="Entities\LicensePlateDetector.cs" />
     <Compile Include="Entities\UtilFunctions.cs" />
@@ -373,6 +374,9 @@
     <Content Include="Scripts\popper.js.map" />
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
+    <Content Include="Views\Shared\_ChartLine.cshtml" />
+    <Content Include="Views\Shared\_ChartRadar.cshtml" />
+    <Content Include="Views\Shared\_ChartBar.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
