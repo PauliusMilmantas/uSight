@@ -1,8 +1,8 @@
 ﻿@{
     ViewBag.Title = "Home Page";
 
-    var defaultPath = "/Content/Images/default.jpg";
-    var imagePath = "/Content/Uploaded_files/upload1.jpg";
+    string defaultPath = "/Content/Images/default.jpg";
+    string imagePath = "/Content/Uploaded_files/u1.jpg";
 
     var absolutePath = HttpContext.Current.Server.MapPath(imagePath);
     if (!System.IO.File.Exists(absolutePath)) { imagePath = defaultPath; }

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using uSight_Web.Entities;
@@ -16,16 +15,17 @@ namespace uSight_Web.Controllers
     {
         public ActionResult Index(HttpPostedFileBase file)
         {
+            //string path = Path.Combine(Server.MapPath("~/Content/Uploaded_files"), Path.GetFileName(file.FileName));
+            string path = Path.Combine(Server.MapPath("~/Content/Uploaded_files"), "u1.jpg");
+            System.IO.File.Delete(path);
+
             if (file != null && file.ContentLength > 0)
                 try
                 {
-                    //string path = Path.Combine(Server.MapPath("~/Content/Uploaded_files"), Path.GetFileName(file.FileName));
-                    string path = Path.Combine(Server.MapPath("~/Content/Uploaded_files"), "upload1.jpg");
                     file.SaveAs(path);
-                    ViewBag.Message = "File uploaded successfully";
-                    var imagePath = Server.MapPath(".") + "\\Content/Uploaded_files/upload1.jpg";
+                    //ViewBag.Message = "File uploaded successfully";
 
-                    var currentImageSource = new ImageSource(new Image<Bgr, byte>(imagePath));
+                    var currentImageSource = new ImageSource(new Image<Bgr, byte>(path));
                     var image = currentImageSource[0].Bitmap;
                     var scaledImage = ScaleImage(image, 900, 700);
                     var img = UtilFunctions.GetMatFromImage(scaledImage);
@@ -34,14 +34,13 @@ namespace uSight_Web.Controllers
                     List<String> strings = f.ProcessImage(uImg);
                     string foundLP = new FormData(strings).GetLicensePlate();
                     ViewBag.Message = foundLP;
-                    //System.IO.File.Delete(imagePath);
+
                 }
                 catch (Exception ex)
                 {
                     ViewBag.Message = "ERROR: " + ex.Message.ToString();
                 }
         
-
             return View();
         }
         private Image ScaleImage(Image image, int maxWidth, int maxHeight)
