@@ -17,7 +17,14 @@ namespace uSight_Web.Controllers
         {
             //string path = Path.Combine(Server.MapPath("~/Content/Uploaded_files"), Path.GetFileName(file.FileName));
             string path = Path.Combine(Server.MapPath("~/Content/Uploaded_files"), "u1.jpg");
-            System.IO.File.Delete(path);
+            try
+            {
+                System.IO.File.Delete(path);
+            }
+            catch (Exception)
+            {
+
+            }
 
             if (file != null && file.ContentLength > 0)
                 try
