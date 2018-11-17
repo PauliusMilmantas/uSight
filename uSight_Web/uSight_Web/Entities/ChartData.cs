@@ -10,7 +10,7 @@ namespace uSight_Web.Entities
     public class ChartSeries
     {
         public string name;
-        public IEnumerable<int> data;
+        public IEnumerable<double> data;
     }
 
     public class ChartData
@@ -18,7 +18,7 @@ namespace uSight_Web.Entities
         public IEnumerable<string> labels;
         public IEnumerable<ChartSeries> series;
 
-        public ChartData(IEnumerable<string> labels, IEnumerable<string> names, IEnumerable<IEnumerable<int>> data)
+        public ChartData(IEnumerable<string> labels, IEnumerable<string> names, IEnumerable<IEnumerable<double>> data)
         {
             this.labels = labels;
             var series = new List<ChartSeries>();
