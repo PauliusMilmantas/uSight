@@ -9,19 +9,18 @@ namespace uSight_Web.Controllers
     {
         public ActionResult Index(HttpPostedFileBase file)
         {
-            string serverMapPath = Server.MapPath(".");
-
             if (file != null && file.ContentLength > 0)
                 try
                 {
-                    string foundLP = new RecognitionBuilder(file, serverMapPath).GetFoundLP();
-                    ViewBag.Message = foundLP;
+                    ShowUploadedImage(file);
+                    ViewBag.Message = new RecognitionBuilder(file, Server.MapPath(".")).GetFoundLP();
                 }
                 catch (Exception ex)
                 {
                     ViewBag.Message = "ERROR: " + ex.Message.ToString();
                 }
-        
+            else ViewBag.ImageData = "/Content/Images/default.jpg";
+
             return View();
         }
 
@@ -33,6 +32,15 @@ namespace uSight_Web.Controllers
         public ActionResult Contact()
         {
             return View();
+        }
+
+        private void ShowUploadedImage(HttpPostedFileBase file)
+        {
+            byte[] image = new byte[file.ContentLength];
+            file.InputStream.Read(image, 0, image.Length);
+            string imreBase64Data = Convert.ToBase64String(image);
+            string imgDataURL = string.Format("data:image/png;base64,{0}", imreBase64Data);
+            ViewBag.ImageData = imgDataURL;
         }
     }
 }
