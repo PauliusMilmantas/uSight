@@ -4,7 +4,7 @@
     string imagePath = "/Content/Uploaded_files/u1.jpg";
 
     var absolutePath = HttpContext.Current.Server.MapPath(imagePath);
-    if (!System.IO.File.Exists(absolutePath)) { imagePath = defaultPath; }
+    if (!System.IO.File.Exists(absolutePath)) { imagePath = defaultPath;
 }
 
 <br><br>
@@ -12,7 +12,7 @@
 <div class="Container">
 	<div class="row">
 		<div class="col-xs col-sm-8 col-lg-6 align-self-center">
-			<img src="@imagePath" class="img-responsive">
+			<img src="@ViewBag.ImageData" class="img-responsive">
 		</div>
 		
 		<br>

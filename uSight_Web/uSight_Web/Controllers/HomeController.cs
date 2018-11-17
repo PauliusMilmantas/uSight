@@ -9,20 +9,6 @@ namespace uSight_Web.Controllers
     {
         public ActionResult Index(HttpPostedFileBase file)
         {
-<<<<<<< HEAD
-            //string path = Path.Combine(Server.MapPath("~/Content/Uploaded_files"), Path.GetFileName(file.FileName));
-            string path = Path.Combine(Server.MapPath("~/Content/Uploaded_files"), "u1.jpg");
-            try
-            {
-                System.IO.File.Delete(path);
-            }
-            catch (Exception)
-            {
-
-            }
-
-=======
->>>>>>> WebDev_AK
             if (file != null && file.ContentLength > 0)
                 try
                 {
