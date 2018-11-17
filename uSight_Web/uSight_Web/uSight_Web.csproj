@@ -253,7 +253,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>RecordsSearchedModels.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\SearchRecord.cs" />
     <Compile Include="Models\Statistics.cs" />
+    <Compile Include="Models\WantedRecord.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
