@@ -253,7 +253,24 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>RecordsSearchedModels.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Models\SearchRecord.cs" />
+    <Compile Include="Models\SearchRecord.cs">
+      <DependentUpon>SearchRecordModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SearchRecordModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SearchRecordModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SearchRecordModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SearchRecordModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SearchRecordModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SearchRecordModel.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Models\Statistics.cs" />
     <Compile Include="Models\WantedRecord.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -296,6 +313,16 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>RecordsSearchedModels.edmx</DependentUpon>
       <LastGenOutput>RecordsSearchedModels.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\SearchRecordModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>SearchRecordModel.edmx</DependentUpon>
+      <LastGenOutput>SearchRecordModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\SearchRecordModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>SearchRecordModel.edmx</DependentUpon>
+      <LastGenOutput>SearchRecordModel.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
@@ -346,6 +373,13 @@
     </EntityDeploy>
     <Content Include="Models\RecordsModel.edmx.diagram">
       <DependentUpon>RecordsModel.edmx</DependentUpon>
+    </Content>
+    <EntityDeploy Include="Models\SearchRecordModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>SearchRecordModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\SearchRecordModel.edmx.diagram">
+      <DependentUpon>SearchRecordModel.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
@@ -417,10 +451,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Account\Records.cshtml" />
-    <Content Include="Views\Data\AddRecord.cshtml" />
     <Content Include="Views\Data\DeleteRecord.cshtml" />
     <Content Include="Views\Data\Index.cshtml" />
-    <Content Include="Views\Data\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Record\" />
