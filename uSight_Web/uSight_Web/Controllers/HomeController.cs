@@ -1,13 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Web;
 using System.Web.Mvc;
 using uSight_Web.Entities;
-using Emgu.CV;
-using Emgu.CV.CvEnum;
-using Emgu.CV.Structure;
-using System.Drawing;
 
 namespace uSight_Web.Controllers
 {
@@ -15,26 +9,13 @@ namespace uSight_Web.Controllers
     {
         public ActionResult Index(HttpPostedFileBase file)
         {
-            //string path = Path.Combine(Server.MapPath("~/Content/Uploaded_files"), Path.GetFileName(file.FileName));
-            string path = Path.Combine(Server.MapPath("~/Content/Uploaded_files"), "u1.jpg");
-            System.IO.File.Delete(path);
+            string serverMapPath = Server.MapPath(".");
 
             if (file != null && file.ContentLength > 0)
                 try
                 {
-                    file.SaveAs(path);
-                    //ViewBag.Message = "File uploaded successfully";
-
-                    var currentImageSource = new ImageSource(new Image<Bgr, byte>(path));
-                    var image = currentImageSource[0].Bitmap;
-                    var scaledImage = ScaleImage(image, 900, 700);
-                    var img = UtilFunctions.GetMatFromImage(scaledImage);
-                    UMat uImg = img.GetUMat(AccessType.ReadWrite);
-                    UtilFunctions f = new UtilFunctions(Server.MapPath(".") + "\\tessdata");
-                    List<String> strings = f.ProcessImage(uImg);
-                    string foundLP = new FormData(strings).GetLicensePlate();
+                    string foundLP = new RecognitionBuilder(file, serverMapPath).GetFoundLP();
                     ViewBag.Message = foundLP;
-
                 }
                 catch (Exception ex)
                 {
@@ -42,22 +23,6 @@ namespace uSight_Web.Controllers
                 }
         
             return View();
-        }
-        private Image ScaleImage(Image image, int maxWidth, int maxHeight)
-        {
-            var ratioX = (double)maxWidth / image.Width;
-            var ratioY = (double)maxHeight / image.Height;
-            var ratio = Math.Min(ratioX, ratioY);
-
-            var newWidth = (int)(image.Width * ratio);
-            var newHeight = (int)(image.Height * ratio);
-
-            var newImage = new Bitmap(newWidth, newHeight);
-
-            using (var graphics = Graphics.FromImage(newImage))
-                graphics.DrawImage(image, 0, 0, newWidth, newHeight);
-
-            return newImage;
         }
 
         public ActionResult About()
