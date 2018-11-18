@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Web;
 
 namespace uSight_Web.Entities
@@ -26,10 +27,25 @@ namespace uSight_Web.Entities
             System.IO.Stream os = req.GetRequestStream();
             os.Write(bytes, 0, bytes.Length);
             os.Close();
-            System.Net.WebResponse resp = req.GetResponse();
-            if (resp == null)
+            HttpWebResponse resp = null;
+            HttpStatusCode code;
+            try
             {
-                throw new Exception("No response.");
+                resp = (HttpWebResponse)req.GetResponse();
+                if (resp == null)
+                {
+                    return false;
+                }
+                code = resp.StatusCode;
+            }
+            catch (WebException e)
+            {
+                code = ((HttpWebResponse)e.Response).StatusCode;
+            }
+            
+            if (code != HttpStatusCode.OK)
+            {
+                return false;
             }
 
             var sr = new StreamReader(resp.GetResponseStream());

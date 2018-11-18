@@ -20,6 +20,9 @@ namespace uSight_Web.Models
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
+        public DbSet<SearchRecord> SearchRecords { get; set; }
+        public DbSet<WantedRecord> WantedRecords { get; set; }
+
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {

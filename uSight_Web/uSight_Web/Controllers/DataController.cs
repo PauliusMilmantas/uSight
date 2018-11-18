@@ -13,37 +13,21 @@ namespace uSight_Web.Controllers
         // GET: Data
         public ActionResult Index()
         {
-            entities = new Models.RecordsEntities1();
+            Models.Search t = new Models.Search();
 
-            return View(entities.Records.ToList());
-        }
-
-        public ActionResult AddRecord()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public ActionResult AddRecord(Models.Record rr) {
-
-            entities = new Models.RecordsEntities1();
-
-            if (ModelState.IsValid) {
-                entities.Records.Add(rr);
-                entities.SaveChanges();
-
-                return RedirectToAction("Index");
-            }
-
-            return View();
+            return View(t.SearchRecords.ToList());
         }
 
         public ActionResult DeleteRecord() {
 
-            int id;
+            /*string plate;
+
 
             try
             {
+                plate = this.RouteData.Values["PlateNumber"].ToString();
+
+
                 id = int.Parse(this.RouteData.Values["id"].ToString());
             }
             catch (Exception) {
@@ -58,31 +42,9 @@ namespace uSight_Web.Controllers
             Models.Record rrr = rec.Find(x => x.Id == id);
 
             entities.Records.Remove(rrr);
-            entities.SaveChanges();
+            entities.SaveChanges();*/
 
-            return RedirectToAction("Index");            
-        }
-
-        public ActionResult Details() {
-            int id;
-
-            try
-            {
-                id = int.Parse(this.RouteData.Values["id"].ToString());
-            }
-            catch (Exception)
-            {
-                id = 0;
-
-                return RedirectToAction("Index");
-            }
-
-            entities = new Models.RecordsEntities1();
-
-            List<Models.Record> rec = entities.Records.ToList();
-            Models.Record rrr = rec.Find(x => x.Id == id);
-            
-            return View(rrr);
+            return RedirectToAction("Index");           
         }
     }
 }
