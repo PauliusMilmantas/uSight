@@ -11,13 +11,13 @@ namespace uSight_Web.Controllers
         private Models.RecordsEntities1 entities;
 
         // GET: Data
-        public ActionResult Index(int filter)
+        public ActionResult Index(int filter = 0)
         {
             Models.Search t = new Models.Search();
 
+            
 
-
-            ViewData["Filter"] = 0;
+            ViewData["Filter"] = filter;
 
             return View(t.SearchRecords.ToList());
         }

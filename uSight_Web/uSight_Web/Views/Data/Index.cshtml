@@ -9,17 +9,13 @@
 
 <h2>Searched records</h2>
 
-@Html.Raw(ViewData["Filter"].ToString())
-
 @if (ViewData["Filter"].ToString() == 1.ToString())
 {
-    @Html.ActionLink("<button type=\"button\" class=\"btn btn-primary\">Only personal history</button>", "Index", new { Filter = 0 })
+    <a class="btn" href="/Data?Filter=0"><button type="button" class="btn btn-primary">All history</button></a>
 }
 else
 {
-    @Html.ActionLink("<button type=\"button\" class=\"btn btn - primary\">All history</button>", "Index", new { Filter = 1})
-
-
+    <a class="btn" href="/Data?Filter=1"><button type="button" class="btn btn-primary">Only personal history</button></a>
 }
 <br><br>
 
@@ -49,7 +45,7 @@ else
         if (
             item.UserId == HttpContext.Current.User.Identity.Name.ToString() || (
             item.UserId == null &&
-            ViewData["Filter"] != "1"
+            ViewData["Filter"].ToString() != 1.ToString()
             ))
         {
             <tr>
