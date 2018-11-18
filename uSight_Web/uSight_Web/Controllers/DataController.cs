@@ -8,15 +8,11 @@ namespace uSight_Web.Controllers
 {
     public class DataController : Controller
     {
-        private Models.RecordsEntities1 entities;
-
         // GET: Data
         public ActionResult Index(int filter = 0)
         {
             Models.Search t = new Models.Search();
-
             
-
             ViewData["Filter"] = filter;
 
             return View(t.SearchRecords.ToList());
@@ -27,33 +23,35 @@ namespace uSight_Web.Controllers
             ViewData["Filter"] = filter;
         }
 
-        public ActionResult DeleteRecord() {
+        public ActionResult Delete(string PlateNumber, string Time) {
 
-            /*string plate;
+            string plate = PlateNumber;
+            string time = Time;
 
 
-            try
+         /*   try
             {
                 plate = this.RouteData.Values["PlateNumber"].ToString();
-
-
-                id = int.Parse(this.RouteData.Values["id"].ToString());
+                time = this.RouteData.Values["Time"].ToString();
             }
             catch (Exception) {
-                id = 0;
-
-                return View();
+                return RedirectToAction("Index");
             }
+            */
 
-            entities = new Models.RecordsEntities1();
+            Models.Search entities = new Models.Search();
 
-            List<Models.Record> rec = entities.Records.ToList();
-            Models.Record rrr = rec.Find(x => x.Id == id);
+            List<Models.SearchRecord> rec = entities.SearchRecords.ToList();
 
-            entities.Records.Remove(rrr);
-            entities.SaveChanges();*/
+            Models.SearchRecord rrr = rec.Find(x => x.Time.ToString() == time);// && x.PlateNumber == plate);
 
-            return RedirectToAction("Index");           
+
+    
+            //entities.SearchRecords.Remove(rrr);
+
+           // entities.SaveChanges();
+
+            return View(rrr);           
         }
     }
 }

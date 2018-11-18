@@ -449,6 +449,7 @@
     <Content Include="Views\Shared\_ChartLine.cshtml" />
     <Content Include="Views\Shared\_ChartRadar.cshtml" />
     <Content Include="Views\Shared\_ChartBar.cshtml" />
+    <Content Include="Views\Data\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Account\Records.cshtml" />
