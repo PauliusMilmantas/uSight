@@ -8,11 +8,20 @@ namespace uSight_Web.Entities
 {
     class UtilFunctions
     {
-        private LicenesePlateDetector _licensePlateDetector;
+        delegate List<string> DetectorDelegate(IInputArray img,
+           List<IInputOutputArray> licensePlateImagesList,
+           List<IInputOutputArray> filteredLicensePlateImagesList,
+           List<RotatedRect> detectedLicensePlateRegionList);
+        private DetectorDelegate DetectLicensePlate;
 
         public UtilFunctions(string path)
         {
-            _licensePlateDetector = new LicenesePlateDetector(path);
+            DetectLicensePlate = new LicenesePlateDetector(path).DetectLicensePlate;
+        }
+
+        public UtilFunctions(LicenesePlateDetector d)
+        {
+            DetectLicensePlate = d.DetectLicensePlate;
         }
 
         public static Image ShowContours(Image<Bgr, byte> image)

@@ -21,7 +21,7 @@ namespace uSight_Web.Entities
             var scaledImage = ScaleImage(image, 900, 700);
             var img = UtilFunctions.GetMatFromImage(scaledImage);
             UMat uImg = img.GetUMat(AccessType.ReadWrite);
-            UtilFunctions f = new UtilFunctions(serverMapPath + "\\tessdata");
+            UtilFunctions f = new UtilFunctions( new LicenesePlateDetector(serverMapPath + "\\tessdata"));
             List<String> strings = f.ProcessImage(uImg);
             foundLP = new FormData(strings).GetLicensePlate();
         }
