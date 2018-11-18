@@ -11,11 +11,20 @@ namespace uSight_Web.Controllers
         private Models.RecordsEntities1 entities;
 
         // GET: Data
-        public ActionResult Index()
+        public ActionResult Index(int filter)
         {
             Models.Search t = new Models.Search();
 
+
+
+            ViewData["Filter"] = 0;
+
             return View(t.SearchRecords.ToList());
+        }
+        
+        public void Update(int filter) {
+
+            ViewData["Filter"] = filter;
         }
 
         public ActionResult DeleteRecord() {
