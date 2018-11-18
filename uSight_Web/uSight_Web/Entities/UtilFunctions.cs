@@ -8,11 +8,11 @@ namespace uSight_Web.Entities
 {
     class UtilFunctions
     {
-        delegate List<string> DetectorDelegate(IInputArray img,
-           List<IInputOutputArray> licensePlateImagesList,
-           List<IInputOutputArray> filteredLicensePlateImagesList,
-           List<RotatedRect> detectedLicensePlateRegionList);
-        private DetectorDelegate DetectLicensePlate;
+        delegate List<string> DetectorDelegate<T1, T2, T3, T4>(T1 img,
+           T2 licensePlateImagesList,
+           T3 filteredLicensePlateImagesList,
+           T4 detectedLicensePlateRegionList);
+        private DetectorDelegate<IInputArray, List<IInputOutputArray>, List<IInputOutputArray>, List<RotatedRect>> DetectLicensePlate;
 
         public UtilFunctions(string path)
         {
@@ -74,7 +74,7 @@ namespace uSight_Web.Entities
 
             List<RotatedRect> licenseBoxList = new List<RotatedRect>();
 
-            List<string> words = _licensePlateDetector.DetectLicensePlate(
+            List<string> words = DetectLicensePlate(
                image,
                licensePlateImagesList,
                filteredLicensePlateImagesList,
