@@ -42,9 +42,12 @@
     @using (Html.BeginForm()) {
         @Html.AntiForgeryToken()
 
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
-        </div>
+    <div class="form-actions no-color">
+
+        <a class="btn" href="/Delete?Action=1&PlateNumber=@Model.PlateNumber&Time=@Model.Time"><button type="button" class="btn btn-primary">All history</button></a>
+
+        |
+        @Html.ActionLink("Back to List", "Index")
+    </div>
     }
 </div>

@@ -23,35 +23,33 @@ namespace uSight_Web.Controllers
             ViewData["Filter"] = filter;
         }
 
-        public ActionResult Delete(string PlateNumber, string Time) {
+        public ActionResult Delete(String PlateNumber, String Time, int Action = 0) {
 
-            string plate = PlateNumber;
-            string time = Time;
+              string plate = PlateNumber;
+              string time = Time;
 
-
-         /*   try
-            {
-                plate = this.RouteData.Values["PlateNumber"].ToString();
-                time = this.RouteData.Values["Time"].ToString();
-            }
-            catch (Exception) {
-                return RedirectToAction("Index");
-            }
-            */
+            string tt;
 
             Models.Search entities = new Models.Search();
 
             List<Models.SearchRecord> rec = entities.SearchRecords.ToList();
+            Models.SearchRecord rrr = rec.Find(x => x.PlateNumber == plate && x.Time.ToString() == time);
 
-            Models.SearchRecord rrr = rec.Find(x => x.Time.ToString() == time);// && x.PlateNumber == plate);
+            try
+            {
+                tt = this.RouteData.Values["Action"].ToString();
+            } catch (Exception e) {
+                return View(rrr);
+            }
 
+            if (Action == 1) {
+                entities.SearchRecords.Remove(rrr);
+                entities.SaveChanges();
 
-    
-            //entities.SearchRecords.Remove(rrr);
+                return RedirectToAction("Index");
+            }
 
-           // entities.SaveChanges();
-
-            return View(rrr);           
+            return View(rrr);
         }
     }
 }

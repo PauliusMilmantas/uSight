@@ -19,11 +19,8 @@ else
 }
 <br><br>
 
-@User.Identity.GetUserId().ToString()
+Current id: @User.Identity.GetUserId().ToString()
 
-<p>
-    @Html.ActionLink("Create New", "AddRecord")
-</p>
 <table class="table">
     <tr>
         <th>
