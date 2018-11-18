@@ -2,6 +2,8 @@
 using System.Web;
 using System.Web.Mvc;
 using uSight_Web.Entities;
+using uSight_Web.Models;
+using Microsoft.AspNet.Identity;
 
 namespace uSight_Web.Controllers
 {
@@ -13,7 +15,26 @@ namespace uSight_Web.Controllers
                 try
                 {
                     ShowUploadedImage(file);
-                    ViewBag.Message = new RecognitionBuilder(file, Server.MapPath(".")).GetFoundLP();
+
+                    string foundLP = new RecognitionBuilder(file, Server.MapPath(".")).GetFoundLP();
+                    ViewBag.Message = foundLP;
+
+                    foundLP = foundLP.Replace(" ", String.Empty);
+                    bool wanted = new PoliceAPI().IsStolen(foundLP);
+
+                    Search s = new Search();
+                    SearchRecord sr = new SearchRecord();
+                    sr.Time = DateTime.Now;
+                    sr.PlateNumber = foundLP;
+                    sr.Stolen = wanted;
+                    if (Request.IsAuthenticated) sr.UserId = User.Identity.GetUserId();
+                    else sr.UserId = null;
+                    s.SearchRecords.Add(sr);
+                    s.SaveChanges();
+
+
+
+                    //return View(t.SearchRecords.ToList());
                 }
                 catch (Exception ex)
                 {

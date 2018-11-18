@@ -50,7 +50,8 @@ namespace uSight_Web.Entities
 
             var sr = new StreamReader(resp.GetResponseStream());
             var responseString = sr.ReadToEnd().Trim();
-            return !responseString.Contains("There is no information about this transport vehicle in the Register of Wanted Motor Vehicles.");
+            return !responseString.Contains(
+                "There is no information about this transport vehicle in the Register of Wanted Motor Vehicles.");
         }
     }
 }
