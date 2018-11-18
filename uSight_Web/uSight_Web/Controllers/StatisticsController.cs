@@ -13,9 +13,19 @@ namespace uSight_Web.Controllers
     public class StatisticsController : Controller
     {
         // GET: Statistics
-        public ActionResult Index(int? totalStartYear, int? totalStartMonth, int? totalStartDay, int? totalEndYear, int? totalEndMonth, int? totalEndDay)
+        public ActionResult Index(int? totalStartYear, int? totalStartMonth, int? totalStartDay, int? totalEndYear, int? totalEndMonth, int? totalEndDay,
+                                  int? monthlyStartYear, int? monthlyStartMonth, int? monthlyEndYear, int? monthlyEndMonth)
         {
             ApplicationDbContext dbc = ApplicationDbContext.Create();
+
+            {
+                var topQuery =
+                    from sr in dbc.SearchRecords
+                    group sr by sr.PlateNumber into g
+                    select new { name = g.Key, count = g.Count(), stolen = g.Any(x => x.Stolen)};
+                topQuery = topQuery.OrderByDescending(x => x.count).Take(20);
+                ViewBag.topTuples = topQuery.ToList().Select(x => new Tuple<string, int, bool>(x.name, x.count, x.stolen)).ToList();
+            }
 
             {
                 DateTime start = DateTime.MinValue;
@@ -57,16 +67,32 @@ namespace uSight_Web.Controllers
             }
 
             {
+                DateTime start = DateTime.MinValue;
+                DateTime end = DateTime.MaxValue;
+                if (monthlyStartYear != null && monthlyStartMonth != null && monthlyEndYear != null && monthlyEndMonth != null)
+                {
+                    start = new DateTime(monthlyStartYear.Value, monthlyStartMonth.Value, 1);
+                    end = new DateTime(monthlyEndYear.Value, monthlyEndMonth.Value, 1);
+                    if (start > end)
+                    {
+                        DateTime tmp = start;
+                        start = end;
+                        end = tmp;
+                    }
+                }
+
                 ChartData monthlyCountSearchesCD;
                 var allQuery =
                     from sr in dbc.SearchRecords
                     group sr by DbFunctions.CreateDateTime(sr.Time.Year, sr.Time.Month, 1, 0, 0, 0) into g
+                    where start.Year <= g.Key.Value.Year && start.Month <= g.Key.Value.Month && end.Year >= g.Key.Value.Year && end.Month >= g.Key.Value.Month
                     orderby g.Key
                     select new { date = g.Key, count = g.Count() };
 
                 var stolenQuery =
                     from sr in dbc.SearchRecords
                     group sr by DbFunctions.CreateDateTime(sr.Time.Year, sr.Time.Month, 1, 0, 0, 0) into g
+                    where start.Year <= g.Key.Value.Year && start.Month <= g.Key.Value.Month && end.Year >= g.Key.Value.Year && end.Month >= g.Key.Value.Month
                     orderby g.Key
                     select new { date = g.Key, count = g.Count(x => x.Stolen) };
 
