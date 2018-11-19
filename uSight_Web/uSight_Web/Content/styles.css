@@ -9,7 +9,12 @@
     Width: 100%;
     bottom: 0;
 }
-
+.label_position {
+    position: absolute;
+    transition: .5s ease;
+    top: 60%;
+    right: 30%;
+}
 
 
 
