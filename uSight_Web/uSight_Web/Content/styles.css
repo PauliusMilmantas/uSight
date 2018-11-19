@@ -9,19 +9,12 @@
     Width: 100%;
     bottom: 0;
 }
-.home_image_position {
-    position: absolute;
-    transition: .5s ease;
-    top: 15%;
-    left: 20.5%;
-}
 .label_position {
     position: absolute;
     transition: .5s ease;
-    top: 26%;
-    right: 22%;
+    top: 60%;
+    right: 30%;
 }
-
 
 
 
@@ -281,3 +274,11 @@
 		display: block;
 	}
 }
+
+
+
+
+
+
+
+
