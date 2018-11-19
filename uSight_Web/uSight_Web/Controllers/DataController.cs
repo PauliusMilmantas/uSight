@@ -8,43 +8,48 @@ namespace uSight_Web.Controllers
 {
     public class DataController : Controller
     {
-        private Models.RecordsEntities1 entities;
-
         // GET: Data
-        public ActionResult Index()
+        public ActionResult Index(int filter = 0)
         {
             Models.Search t = new Models.Search();
+            
+            ViewData["Filter"] = filter;
 
             return View(t.SearchRecords.ToList());
         }
+        
+        public void Update(int filter) {
 
-        public ActionResult DeleteRecord() {
+            ViewData["Filter"] = filter;
+        }
 
-            /*string plate;
+        public ActionResult Delete(String PlateNumber, String Time, int Action = 0) {
 
+              string plate = PlateNumber;
+              string time = Time;
+
+            string tt;
+
+            Models.Search entities = new Models.Search();
+
+            List<Models.SearchRecord> rec = entities.SearchRecords.ToList();
+            Models.SearchRecord rrr = rec.Find(x => x.PlateNumber == plate && x.Time.ToString() == time);
 
             try
             {
-                plate = this.RouteData.Values["PlateNumber"].ToString();
-
-
-                id = int.Parse(this.RouteData.Values["id"].ToString());
-            }
-            catch (Exception) {
-                id = 0;
-
-                return View();
+                tt = this.RouteData.Values["Action"].ToString();
+            } catch (Exception e) {
+                return View(rrr);
             }
 
-            entities = new Models.RecordsEntities1();
+            if (Action == 1) {
+                entities.SearchRecords.Remove(rrr);
+                entities.SaveChanges();
 
-            List<Models.Record> rec = entities.Records.ToList();
-            Models.Record rrr = rec.Find(x => x.Id == id);
+                return RedirectToAction("Index");
+            }
 
-            entities.Records.Remove(rrr);
-            entities.SaveChanges();*/
-
-            return RedirectToAction("Index");           
+            return View(rrr);
         }
     }
 }
