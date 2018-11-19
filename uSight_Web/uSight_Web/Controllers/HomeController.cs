@@ -38,7 +38,7 @@ namespace uSight_Web.Controllers
                         if (!confirmedLP) throw new Exception("Sorry! License plate unrecognised.");
                         else
                         {
-                            bool wanted = new PoliceAPI().IsStolen(foundLP);
+                            bool wanted = PoliceAPI.Instance.IsStolen(foundLP);
                             SetViewBagLabels(originalLP, wanted);
                             SaveUploadSearchRecord(foundLP, wanted);
                         }
