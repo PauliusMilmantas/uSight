@@ -3,12 +3,21 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using System.Web;
 
 namespace uSight_Web.Entities
 {
     public class PoliceAPI
     {
+        private static Lazy<PoliceAPI> instance = new Lazy<PoliceAPI>(delegate() { return new PoliceAPI(); });
+        public static PoliceAPI Instance { get { return instance.Value; } set { } }
+
+        private PoliceAPI()
+        {
+
+        }
+
         public bool IsStolen(string plateNumber)
         {
             if (plateNumber.Length < 3 || plateNumber.Length > 10)
@@ -50,7 +59,13 @@ namespace uSight_Web.Entities
 
             var sr = new StreamReader(resp.GetResponseStream());
             var responseString = sr.ReadToEnd().Trim();
-            return !responseString.Contains("There is no information about this transport vehicle in the Register of Wanted Motor Vehicles.");
+            return !responseString.Contains(
+                "There is no information about this transport vehicle in the Register of Wanted Motor Vehicles.");
+        }
+
+        public async Task<bool> IsStolenAsync(string plateNumber)
+        {
+            return await new Task<bool>(() => IsStolen(plateNumber));
         }
     }
 }

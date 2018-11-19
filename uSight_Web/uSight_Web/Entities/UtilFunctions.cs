@@ -8,11 +8,20 @@ namespace uSight_Web.Entities
 {
     class UtilFunctions
     {
-        private LicenesePlateDetector _licensePlateDetector;
+        delegate List<string> DetectorDelegate<T1, T2, T3, T4>(T1 img,
+           T2 licensePlateImagesList,
+           T3 filteredLicensePlateImagesList,
+           T4 detectedLicensePlateRegionList);
+        private DetectorDelegate<IInputArray, List<IInputOutputArray>, List<IInputOutputArray>, List<RotatedRect>> DetectLicensePlate;
 
         public UtilFunctions(string path)
         {
-            _licensePlateDetector = new LicenesePlateDetector(path);
+            DetectLicensePlate = new LicenesePlateDetector(path).DetectLicensePlate;
+        }
+
+        public UtilFunctions(LicenesePlateDetector d)
+        {
+            DetectLicensePlate = d.DetectLicensePlate;
         }
 
         public static Image ShowContours(Image<Bgr, byte> image)
@@ -65,7 +74,7 @@ namespace uSight_Web.Entities
 
             List<RotatedRect> licenseBoxList = new List<RotatedRect>();
 
-            List<string> words = _licensePlateDetector.DetectLicensePlate(
+            List<string> words = DetectLicensePlate(
                image,
                licensePlateImagesList,
                filteredLicensePlateImagesList,

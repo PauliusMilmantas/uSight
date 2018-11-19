@@ -22,6 +22,7 @@ using Emgu.CV;
 using Emgu.CV.CvEnum;
 using Emgu.CV.Structure;
 using System.Drawing;
+using System.Configuration;
 
 namespace uSight_Web
 {
@@ -32,7 +33,7 @@ namespace uSight_Web
         public LicenesePlateDetector(String path)
         {
             ocr = new Emgu.CV.OCR.Tesseract(path, "eng", OcrEngineMode.TesseractLstmCombined);
-            ocr.SetVariable("tessedit_char_whitelist", "ABCDEFGHIJKLMNOPQRSTUVWXYZ-1234567890");
+            ocr.SetVariable("tessedit_char_whitelist", ConfigurationManager.AppSettings["tesseract_whitelist"]);
         }
 
         public List<String> DetectLicensePlate(

@@ -1,15 +1,26 @@
 ﻿@model IEnumerable<uSight_Web.Models.SearchRecord>
 
+@using Microsoft.AspNet.Identity;
+
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Searched records";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<h2>Searched records</h2>
 
-<p>
-    @Html.ActionLink("Create New", "AddRecord")
-</p>
+@if (ViewData["Filter"].ToString() == 1.ToString())
+{
+    <a class="btn" href="/Data?Filter=0"><button type="button" class="btn btn-primary">All history</button></a>
+}
+else
+{
+    <a class="btn" href="/Data?Filter=1"><button type="button" class="btn btn-primary">Only personal history</button></a>
+}
+<br><br>
+
+Current id: @User.Identity.GetUserId().ToString()
+
 <table class="table">
     <tr>
         <th>
@@ -27,24 +38,39 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Time)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PlateNumber)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Stolen)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.UserId)
-        </td>
-        <td>
-            @Html.ActionLink("Delete", "Delete", new { PlateNumber = item.PlateNumber, item.Time })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
 
+        if (
+            item.UserId == User.Identity.GetUserId().ToString() || (
+            item.UserId == null &&
+            ViewData["Filter"].ToString() != 1.ToString()
+            ))
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Time)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PlateNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Stolen)
+                </td>
+                <td>
+                    @if (item.UserId == null)
+                    {
+                        @Html.Raw("System");
+                    }
+                    else
+                    {
+                        @Html.DisplayFor(modelItem => item.UserId)
+                    }
+                </td>
+                <td>
+                    @Html.ActionLink("Delete", "Delete", new { PlateNumber = item.PlateNumber, Time = item.Time.ToString() })
+                </td>
+            </tr>
+        }
+    }
 </table>
