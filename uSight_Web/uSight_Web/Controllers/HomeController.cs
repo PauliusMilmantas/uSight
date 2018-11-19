@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Web;
 using System.Web.Mvc;
-using uSight_Web.Entities;
 using uSight_Web.Models;
+using uSight_Web.Entities;
 using Microsoft.AspNet.Identity;
 using System.Text.RegularExpressions;
 
@@ -12,41 +12,66 @@ namespace uSight_Web.Controllers
     {
         private readonly string uSightLogo = "/Content/Images/default.jpg";
 
-        public ActionResult Index(HttpPostedFileBase file)
+        public ActionResult Index(HttpPostedFileBase file, string text)
         {
             if (file != null && file.ContentLength > 0)
                 try
                 {
-                    ViewBag.LabelColor = "red";
                     string ext = file.FileName.Substring(file.FileName.Length - 4, 4).ToLower();
 
                     if (!ext.Equals(".jpg") && !ext.Equals(".png"))
                     {
-                        ViewBag.Label = "Invalid file format.";
                         ViewBag.ImageData = uSightLogo;
+                        throw new Exception("Invalid file format.");
                     }
                     else
                     {
                         ShowUploadedImage(file);
 
                         string foundLP = new RecognitionBuilder(file, Server.MapPath(".")).GetFoundLP();
-                        string originalLP = foundLP;
 
+                        string originalLP = foundLP;
                         foundLP = foundLP.Replace(" ", String.Empty);
                         bool confirmedLP = new Regex("[A-Z]{3}[0-9]{3}").IsMatch(foundLP);
 
-                        if (!confirmedLP) throw new Exception("Sorry! License plate unrecognised.");
+                        if (!confirmedLP || foundLP.Length != 6) SetViewBagLabels();
                         else
                         {
                             bool wanted = new PoliceAPI().IsStolen(foundLP);
                             SetViewBagLabels(originalLP, wanted);
-                            SaveUploadSearchRecord(foundLP, wanted);
+                            SaveUploadSearchRecord(foundLP.ToUpper(), wanted);
                         }
                     }
                 }
                 catch (Exception ex)
                 {
-                    ViewBag.Label = ex.Message.ToString();
+                    ViewBag.ErrorMessage = ex.Message.ToString();
+                    ViewBag.ImageData = uSightLogo;
+                }
+            else if (text != null && text.Length > 0)
+                try
+                {
+                    bool confirmedLP = new Regex("[A-Z]{3} *[0-9]{3}").IsMatch(text.ToUpper());
+                    string foundLP = text.Replace(" ", String.Empty);
+
+                    if (!confirmedLP || foundLP.Length != 6)
+                    {
+                        ViewBag.ImageData = uSightLogo;
+                        throw new Exception("Invalid text format.");
+                    }
+                    else
+                    {
+                        string viewLP = (foundLP.Substring(0,3) + " " + foundLP.Substring(3, 3)).ToUpper();
+                        bool wanted = new PoliceAPI().IsStolen(foundLP);
+                        SetViewBagLabels(viewLP, wanted);
+                        ViewBag.ImageData = "";
+                        SaveUploadSearchRecord(foundLP.ToUpper(), wanted);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.ErrorMessage2 = ex.Message.ToString();
+                    ViewBag.ImageData = uSightLogo;
                 }
             else ViewBag.ImageData = uSightLogo;
 
@@ -94,6 +119,11 @@ namespace uSight_Web.Controllers
             ViewBag.LicensePlateColor = wanted ? "red" : "black";
             ViewBag.Label = wanted ? "Vehicle wanted!" : "Vehicle not wanted.";
             ViewBag.LabelColor = wanted ? "red" : "green";
+        }
+        private void SetViewBagLabels ()
+        {
+            ViewBag.Label = "Sorry! License plate unrecognised.";
+            ViewBag.LabelColor = "red";
         }
     }
 }
