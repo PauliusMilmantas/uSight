@@ -13,8 +13,8 @@ namespace uSight_Web.Controllers
     public class StatisticsController : Controller
     {
         // GET: Statistics
-        public ActionResult Index(int? totalStartYear, int? totalStartMonth, int? totalStartDay, int? totalEndYear, int? totalEndMonth, int? totalEndDay,
-                                  int? monthlyStartYear, int? monthlyStartMonth, int? monthlyEndYear, int? monthlyEndMonth)
+        public ActionResult Index(int totalStartYear = 2010, int totalStartMonth = 1, int totalStartDay = 1, int totalEndYear = 2030, int totalEndMonth = 12, int totalEndDay = 31,
+                                  int monthlyStartYear = 2010, int monthlyStartMonth = 1, int monthlyEndYear = 2030, int monthlyEndMonth = 12)
         {
             ApplicationDbContext dbc = ApplicationDbContext.Create();
 
@@ -30,10 +30,10 @@ namespace uSight_Web.Controllers
             {
                 DateTime start = DateTime.MinValue;
                 DateTime end = DateTime.MaxValue;
-                if (totalStartYear != null && totalStartMonth != null && totalStartDay != null && totalEndYear != null && totalEndMonth != null && totalStartDay != null)
+                //if (totalStartYear != null && totalStartMonth != null && totalStartDay != null && totalEndYear != null && totalEndMonth != null && totalStartDay != null)
                 {
-                    start = new DateTime(totalStartYear.Value, totalStartMonth.Value, totalStartDay.Value);
-                    end = new DateTime(totalEndYear.Value, totalEndMonth.Value, totalEndDay.Value);
+                    start = new DateTime(totalStartYear, totalStartMonth, totalStartDay);
+                    end = new DateTime(totalEndYear, totalEndMonth, totalEndDay);
                     if (start > end)
                     {
                         DateTime tmp = start;
@@ -41,6 +41,9 @@ namespace uSight_Web.Controllers
                         end = tmp;
                     }
                 }
+
+                ViewBag.totalStartDate = start;
+                ViewBag.totalEndDate = end;
 
                 ChartData timeCountSearchesCD;
                 var allQuery =
@@ -69,10 +72,10 @@ namespace uSight_Web.Controllers
             {
                 DateTime start = DateTime.MinValue;
                 DateTime end = DateTime.MaxValue;
-                if (monthlyStartYear != null && monthlyStartMonth != null && monthlyEndYear != null && monthlyEndMonth != null)
+                //if (monthlyStartYear != null && monthlyStartMonth != null && monthlyEndYear != null && monthlyEndMonth != null)
                 {
-                    start = new DateTime(monthlyStartYear.Value, monthlyStartMonth.Value, 1);
-                    end = new DateTime(monthlyEndYear.Value, monthlyEndMonth.Value, 1);
+                    start = new DateTime(monthlyStartYear, monthlyStartMonth, 1);
+                    end = new DateTime(monthlyEndYear, monthlyEndMonth, 1);
                     if (start > end)
                     {
                         DateTime tmp = start;
@@ -80,6 +83,9 @@ namespace uSight_Web.Controllers
                         end = tmp;
                     }
                 }
+
+                ViewBag.monthlyStartDate = start;
+                ViewBag.monthlyEndDate = end;
 
                 ChartData monthlyCountSearchesCD;
                 var allQuery =
