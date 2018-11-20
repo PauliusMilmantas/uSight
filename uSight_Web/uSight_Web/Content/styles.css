@@ -1,13 +1,36 @@
-.button_position {
-    position: absolute;
-    transition: .5s ease;
-    top: 15%;
-    right: 20.5%;
+.TextBoxHome {
+    height: 25px;
+	width: 60%;
+	font-size: 15px;
+    border: 2px solid black;
+    border-color: #18bc9c;
+    background-color: white;
 }
-.fixed_footer {
-    position: fixed;
-    Width: 100%;
-    bottom: 0;
+.TextBox-position {
+	position: relative;
+    top: 50%;
+    left: 0%;
+	margin-bottom: 30%;
+}
+.submit-home-text {
+	width: 60%;
+	margin-top: 6.2%;
+}
+.ErrorMessage2 {
+	position: absolute;
+	color: red;
+	margin-top: 5%;
+}
+.button_position {
+    position: relative;
+    top: 0%;
+    left: 0%;
+}
+.submit-home-file {
+	width: 60%;
+}
+.ErrorMessage {
+	margin-top: 5%;
 }
 .label_position {
     position: absolute;
@@ -15,7 +38,11 @@
     top: 60%;
     right: 30%;
 }
-
+.fixed_footer {
+    position: fixed;
+    Width: 100%;
+    bottom: 0;
+}
 
 
 
@@ -109,7 +136,7 @@
 .inputfile-2:focus + label,
 .inputfile-2.has-focus + label,
 .inputfile-2 + label:hover {
-    color: #722040;
+    color: #2c3e50;
 }
 
 
@@ -122,7 +149,7 @@
 .inputfile-3:focus + label,
 .inputfile-3.has-focus + label,
 .inputfile-3 + label:hover {
-    color: #722040;
+    color: #18bc9c;
 }
 
 
@@ -135,7 +162,7 @@
 .inputfile-4:focus + label,
 .inputfile-4.has-focus + label,
 .inputfile-4 + label:hover {
-    color: #722040;
+    color: #18bc9c;
 }
 
 .inputfile-4 + label figure {
@@ -151,7 +178,7 @@
 .inputfile-4:focus + label figure,
 .inputfile-4.has-focus + label figure,
 .inputfile-4 + label:hover figure {
-    background-color: #722040;
+    background-color: #18bc9c;
 }
 
 .inputfile-4 + label svg {
