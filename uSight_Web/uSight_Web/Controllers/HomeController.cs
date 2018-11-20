@@ -62,7 +62,7 @@ namespace uSight_Web.Controllers
                     else
                     {
                         string viewLP = (foundLP.Substring(0,3) + " " + foundLP.Substring(3, 3)).ToUpper();
-                        bool wanted = new PoliceAPI().IsStolen(foundLP);
+                        bool wanted = PoliceAPI.Instance.IsStolen(foundLP);
                         SetViewBagLabels(viewLP, wanted);
                         ViewBag.ImageData = "";
                         SaveUploadSearchRecord(foundLP.ToUpper(), wanted);
