@@ -208,6 +208,7 @@
     <Compile Include="Controllers\StatisticsController.cs" />
     <Compile Include="Entities\ChartData.cs" />
     <Compile Include="Entities\FormData.cs" />
+    <Compile Include="Entities\IDetector.cs" />
     <Compile Include="Entities\ImageSource.cs" />
     <Compile Include="Entities\LicensePlateDetector.cs" />
     <Compile Include="Entities\PoliceAPI.cs" />
