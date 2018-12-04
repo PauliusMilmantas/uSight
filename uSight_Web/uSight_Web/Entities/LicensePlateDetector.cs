@@ -26,7 +26,7 @@ using System.Configuration;
 
 namespace uSight_Web
 {
-    public class LicenesePlateDetector
+    public class LicenesePlateDetector : IDetector
     {
         private Emgu.CV.OCR.Tesseract ocr;
 
