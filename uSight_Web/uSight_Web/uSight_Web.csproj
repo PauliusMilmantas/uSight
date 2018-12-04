@@ -206,6 +206,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\StatisticsController.cs" />
+    <Compile Include="Controllers\WantedController.cs" />
     <Compile Include="Entities\ChartData.cs" />
     <Compile Include="Entities\FormData.cs" />
     <Compile Include="Entities\IDetector.cs" />
@@ -451,6 +452,7 @@
     <Content Include="Views\Shared\_ChartRadar.cshtml" />
     <Content Include="Views\Shared\_ChartBar.cshtml" />
     <Content Include="Views\Data\Delete.cshtml" />
+    <Content Include="Views\Wanted\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Account\Records.cshtml" />
