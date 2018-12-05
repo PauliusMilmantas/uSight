@@ -5,6 +5,7 @@ using uSight_Web.Models;
 using uSight_Web.Entities;
 using Microsoft.AspNet.Identity;
 using System.Text.RegularExpressions;
+using System.Device.Location;
 
 namespace uSight_Web.Controllers
 {
@@ -89,7 +90,22 @@ namespace uSight_Web.Controllers
         }
 
 
+        static String GetLocationProperty()
+        {
+            GeoCoordinateWatcher watcher = new GeoCoordinateWatcher();
 
+            // Do not suppress prompt, and wait 1000 milliseconds to start.
+            watcher.TryStart(false, TimeSpan.FromMilliseconds(1000));
+
+            GeoCoordinate coord = watcher.Position.Location;
+
+            if (coord.IsUnknown != true)
+            {
+                return coord.Latitude + "," + coord.Longitude;
+            }
+
+            return null;
+        }
 
         private void ShowUploadedImage(HttpPostedFileBase file)
         {
