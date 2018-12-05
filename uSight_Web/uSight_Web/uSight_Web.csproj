@@ -298,12 +298,34 @@
     <Content Include="App_Data\Records_log.ldf">
       <DependentUpon>Records.mdf</DependentUpon>
     </Content>
+    <Content Include="Content\bootstrap-darkly.css" />
+    <Content Include="Content\bootstrap-flatly.css" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
+    <Content Include="Content\bootstrap-lumen.css" />
+    <Content Include="Content\bootstrap-lux.css" />
     <Content Include="Content\bootstrap-reboot.css" />
     <Content Include="Content\bootstrap-reboot.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Images\default.jpg" />
+    <Content Include="Content\Images\FGP999.png" />
+    <Content Include="Content\Images\FTE335.png" />
+    <Content Include="Content\Images\GEM941.png" />
+    <Content Include="Content\Images\HHO427.jpg" />
+    <Content Include="Content\Images\JES014.png" />
+    <Content Include="Content\Images\JET002.png" />
+    <Content Include="Content\Images\JMP885.jpg" />
+    <Content Include="Content\Images\JNA593.png" />
+    <Content Include="Content\Images\JPE557.jpg" />
+    <Content Include="Content\Images\KGK961.png" />
+    <Content Include="Content\Images\KGL672.png" />
+    <Content Include="Content\Images\KHD999.png" />
+    <Content Include="Content\Images\KHZ428.png" />
+    <Content Include="Content\Images\KOP618.JPG" />
+    <Content Include="Content\Images\TVF923.png" />
+    <Content Include="Content\styles.css" />
+    <Content Include="Content\styles_original.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
