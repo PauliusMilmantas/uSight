@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using uSight_Web.Models;
 
 namespace uSight_Web.Controllers
 {
@@ -11,11 +12,11 @@ namespace uSight_Web.Controllers
         // GET: Data
         public ActionResult Index(int filter = 0)
         {
-            Models.Search t = new Models.Search();
-            
+            ApplicationDbContext dbc = ApplicationDbContext.Create();
+
             ViewData["Filter"] = filter;
 
-            return View(t.SearchRecords.ToList());
+            return View(dbc.SearchRecords.ToList());
         }
         
         public void Update(int filter) {
@@ -30,10 +31,10 @@ namespace uSight_Web.Controllers
 
             string tt;
 
-            Models.Search entities = new Models.Search();
+            ApplicationDbContext dbc = ApplicationDbContext.Create();
 
-            List<Models.SearchRecord> rec = entities.SearchRecords.ToList();
-            Models.SearchRecord rrr = rec.Find(x => x.PlateNumber == plate && x.Time.ToString() == time);
+            List<SearchRecord> rec = dbc.SearchRecords.ToList();
+            SearchRecord rrr = rec.Find(x => x.PlateNumber == plate && x.Time.ToString() == time);
 
             try
             {
@@ -43,8 +44,8 @@ namespace uSight_Web.Controllers
             }
 
             if (Action == 1) {
-                entities.SearchRecords.Remove(rrr);
-                entities.SaveChanges();
+                dbc.SearchRecords.Remove(rrr);
+                dbc.SaveChanges();
 
                 return RedirectToAction("Index");
             }
