@@ -158,18 +158,27 @@ namespace uSight_Web.Controllers
 
         private void SaveUploadSearchRecord (string foundLP, bool wanted)
         {
+            IpInfo info = GetUserInfo(GetIPAddress());
             
-
-
-
-
-
-
             ApplicationDbContext dbc = ApplicationDbContext.Create();
             SearchRecord sr = new SearchRecord();
             sr.Time = DateTime.Now;
             sr.PlateNumber = foundLP;
             sr.Stolen = wanted;
+            sr.City = info.City;
+            sr.Region = info.Region;
+            sr.Country = info.Country;
+            
+
+            /*
+        public string City { get; set; }
+        public string Region { get; set; }
+        public string Country { get; set; }
+        public double Latitude { get; set; }
+        public double Longitude { get; set; }
+        */
+
+
             if (Request.IsAuthenticated) sr.UserId = User.Identity.GetUserId();
             else sr.UserId = null;
             dbc.SearchRecords.Add(sr);
