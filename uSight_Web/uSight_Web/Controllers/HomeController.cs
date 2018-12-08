@@ -6,6 +6,11 @@ using uSight_Web.Entities;
 using Microsoft.AspNet.Identity;
 using System.Text.RegularExpressions;
 using System.Device.Location;
+using System.Net;
+using System.IO;
+using System.Text;
+using Newtonsoft.Json;
+using System.Globalization;
 
 namespace uSight_Web.Controllers
 {
@@ -106,8 +111,8 @@ namespace uSight_Web.Controllers
             return View();
         }
 
-
-        static String GetLocationProperty()
+        // NOT WORKING
+        static String GetLocationProperty() 
         {
             GeoCoordinateWatcher watcher = new GeoCoordinateWatcher();
 
@@ -133,8 +138,33 @@ namespace uSight_Web.Controllers
             ViewBag.ImageData = imgDataURL;
         }
 
+        public static IpInfo GetUserInfo(string ip)
+        {
+            IpInfo ipInfo = new IpInfo();
+            try
+            {
+                string info = new WebClient().DownloadString("http://ipinfo.io/" + ip);
+                ipInfo = JsonConvert.DeserializeObject<IpInfo>(info);
+                RegionInfo myRI1 = new RegionInfo(ipInfo.Country);
+                ipInfo.Country = myRI1.EnglishName;
+            }
+            catch (Exception)
+            {
+                ipInfo.Country = null;
+            }
+
+            return ipInfo;
+        }
+
         private void SaveUploadSearchRecord (string foundLP, bool wanted)
         {
+            
+
+
+
+
+
+
             ApplicationDbContext dbc = ApplicationDbContext.Create();
             SearchRecord sr = new SearchRecord();
             sr.Time = DateTime.Now;
