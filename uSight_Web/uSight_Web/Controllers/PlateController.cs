@@ -11,43 +11,45 @@ namespace uSight_Web.Controllers
     public class PlateController : Controller
     {
         // GET: Plate
-        public ActionResult Index()
+        public ActionResult Index(String PlateNumber = "")
         {
-            String plateNumber = Request.Form["plateNumber"];
-
-            ApplicationDbContext dbc = ApplicationDbContext.Create();
-
-            if (plateNumber == null)
-            {
-                ViewData["Action"] = 0;
-
-                var list = dbc.SearchRecords.ToList();
-
-                var list2 = list.DistinctBy(x => x.PlateNumber);
-
-                return View(list2);
-            }
-            else {
-                ViewData["Action"] = 1;    
-                
-                SearchRecord record = new SearchRecord();
-                record.PlateNumber = plateNumber;
-
-                return View(record);
-            }           
-        }
-
-        public ActionResult Index(String PlateNumber) {
-
             String plateNumber = PlateNumber;
 
-            if (plateNumber.Equals("")) plateNumber = Request["plateNumber"];
-
+            if (PlateNumber.Equals("")) {
+                plateNumber = Request.Form["plateNumber"];
+            }
+                        
             ApplicationDbContext dbc = ApplicationDbContext.Create();
 
-            SearchRecord record = dbc.SearchRecords.ToList().Find(x => x.PlateNumber.Equals(plateNumber));
+            var list = dbc.SearchRecords.ToList();
 
-            return View(record);
+            var list2 = list.DistinctBy(x => x.PlateNumber);
+            
+            if (plateNumber == null || plateNumber.Equals(""))
+            {
+                ViewData["Action"] = 0;
+            }
+            else {
+                ViewData["Action"] = 1;
+
+                SearchRecord rr = list.Find(x => x.PlateNumber.Equals(plateNumber));
+
+
+
+                if (rr.PlateNumber != null) { ViewData["LicensePlate"] = rr.PlateNumber; } else { ViewData["LicensePlate"] = ""; }
+
+                if (rr.Region != null) { ViewData["Region"] = rr.Region; } else { ViewData["Region"] = ""; }
+
+                if (rr.Longitude != null) { ViewData["Longitude"] = rr.Longitude; } else { ViewData["Longitude"] = ""; }
+
+                if (rr.Latitude != null) { ViewData["Latitude"] = rr.Latitude; } else { ViewData["Latitude"] = ""; }
+
+                if (rr.Time != null) { ViewData["Time"] = rr.Time; } else { ViewData["Time"] = ""; }
+
+               
+            }
+
+            return View(list2);
         }
     }
 }

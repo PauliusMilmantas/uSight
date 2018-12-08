@@ -5,12 +5,35 @@
 }
 
 <br>
-<form method="POST" action="Plate/Details">
-   <label for="usr">Search:</label>
-   <input type="text" class="form-control" id="plateNumber" name="plateNumber">
-    
+<form method="POST" action="Plate">
+    <label for="usr">Search:</label>
+    <input type="text" class="form-control" id="plateNumber" name="plateNumber">
+
     <button type="submit" class="btn btn-primary">Search</button>
 </form>
+
+<!-- If record selected -->
+@if (ViewData["Action"].ToString().Equals("1"))
+{
+    <br><br>
+
+    @Html.Raw("Number plate: ");
+    @Html.Raw(ViewData["LicensePlate"].ToString());
+    <br>
+    @Html.Raw("Region: ");
+    @Html.Raw(ViewData["Region"].ToString());
+    <br>
+    @Html.Raw("Logitude: ");
+    @Html.Raw(ViewData["Longitude"].ToString());
+    <br>
+    @Html.Raw("Latitude: ");
+    @Html.Raw(ViewData["Latitude"].ToString());
+    <br>
+    @Html.Raw("Time: ");
+    @Html.Raw(ViewData["Time"].ToString());
+
+    <br><br>
+}
 
 <table class="table">
     <tr>
@@ -20,17 +43,18 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        
-        <td>
-           @Html.DisplayFor(modelItem => item.PlateNumber)
-        </td>
-        
-        <td>
-            @Html.ActionLink("Details", "Details", new {  PlateNumber = item.PlateNumber })
-        </td>
-    </tr>
-}
-    
+    @foreach (var item in Model)
+    {
+        <tr>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.PlateNumber)
+            </td>
+
+            <td>
+                @Html.ActionLink("Index", "Index", new { PlateNumber = item.PlateNumber })
+            </td>
+        </tr>
+    }
+
 </table>
