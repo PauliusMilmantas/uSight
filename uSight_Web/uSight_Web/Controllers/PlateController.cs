@@ -49,7 +49,10 @@ namespace uSight_Web.Controllers
                
             }
 
-            return View(list2);
+            CommentViewModel cvm = new CommentViewModel();
+            cvm.search = list2;
+
+            return View(cvm);
         }
     }
 }

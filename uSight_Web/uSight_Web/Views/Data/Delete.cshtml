@@ -48,9 +48,6 @@
     <a class="btn" href="Delete?Action=1&PlateNumber=@Model.PlateNumber&Time=@Model.Time.ToString()"><button type="button" class="btn btn-primary">All history</button></a>
     -->
         
-        
-        
-        
         @Html.ActionLink("Delete", "Delete", new { PlateNumber = Model.PlateNumber, Time = Model.Time.ToString(), TAction = 1 })
 
         |

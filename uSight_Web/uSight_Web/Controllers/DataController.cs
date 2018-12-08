@@ -50,7 +50,6 @@ namespace uSight_Web.Controllers
                 return RedirectToAction("Index");
             }
             
-
             return View(rrr);
         }
     }
