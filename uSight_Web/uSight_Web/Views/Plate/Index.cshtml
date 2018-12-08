@@ -1,0 +1,36 @@
+﻿@model IEnumerable<uSight_Web.Models.SearchRecord>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<br>
+<form method="POST" action="Plate/Details">
+   <label for="usr">Search:</label>
+   <input type="text" class="form-control" id="plateNumber" name="plateNumber">
+    
+    <button type="submit" class="btn btn-primary">Search</button>
+</form>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.PlateNumber)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        
+        <td>
+           @Html.DisplayFor(modelItem => item.PlateNumber)
+        </td>
+        
+        <td>
+            @Html.ActionLink("Details", "Details", new {  PlateNumber = item.PlateNumber })
+        </td>
+    </tr>
+}
+    
+</table>

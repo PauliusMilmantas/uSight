@@ -224,6 +224,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\PlateController.cs" />
     <Compile Include="Controllers\StatisticsController.cs" />
     <Compile Include="Controllers\WantedController.cs" />
     <Compile Include="Entities\ChartData.cs" />
@@ -390,6 +391,8 @@
     <Content Include="Views\Shared\_ChartBar.cshtml" />
     <Content Include="Views\Data\Delete.cshtml" />
     <Content Include="Views\Wanted\Index.cshtml" />
+    <Content Include="Views\Plate\Index.cshtml" />
+    <Content Include="Views\Plate\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Account\Records.cshtml" />

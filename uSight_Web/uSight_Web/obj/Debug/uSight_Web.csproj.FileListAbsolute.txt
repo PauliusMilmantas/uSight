@@ -1122,3 +1122,5 @@ C:\Projects\uSight\uSight_Web\uSight_Web\bin\Tracing.pdb
 C:\Projects\uSight\uSight_Web\uSight_Web\bin\Tracing.xml
 C:\Projects\uSight\uSight_Web\uSight_Web\bin\System.ValueTuple.dll
 C:\Projects\uSight\uSight_Web\uSight_Web\bin\System.ValueTuple.xml
+C:\Users\lenovo\Desktop\uSight\uSight_Web\uSight_Web\bin\System.ValueTuple.dll
+C:\Users\lenovo\Desktop\uSight\uSight_Web\uSight_Web\bin\System.ValueTuple.xml
