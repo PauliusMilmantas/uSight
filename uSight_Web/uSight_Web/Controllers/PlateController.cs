@@ -48,9 +48,10 @@ namespace uSight_Web.Controllers
 
                
             }
-
+            
             CommentViewModel cvm = new CommentViewModel();
             cvm.search = list2;
+            cvm.comment = dbc.Comments;
 
             return View(cvm);
         }

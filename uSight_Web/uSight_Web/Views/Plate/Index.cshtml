@@ -58,22 +58,48 @@
             {
                 <br><br>
 
-                @Html.Raw("Number plate: ");
+                @Html.Raw("<b>Number plate:</b> ");
                 @Html.Raw(ViewData["LicensePlate"].ToString());
                 <br>
-                @Html.Raw("Region: ");
+                @Html.Raw("<b>Region:</b> ");
                 @Html.Raw(ViewData["Region"].ToString());
                 <br>
-                @Html.Raw("Logitude: ");
+                @Html.Raw("<b>Logitude:</b> ");
                 @Html.Raw(ViewData["Longitude"].ToString());
                 <br>
-                @Html.Raw("Latitude: ");
+                @Html.Raw("<b>Latitude:</b> ");
                 @Html.Raw(ViewData["Latitude"].ToString());
                 <br>
-                @Html.Raw("Time: ");
+                @Html.Raw("<b>Time:</b> ");
                 @Html.Raw(ViewData["Time"].ToString());
 
                 <br><br>
+
+                <h2>Comments:</h2>
+
+                <form method="post" action="Index?Post=1">
+                    <div class="form-group">
+                        <label for="comment">Comment:</label>
+                        <textarea class="form-control" rows="5" id="comment"></textarea>
+                        <input type="submit" value="Post">
+                    </div>
+                </form>
+
+                if (Model.comment.Count<uSight_Web.Models.Comment>() == 0)
+                {
+                    <h2>No comments</h2>
+                }
+                else
+                {
+                    foreach (var item in Model.comment)
+                    {
+                        <div>
+                            @Html.Label(item.UserId);
+                            @Html.Label(item.Text);
+                            @Html.Label(item.Time.ToString());
+                        </div>
+                    }
+                }
             }
 
         </div>

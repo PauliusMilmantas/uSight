@@ -8,6 +8,6 @@ namespace uSight_Web.Models
     public class CommentViewModel
     {
         public IEnumerable<uSight_Web.Models.SearchRecord> search { get; set; }
-        public uSight_Web.Models.Comment comment { get; set; }
+        public IEnumerable<uSight_Web.Models.Comment> comment { get; set; }
     }
 }
