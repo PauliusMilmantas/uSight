@@ -170,12 +170,5 @@ namespace uSight_Web.Controllers
             return View();
             //return HttpNotFound();
         }
-
-        // GET: Statistics/General
-        public ViewResult General()
-        {
-            var stats = new Statistics() { Name = "<Some general statistics here>" };
-            return View(stats);
-        }
     }
 }

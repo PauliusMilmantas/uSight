@@ -40,7 +40,7 @@ namespace uSight_Web.Controllers
                         {
                             bool wanted = PoliceAPI.Instance.IsStolen(foundLP);
                             SetViewBagLabels(originalLP, wanted);
-                            SaveUploadSearchRecord(foundLP.ToUpper(), wanted);
+                            SaveUploadSearchRecord(foundLP.ToUpper(), wanted, true);
                         }
                     }
                 }
@@ -66,7 +66,7 @@ namespace uSight_Web.Controllers
                         bool wanted = PoliceAPI.Instance.IsStolen(foundLP);
                         SetViewBagLabels(viewLP, wanted);
                         ViewBag.ImageData = "";
-                        SaveUploadSearchRecord(foundLP.ToUpper(), wanted);
+                        SaveUploadSearchRecord(foundLP.ToUpper(), wanted, false);
                     }
                 }
                 catch (Exception ex)
@@ -116,15 +116,26 @@ namespace uSight_Web.Controllers
             ViewBag.ImageData = imgDataURL;
         }
 
-        private void SaveUploadSearchRecord (string foundLP, bool wanted)
+        private void SaveUploadSearchRecord (string foundLP, bool wanted, bool locate)
         {
             ApplicationDbContext dbc = ApplicationDbContext.Create();
             SearchRecord sr = new SearchRecord();
             sr.Time = DateTime.Now;
             sr.PlateNumber = foundLP;
             sr.Stolen = wanted;
+            sr.Latitude = null;
+            sr.Longitude = null;
             if (Request.IsAuthenticated) sr.UserId = User.Identity.GetUserId();
             else sr.UserId = null;
+            if (locate)
+            {
+                (string city, string region, string country, double latitude, double longitude) = GeolocationAPI.Instance.GetInfo(Request.UserHostAddress);
+                sr.City = city;
+                sr.Region = region;
+                sr.Country = country;
+                sr.Latitude = latitude;
+                sr.Longitude = longitude;
+            }
             dbc.SearchRecords.Add(sr);
             dbc.SaveChanges();
         }

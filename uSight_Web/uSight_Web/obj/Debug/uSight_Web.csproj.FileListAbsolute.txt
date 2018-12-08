@@ -1120,3 +1120,5 @@ C:\Projects\uSight\uSight_Web\uSight_Web\bin\Microsoft.Practices.ServiceLocation
 C:\Projects\uSight\uSight_Web\uSight_Web\bin\Microsoft.Practices.ServiceLocation.xml
 C:\Projects\uSight\uSight_Web\uSight_Web\bin\Tracing.pdb
 C:\Projects\uSight\uSight_Web\uSight_Web\bin\Tracing.xml
+C:\Projects\uSight\uSight_Web\uSight_Web\bin\System.ValueTuple.dll
+C:\Projects\uSight\uSight_Web\uSight_Web\bin\System.ValueTuple.xml
