@@ -8,7 +8,7 @@ namespace uSight_Web.Entities
 {
     public class AchievementData
     {
-        public int GetCurrentTier (string groupName, int count)
+        public int GetTier (string groupName, int count)
         {
             if (count == 0) return 0;
             else if (count < 0) return -1;
@@ -149,16 +149,16 @@ namespace uSight_Web.Entities
             }
         }
 
-        public int GetOverallAchieverTier (string userID)
+        public int GetOverallAchieverCount (string userID)
         {
             ApplicationDbContext db = ApplicationDbContext.Create();
             var query =
                 from i in db.Achievements
                 where i.UserId == userID && i.GroupName != "Overall Achiever"
                 select i.Tier;
-
             int count = query.Sum();
-            return GetCurrentTier("Overall Achiever", count);
+
+            return count;
         }
     }
 }

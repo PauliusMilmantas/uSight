@@ -6,6 +6,7 @@ using uSight_Web.Entities;
 using Microsoft.AspNet.Identity;
 using System.Text.RegularExpressions;
 using System.Device.Location;
+using System.Linq;
 
 namespace uSight_Web.Controllers
 {
@@ -41,6 +42,7 @@ namespace uSight_Web.Controllers
                             bool wanted = PoliceAPI.Instance.IsStolen(foundLP);
                             SetViewBagLabels(originalLP, wanted);
                             SaveUploadSearchRecord(foundLP.ToUpper(), wanted, true);
+                            if (Request.IsAuthenticated) RefreshImageSearchAchievements();
                         }
                     }
                 }
@@ -67,6 +69,7 @@ namespace uSight_Web.Controllers
                         SetViewBagLabels(viewLP, wanted);
                         ViewBag.ImageData = "";
                         SaveUploadSearchRecord(foundLP.ToUpper(), wanted, false);
+                        if (Request.IsAuthenticated) RefreshTextSearchAchievements();
                     }
                 }
                 catch (Exception ex)
@@ -147,10 +150,99 @@ namespace uSight_Web.Controllers
             ViewBag.Label = wanted ? "Vehicle wanted!" : "Vehicle not wanted.";
             ViewBag.LabelColor = wanted ? "red" : "green";
         }
+
         private void SetViewBagLabels ()
         {
             ViewBag.Label = "Sorry! License plate unrecognised.";
             ViewBag.LabelColor = "red";
+        }
+    
+        private void RefreshTextSearchAchievements()
+        {
+            ApplicationDbContext db = ApplicationDbContext.Create();
+            SearchRecord sr = new SearchRecord();
+            AchievementData ad = new AchievementData();
+            string userID = User.Identity.GetUserId();
+
+            string groupName = "Text Searcher";
+            var srQuery =
+                from i in db.SearchRecords
+                where i.UserId == userID && i.Latitude == null
+                select i.PlateNumber;
+            int count = srQuery.Count();      // count of text searches
+            RefreshTierAndName(userID, groupName, count);
+
+
+            groupName = "Wanted Plates Finder";
+            srQuery =
+                from i in db.SearchRecords
+                where i.UserId == userID && i.Stolen == true
+                select i.PlateNumber;
+            count = srQuery.Count();      // count of all wanted plates found
+            RefreshTierAndName(userID, groupName, count);
+
+
+            groupName = "Overall Achiever";
+            RefreshTierAndName(userID, groupName, ad.GetOverallAchieverCount(userID));
+        }
+
+        private void RefreshImageSearchAchievements()
+        {
+            ApplicationDbContext db = ApplicationDbContext.Create();
+            SearchRecord sr = new SearchRecord();
+            AchievementData ad = new AchievementData();
+            string userID = User.Identity.GetUserId();
+
+            string groupName = "Image Searcher";
+            var srQuery =
+                from i in db.SearchRecords
+                where i.UserId == userID && i.Latitude != null
+                select i.PlateNumber;
+            int count = srQuery.Count();      // count of image searches
+            RefreshTierAndName(userID, groupName, count);
+
+
+            groupName = "Wanted Images Finder";
+            srQuery =
+                from i in db.SearchRecords
+                where i.UserId == userID && i.Stolen == true && i.Latitude != null
+                select i.PlateNumber;
+            count = srQuery.Count();      // count of all images with wanted plates found
+            RefreshTierAndName(userID, groupName, count);
+
+
+            groupName = "Wanted Plates Finder";
+            srQuery =
+                from i in db.SearchRecords
+                where i.UserId == userID && i.Stolen == true
+                select i.PlateNumber;
+            count = srQuery.Count();      // count of all wanted plates found
+            RefreshTierAndName(userID, groupName, count);
+
+
+            groupName = "Overall Achiever";
+            RefreshTierAndName(userID, groupName, ad.GetOverallAchieverCount(userID));
+        }
+
+        private void RefreshTierAndName (string userID, string groupName, int count)
+        {
+            ApplicationDbContext db = ApplicationDbContext.Create();
+            AchievementData ad = new AchievementData();
+
+            var adQuery =
+                from i in db.Achievements
+                where i.UserId == userID && i.GroupName == groupName
+                select i.Tier;
+            int currentTier = adQuery.ToList()[0];
+
+            int trueTier = ad.GetTier(groupName, count);
+            if (currentTier != trueTier)
+            {
+                Achievement existing = db.Achievements.Find(new object[] { userID, groupName, currentTier });
+                existing.Tier = trueTier;
+                existing.Name = ad.GetTierName(groupName, trueTier);
+                db.SaveChanges();
+            }
         }
     }
 }
