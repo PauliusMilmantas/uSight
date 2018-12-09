@@ -1,10 +1,16 @@
 ﻿@using Microsoft.AspNet.Identity;
 @using uSight_Web.Entities;
+@using System.Globalization;
 
 @model uSight_Web.Models.CommentViewModel
 
 @{
     ViewBag.Title = "Index";
+
+    var dtfi = new DateTimeFormatInfo();
+
+    DateTime totalStartDate = ViewBag.totalStartDate;
+    DateTime totalEndDate = ViewBag.totalEndDate;
 }
 
 <br>
@@ -24,7 +30,7 @@
                 <button type="submit" class="btn btn-primary">Search</button>
             </form>
 
-            <h3>License plates</h3>
+            <h2>License plates</h2>
 
             <table class="table">
                 <tr>
@@ -51,17 +57,125 @@
             </table>
         </div>
         <div id="menu2" class="tab-pane fade in @(!ViewBag.Search ? "active" : "")">
-            <h3>Information</h3>
+            <h2>Information</h2>
 
             <!-- If record selected -->
             @if (ViewData["Action"].ToString().Equals("1"))
             {
                 <br><br>
 
+
                 <h2>@Html.Raw(ViewData["LicensePlate"].ToString())</h2>;
 
-                @Html.Partial("_Map", (MapData)ViewBag.MapData);
+                <div class="row">
+                    <div class="col-md-12">
+                        @Html.Partial("_Map", (MapData)ViewBag.MapData);
+                    </div>
+                </div>
 
+                <br>
+                using (Html.BeginForm("Index", "Plate", FormMethod.Get))
+                {
+                    <input type="hidden" name="PlateNumber" value="@Html.Raw(ViewData["LicensePlate"].ToString())"/>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h2>Searches for this plate</h2>
+                            @{
+                                Html.RenderPartial("_ChartBar", (ChartData)ViewBag.timeCountSearchesCD);
+                            }
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <p>Start date:</p>
+                            <select name="totalStartYear" class="form-control">
+                                @for (int i = 2010; i <= 2030; i++)
+                                {
+                                    if (i == totalStartDate.Year)
+                                    {
+                                        <option value="@i" selected>@i</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@i">@i</option>
+                                    }
+                                }
+                            </select>
+                            <select name="totalStartMonth" class="form-control">
+                                @for (int i = 1; i <= 12; i++)
+                                {
+                                    if (i == totalStartDate.Month)
+                                    {
+                                        <option value="@i" selected>@dtfi.GetMonthName(i)</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@i">@dtfi.GetMonthName(i)</option>
+                                    }
+
+                                }
+                            </select>
+                            <select name="totalStartDay" class="form-control">
+                                @for (int i = 1; i <= 31; i++)
+                                {
+                                    if (i == totalStartDate.Day)
+                                    {
+                                        <option value="@i" selected>@i</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@i">@i</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                        <div class="col-md-4 col-md-push-4">
+                            <p>End date:</p>
+                            <select name="totalEndYear" class="form-control">
+                                @for (int i = 2010; i <= 2030; i++)
+                                {
+                                    if (i == totalEndDate.Year)
+                                    {
+                                        <option value="@i" selected>@i</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@i">@i</option>
+                                    }
+                                }
+                            </select>
+                            <select name="totalEndMonth" class="form-control">
+                                @for (int i = 1; i <= 12; i++)
+                                {
+                                    if (i == totalEndDate.Month)
+                                    {
+                                        <option value="@i" selected>@dtfi.GetMonthName(i)</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@i">@dtfi.GetMonthName(i)</option>
+                                    }
+                                }
+                            </select>
+                            <select name="totalEndDay" class="form-control">
+                                @for (int i = 1; i <= 31; i++)
+                                {
+                                    if (i == totalEndDate.Day)
+                                    {
+                                        <option value="@i" selected>@i</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@i">@i</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                        <div class="col-md-4 col-md-pull-4 text-center">
+                            <input type="submit" class="btn btn-success btn-block" value="Change interval">
+                        </div>
+                    </div>
+                }
                 <br><br>
 
                 <h2>Comments:</h2>

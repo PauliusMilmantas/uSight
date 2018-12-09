@@ -32,6 +32,7 @@ namespace uSight_Web.Controllers
                 var myWantedQuery =
                     from wr in dbc.WantedRecords
                     where wr.UserId == userId
+                    orderby wr.PlateNumber ascending
                     select wr.PlateNumber;
                 var myWantedList = new List<Tuple<string, List<Tuple<bool, DateTime>>>>();
                 foreach (var pName in myWantedQuery.ToList())
