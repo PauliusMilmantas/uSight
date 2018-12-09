@@ -14,6 +14,8 @@ namespace uSight_Web.Controllers
         // GET: Plate
         public ActionResult Index(String PlateNumber = "", int CPost = 0)
         {
+            ViewBag.Search = true;
+
             String plateNumber = PlateNumber;
 
             if (PlateNumber.Equals("")) {
@@ -74,7 +76,7 @@ namespace uSight_Web.Controllers
 
                 if (rr.Time != null) { ViewData["Time"] = rr.Time; } else { ViewData["Time"] = ""; }
 
-               
+                ViewBag.Search = false;
             }
             
             IEnumerable<Models.Comment> tre3 = dbc.Comments.ToList().FindAll(x => x.PlateNumber.Equals(plateNumber));
