@@ -11,7 +11,7 @@ namespace uSight_Web.Controllers
     public class PlateController : Controller
     {
         // GET: Plate
-        public ActionResult Index(String PlateNumber = "")
+        public ActionResult Index(String PlateNumber = "", int CPost = 0)
         {
             String plateNumber = PlateNumber;
 
@@ -20,6 +20,19 @@ namespace uSight_Web.Controllers
             }
                         
             ApplicationDbContext dbc = ApplicationDbContext.Create();
+
+
+            //Comment trigger
+            if (CPost == 1) {
+
+                
+
+
+
+                return RedirectToAction("Index");
+            }
+
+
 
             var list = dbc.SearchRecords.ToList();
 
@@ -34,7 +47,7 @@ namespace uSight_Web.Controllers
 
                 SearchRecord rr = list.Find(x => x.PlateNumber.Equals(plateNumber));
 
-
+                if (rr == null) rr = new SearchRecord();
 
                 if (rr.PlateNumber != null) { ViewData["LicensePlate"] = rr.PlateNumber; } else { ViewData["LicensePlate"] = ""; }
 

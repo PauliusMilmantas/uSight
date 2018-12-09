@@ -1,4 +1,6 @@
-﻿@model uSight_Web.Models.CommentViewModel
+﻿@using Microsoft.AspNet.Identity;
+
+@model uSight_Web.Models.CommentViewModel
 
 @{
     ViewBag.Title = "Index";
@@ -77,17 +79,24 @@
 
                 <h2>Comments:</h2>
 
-                <form method="post" action="Index?Post=1">
-                    <div class="form-group">
-                        <label for="comment">Comment:</label>
-                        <textarea class="form-control" rows="5" id="comment"></textarea>
-                        <input type="submit" value="Post">
-                    </div>
-                </form>
+                if (User.Identity.GetUserId() == null)
+                {
+                    <h3>Login to comment</h3>
+                }
+                else
+                {
+                    <form method="post" action="Plate?CPost=1">
+                        <div class="form-group">
+                            <label for="comment">Comment:</label>
+                            <textarea class="form-control" rows="5" id="comment" name="comment"></textarea>
+                            <input type="submit" value="Post">
+                        </div>
+                    </form>
+                }
 
                 if (Model.comment.Count<uSight_Web.Models.Comment>() == 0)
                 {
-                    <h2>No comments</h2>
+                    <h3>No comments</h3>
                 }
                 else
                 {
