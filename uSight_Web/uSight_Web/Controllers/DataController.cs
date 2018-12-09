@@ -24,10 +24,10 @@ namespace uSight_Web.Controllers
             ViewData["Filter"] = filter;
         }
 
-        public ActionResult Delete(String PlateNumber, String Time, int Action = 0) {
+        public ActionResult Delete(String PlateNumber, String Time, int TAction = 0) {
 
-              string plate = PlateNumber;
-              string time = Time;
+            string plate = PlateNumber;
+            string time = Time;
 
             string tt;
 
@@ -42,14 +42,14 @@ namespace uSight_Web.Controllers
             } catch (Exception e) {
                 return View(rrr);
             }
-
-            if (Action == 1) {
+            
+            if (tt.Equals("1") || TAction == 1) {
                 dbc.SearchRecords.Remove(rrr);
                 dbc.SaveChanges();
 
                 return RedirectToAction("Index");
             }
-
+            
             return View(rrr);
         }
     }

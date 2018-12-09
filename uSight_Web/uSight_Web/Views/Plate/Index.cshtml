@@ -1,60 +1,122 @@
-﻿@model IEnumerable<uSight_Web.Models.SearchRecord>
+﻿@using Microsoft.AspNet.Identity;
+
+@model uSight_Web.Models.CommentViewModel
 
 @{
     ViewBag.Title = "Index";
 }
 
 <br>
-<form method="POST" action="Plate">
-    <label for="usr">Search:</label>
-    <input type="text" class="form-control" id="plateNumber" name="plateNumber">
 
-    <button type="submit" class="btn btn-primary">Search</button>
-</form>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-<!-- If record selected -->
-@if (ViewData["Action"].ToString().Equals("1"))
-{
-    <br><br>
+<div class="container">
+    <ul class="nav nav-tabs">
+        <li><a data-toggle="tab" href="#menu1">License plates</a></li>
+        <li><a data-toggle="tab" href="#menu2">Information</a></li>
+    </ul>
 
-    @Html.Raw("Number plate: ");
-    @Html.Raw(ViewData["LicensePlate"].ToString());
-    <br>
-    @Html.Raw("Region: ");
-    @Html.Raw(ViewData["Region"].ToString());
-    <br>
-    @Html.Raw("Logitude: ");
-    @Html.Raw(ViewData["Longitude"].ToString());
-    <br>
-    @Html.Raw("Latitude: ");
-    @Html.Raw(ViewData["Latitude"].ToString());
-    <br>
-    @Html.Raw("Time: ");
-    @Html.Raw(ViewData["Time"].ToString());
+    <div class="tab-content">
+        <div id="menu1" class="tab-pane fade">
+            <form method="POST" action="Plate">
+                <label for="usr">Search:</label>
+                <input type="text" class="form-control" id="plateNumber" name="plateNumber">
 
-    <br><br>
-}
+                <button type="submit" class="btn btn-primary">Search</button>
+            </form>
 
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.PlateNumber)
-        </th>
-        <th></th>
-    </tr>
+            <h3>License plates</h3>
 
-    @foreach (var item in Model)
-    {
-        <tr>
+            <table class="table">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.search.ElementAt(0).PlateNumber)
+                    </th>
+                    <th></th>
+                </tr>
 
-            <td>
-                @Html.DisplayFor(modelItem => item.PlateNumber)
-            </td>
+                @foreach (var item in Model.search)
+                {
+                    <tr>
 
-            <td>
-                @Html.ActionLink("Index", "Index", new { PlateNumber = item.PlateNumber })
-            </td>
-        </tr>
-    }
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PlateNumber)
+                        </td>
 
-</table>
+                        <td>
+                            @Html.ActionLink("Details", "Index", new { PlateNumber = item.PlateNumber })
+                        </td>
+                    </tr>
+                }
+
+            </table>
+        </div>
+        <div id="menu2" class="tab-pane fade">
+            <h3>Information</h3>
+
+            <!-- If record selected -->
+            @if (ViewData["Action"].ToString().Equals("1"))
+            {
+                <br><br>
+
+                @Html.Raw("<b>Number plate:</b> ");
+                @Html.Raw(ViewData["LicensePlate"].ToString());
+                <br>
+                @Html.Raw("<b>Region:</b> ");
+                @Html.Raw(ViewData["Region"].ToString());
+                <br>
+                @Html.Raw("<b>Logitude:</b> ");
+                @Html.Raw(ViewData["Longitude"].ToString());
+                <br>
+                @Html.Raw("<b>Latitude:</b> ");
+                @Html.Raw(ViewData["Latitude"].ToString());
+                <br>
+                @Html.Raw("<b>Time:</b> ");
+                @Html.Raw(ViewData["Time"].ToString());
+
+                <br><br>
+
+                <h2>Comments:</h2>
+
+                if (User.Identity.GetUserId() == null)
+                {
+                    <h3>Login to comment</h3>
+                }
+                else
+                {
+                    <form method="post" action="Plate?CPost=1&PlateNumber=@ViewData["LicensePlate"]">
+                        <div class="form-group">
+                            <label for="comment">Comment:</label>
+                            <textarea class="form-control" rows="5" id="comment" name="comment"></textarea>
+                            <input type="submit" value="Post">
+                        </div>
+                    </form>
+                }
+
+                if (Model.comment.Count<uSight_Web.Models.Comment>() == 0)
+                {
+                    <h3>No comments</h3>
+                }
+                else
+                {
+                    foreach (var item in Model.comment)
+                    {
+                        <div>
+                            @Html.Label(item.UserId)
+                            <br>
+                            @Html.Label(item.Text)
+                            <br>
+                            @Html.Label(item.Time.ToString())
+                            <hr>
+                        </div>
+                    }
+                }
+            }
+
+        </div>
+    </div>
+</div>
+
+
+
