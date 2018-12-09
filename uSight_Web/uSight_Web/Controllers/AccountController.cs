@@ -156,13 +156,13 @@ namespace uSight_Web.Controllers
                 if (result.Succeeded)
                 {
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
+
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
-
+                    CreateDefaultAchievementEntries(user.Id);
                     return RedirectToAction("Index", "Home");
                 }
                 AddErrors(result);
@@ -170,6 +170,30 @@ namespace uSight_Web.Controllers
 
             // If we got this far, something failed, redisplay form
             return View(model);
+        }
+
+        private void CreateDefaultAchievementEntries(string userID)
+        {
+            CreateNewAchievementEntry("Text Searcher", userID);
+            CreateNewAchievementEntry("Image Searcher", userID);
+            CreateNewAchievementEntry("Commenter", userID);
+            CreateNewAchievementEntry("Wanted Plates Finder", userID);
+            CreateNewAchievementEntry("Wanted Images Finder", userID);
+            CreateNewAchievementEntry("Overall Achiever", userID);
+        }
+        private void CreateNewAchievementEntry(string groupName, string userID)
+        {
+            ApplicationDbContext db = ApplicationDbContext.Create();
+            Achievement ad = new Achievement();
+
+            ad.UserId = userID;
+            ad.GroupName = groupName;
+            ad.Tier = 0;
+            ad.Name = "Unranked";
+            ad.Description = "";
+
+            db.Achievements.Add(ad);
+            db.SaveChanges();
         }
 
         //
