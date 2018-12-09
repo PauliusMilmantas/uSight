@@ -1,16 +1,17 @@
 ﻿@using Microsoft.AspNet.Identity;
 @using uSight_Web.Entities;
 @using System.Globalization;
+@using System.Data.Entity;
 
 @model uSight_Web.Models.CommentViewModel
 
 @{
     ViewBag.Title = "Index";
 
-    var dtfi = new DateTimeFormatInfo();
+var dtfi = new DateTimeFormatInfo();
 
-    DateTime totalStartDate = ViewBag.totalStartDate;
-    DateTime totalEndDate = ViewBag.totalEndDate;
+DateTime totalStartDate = ViewBag.totalStartDate;
+DateTime totalEndDate = ViewBag.totalEndDate;
 }
 
 <br>
@@ -76,7 +77,7 @@
                 <br>
                 using (Html.BeginForm("Index", "Plate", FormMethod.Get))
                 {
-                    <input type="hidden" name="PlateNumber" value="@Html.Raw(ViewData["LicensePlate"].ToString())"/>
+                    <input type="hidden" name="PlateNumber" value="@Html.Raw(ViewData["LicensePlate"].ToString())" />
                     <div class="row">
                         <div class="col-md-12">
                             <h2>Searches for this plate</h2>
@@ -198,24 +199,31 @@
                 if (Model.comment.Count<uSight_Web.Models.Comment>() == 0)
                 {
                     <h3>No comments</h3>
-                }
-                else
-                {
-                    foreach (var item in Model.comment)
-                    {
-                        <div>
-                            @Html.Label(item.UserId)
-                            <br>
-                            @Html.Label(item.Text)
-                            <br>
-                            @Html.Label(item.Time.ToString())
-                            <hr>
-                        </div>
-                    }
-                }
-            }
+                                }
+                                else
+                                {
+                                    var ll = ViewData["infm"] as List<String>;
 
-        </div>
+                                    foreach (var item in Model.comment)
+                                    {
+                    <div>
+                        @{ 
+                            String us = ll.ElementAt(0);
+
+                        @Html.Label(us)
+                        Boolean r = ll.Remove(us);
+                            }
+                        <br>
+                        @Html.Label(item.Text)
+                        <br>
+                        @Html.Label(item.Time.ToString())
+                        <hr>
+                    </div>
+                        }
+                        }
+                }
+
+             </div>
     </div>
 </div>
 

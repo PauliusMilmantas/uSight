@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using uSight_Web.Entities;
 using uSight_Web.Models;
+using System.Web.Security;
 
 namespace uSight_Web.Controllers
 {
@@ -125,7 +126,27 @@ namespace uSight_Web.Controllers
             ViewBag.totalEndDate = end;
 
             IEnumerable<Models.Comment> tre3 = dbc.Comments.ToList().FindAll(x => x.PlateNumber.Equals(plateNumber));
-            
+
+            List<String> sad = new List<String>();
+
+            foreach (Models.Comment aa in tre3) {
+                String uu;
+
+                try
+                {
+                    var user = aa.UserId;
+                    uu = dbc.Users.Find(user).UserName;
+                   
+                }
+                catch (Exception) {
+                    uu = aa.UserId;
+                }
+
+                sad.Add(uu);
+            }
+
+            ViewData["infm"] = sad;
+
             CommentViewModel cvm = new CommentViewModel();
 
             cvm.search = list2;
