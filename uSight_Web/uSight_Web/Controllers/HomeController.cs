@@ -170,7 +170,7 @@ namespace uSight_Web.Controllers
                 where i.UserId == userID && i.Latitude == null
                 select i.PlateNumber;
             int count = srQuery.Count();      // count of text searches
-            RefreshTierAndName(userID, groupName, count);
+            ad.RefreshUserAchievements(userID, groupName, count);
 
 
             groupName = "Wanted Plates Finder";
@@ -179,11 +179,11 @@ namespace uSight_Web.Controllers
                 where i.UserId == userID && i.Stolen == true
                 select i.PlateNumber;
             count = srQuery.Count();      // count of all wanted plates found
-            RefreshTierAndName(userID, groupName, count);
+            ad.RefreshUserAchievements(userID, groupName, count);
 
 
             groupName = "Overall Achiever";
-            RefreshTierAndName(userID, groupName, ad.GetOverallAchieverCount(userID));
+            ad.RefreshUserAchievements(userID, groupName, ad.GetOverallAchieverCount(userID));
         }
 
         private void RefreshImageSearchAchievements()
@@ -199,7 +199,7 @@ namespace uSight_Web.Controllers
                 where i.UserId == userID && i.Latitude != null
                 select i.PlateNumber;
             int count = srQuery.Count();      // count of image searches
-            RefreshTierAndName(userID, groupName, count);
+            ad.RefreshUserAchievements(userID, groupName, count);
 
 
             groupName = "Wanted Images Finder";
@@ -208,7 +208,7 @@ namespace uSight_Web.Controllers
                 where i.UserId == userID && i.Stolen == true && i.Latitude != null
                 select i.PlateNumber;
             count = srQuery.Count();      // count of all images with wanted plates found
-            RefreshTierAndName(userID, groupName, count);
+            ad.RefreshUserAchievements(userID, groupName, count);
 
 
             groupName = "Wanted Plates Finder";
@@ -217,32 +217,12 @@ namespace uSight_Web.Controllers
                 where i.UserId == userID && i.Stolen == true
                 select i.PlateNumber;
             count = srQuery.Count();      // count of all wanted plates found
-            RefreshTierAndName(userID, groupName, count);
+            ad.RefreshUserAchievements(userID, groupName, count);
 
 
             groupName = "Overall Achiever";
-            RefreshTierAndName(userID, groupName, ad.GetOverallAchieverCount(userID));
+            ad.RefreshUserAchievements(userID, groupName, ad.GetOverallAchieverCount(userID));
         }
 
-        private void RefreshTierAndName (string userID, string groupName, int count)
-        {
-            ApplicationDbContext db = ApplicationDbContext.Create();
-            AchievementData ad = new AchievementData();
-
-            var adQuery =
-                from i in db.Achievements
-                where i.UserId == userID && i.GroupName == groupName
-                select i.Tier;
-            int currentTier = adQuery.ToList()[0];
-
-            int trueTier = ad.GetTier(groupName, count);
-            if (currentTier != trueTier)
-            {
-                Achievement existing = db.Achievements.Find(new object[] { userID, groupName, currentTier });
-                existing.Tier = trueTier;
-                existing.Name = ad.GetTierName(groupName, trueTier);
-                db.SaveChanges();
-            }
-        }
     }
 }

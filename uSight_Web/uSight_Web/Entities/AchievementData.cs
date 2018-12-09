@@ -160,5 +160,147 @@ namespace uSight_Web.Entities
 
             return count;
         }
+
+        private int GetTierLevelUpValues (string groupName, int tier)
+        {
+            if (tier <= 0 || tier > 4) return -1;
+            else groupName = groupName.ToLower();
+
+            switch (groupName)
+            {
+                case "text searcher":
+                    {
+                        switch (tier)
+                        {
+                            case 1: return 1;
+                            case 2: return 25;
+                            case 3: return 100;
+                            case 4: return 300;
+                            default: return -1;
+                        }
+                    }
+                case "image searcher":
+                    {
+                        switch (tier)
+                        {
+                            case 1: return 1;
+                            case 2: return 10;
+                            case 3: return 50;
+                            case 4: return 100;
+                            default: return -1;
+                        }
+                    }
+                case "commenter":
+                    {
+                        switch (tier)
+                        {
+                            case 1: return 1;
+                            case 2: return 10;
+                            case 3: return 30;
+                            case 4: return 100;
+                            default: return -1;
+                        }
+                    }
+                case "wanted plates finder":        // by both images and text searches
+                    {
+                        switch (tier)
+                        {
+                            case 1: return 1;
+                            case 2: return 5;
+                            case 3: return 20;
+                            case 4: return 50;
+                            default: return -1;
+                        }
+                    }
+                case "wanted images finder":
+                    {
+                        switch (tier)
+                        {
+                            case 1: return 1;
+                            case 2: return 2;
+                            case 3: return 10;
+                            case 4: return 30;
+                            default: return -1;
+                        }
+                    }
+                case "overall achiever":
+                    {
+                        switch (tier)
+                        {
+                            case 1: return 1;
+                            case 2: return 5;
+                            case 3: return 10;
+                            case 4: return 20;
+                            default: return -1;
+                        }
+                    }
+                default:
+                    return -1;
+            }
+        }
+
+        public string GetTierDescription (string groupName, int tier)
+        {
+            if (tier <= 0 || tier > 4) return "";
+            groupName = groupName.ToLower();
+
+            switch (groupName)
+            {
+                case "text searcher":
+                    {
+                        return "This user has searched by text "
+                                + GetTierLevelUpValues(groupName, tier) + " times! ";
+                    }
+                case "image searcher":
+                    {
+                        return "This user has searched by image "
+                                + GetTierLevelUpValues(groupName, tier) + " times! ";
+                    }
+                case "commenter":
+                    {
+                        return "This user has commented "
+                                + GetTierLevelUpValues(groupName, tier) + " times! ";
+                    }
+                case "wanted plates finder":        // by both images and text searches
+                    {
+                        return "This user has found "
+                                + GetTierLevelUpValues(groupName, tier) + " wanted plates! ";
+                    }
+                case "wanted images finder":
+                    {
+                        return "This user has uploaded images with wanted license plates "
+                                + GetTierLevelUpValues(groupName, tier) + " times! ";
+                    }
+                case "overall achiever":
+                    {
+                        int points = GetTierLevelUpValues(groupName, tier) - 1;
+                        return "This user has more than "
+                                + points + " uSight achievement points! ";
+                    }
+                default:
+                    return "";
+            }
+        }
+
+        public void RefreshUserAchievements(string userID, string groupName, int count)
+        {
+            ApplicationDbContext db = ApplicationDbContext.Create();
+
+            var adQuery =
+                from i in db.Achievements
+                where i.UserId == userID && i.GroupName == groupName
+                select i.Tier;
+            int currentTier = adQuery.ToList()[0];
+
+            int trueTier = GetTier(groupName, count);
+            if (currentTier < trueTier)
+            {
+                Achievement existing = db.Achievements.Find(new object[] { userID, groupName, currentTier });
+                existing.Tier = trueTier;
+                existing.Name = GetTierName(groupName, trueTier);
+                existing.Description = GetTierDescription(groupName, trueTier);
+                db.SaveChanges();
+            }
+        }
     }
 }
