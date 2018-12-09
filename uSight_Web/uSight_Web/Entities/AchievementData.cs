@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using uSight_Web.Models;
 
 namespace uSight_Web.Entities
 {
     public class AchievementData
     {
-        public int GetCurrentTier (string userID, string groupName, int count)
+        public int GetCurrentTier (string groupName, int count)
         {
             if (count == 0) return 0;
             else if (count < 0) return -1;
@@ -56,12 +57,14 @@ namespace uSight_Web.Entities
                     else if (count >= b && count < c) return 3;
                     else return 4;
                 }
-                /*case "overall achiever":      // pridesiu jungimasi i db
+                case "overall achiever": 
                 {
-
-                    break;
-                }*/
-
+                    int a = 5, b = 10, c = 20;
+                    if (count < a) return 1;
+                    else if (count >= a && count < b) return 2;
+                    else if (count >= b && count < c) return 3;
+                    else return 4;
+                }
                 default:
                     return -1;
             }
@@ -146,5 +149,16 @@ namespace uSight_Web.Entities
             }
         }
 
+        public int GetOverallAchieverTier (string userID)
+        {
+            ApplicationDbContext db = ApplicationDbContext.Create();
+            var query =
+                from i in db.Achievements
+                where i.UserId == userID && i.GroupName != "Overall Achiever"
+                select i.Tier;
+
+            int count = query.Sum();
+            return GetCurrentTier("Overall Achiever", count);
+        }
     }
 }
