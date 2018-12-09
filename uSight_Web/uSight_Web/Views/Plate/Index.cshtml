@@ -1,4 +1,5 @@
 ﻿@using Microsoft.AspNet.Identity;
+@using uSight_Web.Entities;
 
 @model uSight_Web.Models.CommentViewModel
 
@@ -8,13 +9,10 @@
 
 <br>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
 <div class="container">
     <ul class="nav nav-tabs">
-        <li @(ViewBag.Search ? "class=\"active\"" : "")><a data-toggle="tab" href="#menu1">License plates</a></li>
-        <li @(!ViewBag.Search ? "class=\"active\"" : "")><a data-toggle="tab" href="#menu2">Information</a></li>
+        <li @(ViewBag.Search ? Html.Raw("class=\"active\"") : Html.Raw(""))><a data-toggle="tab" href="#menu1">License plates</a></li>
+        <li @(!ViewBag.Search ? Html.Raw("class=\"active\"") : Html.Raw(""))><a data-toggle="tab" href="#menu2">Information</a></li>
     </ul>
 
     <div class="tab-content">
@@ -60,20 +58,9 @@
             {
                 <br><br>
 
-                @Html.Raw("<b>Number plate:</b> ");
-                @Html.Raw(ViewData["LicensePlate"].ToString());
-                <br>
-                @Html.Raw("<b>Region:</b> ");
-                @Html.Raw(ViewData["Region"].ToString());
-                <br>
-                @Html.Raw("<b>Logitude:</b> ");
-                @Html.Raw(ViewData["Longitude"].ToString());
-                <br>
-                @Html.Raw("<b>Latitude:</b> ");
-                @Html.Raw(ViewData["Latitude"].ToString());
-                <br>
-                @Html.Raw("<b>Time:</b> ");
-                @Html.Raw(ViewData["Time"].ToString());
+                <h2>@Html.Raw(ViewData["LicensePlate"].ToString())</h2>;
+
+                @Html.Partial("_Map", (MapData)ViewBag.MapData);
 
                 <br><br>
 

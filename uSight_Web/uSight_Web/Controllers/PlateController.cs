@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using uSight_Web.Entities;
 using uSight_Web.Models;
 
 namespace uSight_Web.Controllers
@@ -67,15 +68,20 @@ namespace uSight_Web.Controllers
                 }
 
                 if (rr.PlateNumber != null) { ViewData["LicensePlate"] = rr.PlateNumber; } else { ViewData["LicensePlate"] = ""; }
-
-                if (rr.Region != null) { ViewData["Region"] = rr.Region; } else { ViewData["Region"] = ""; }
-
-                if (rr.Longitude != null) { ViewData["Longitude"] = rr.Longitude; } else { ViewData["Longitude"] = ""; }
-
-                if (rr.Latitude != null) { ViewData["Latitude"] = rr.Latitude; } else { ViewData["Latitude"] = ""; }
-
-                if (rr.Time != null) { ViewData["Time"] = rr.Time; } else { ViewData["Time"] = ""; }
-
+                var markers = new List<MapMarker>();
+                if (rr.PlateNumber != null)
+                {
+                    var query = from sr in dbc.SearchRecords
+                                where sr.Latitude != null && sr.PlateNumber == rr.PlateNumber
+                                select new {sr.Latitude, sr.Longitude, sr.Time, sr.Stolen};
+                    string format = "<p><b>Latitude:</b> {0}</p>" +
+                                    "<p><b>Longitude:</b> {1}</p>" +
+                                    "<p><b>Time:</b> {2}</p>" +
+                                    "<p><b>Was stolen:</b> {3}</p>";
+                    markers = query.ToList().Select(x => new MapMarker { lat = (double)x.Latitude, lng = (double)x.Longitude, desc = string.Format(format, (double)x.Latitude, (double)x.Longitude, x.Time, x.Stolen ? "Yes": "No") }).ToList();
+                }
+                MapData mapData = new MapData(markers);
+                ViewBag.MapData = mapData;
                 ViewBag.Search = false;
             }
             
