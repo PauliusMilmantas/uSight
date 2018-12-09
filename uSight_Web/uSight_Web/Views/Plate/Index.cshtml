@@ -85,7 +85,7 @@
                 }
                 else
                 {
-                    <form method="post" action="Plate?CPost=1">
+                    <form method="post" action="Plate?CPost=1&PlateNumber=@ViewData["LicensePlate"]">
                         <div class="form-group">
                             <label for="comment">Comment:</label>
                             <textarea class="form-control" rows="5" id="comment" name="comment"></textarea>
@@ -103,9 +103,12 @@
                     foreach (var item in Model.comment)
                     {
                         <div>
-                            @Html.Label(item.UserId);
-                            @Html.Label(item.Text);
-                            @Html.Label(item.Time.ToString());
+                            @Html.Label(item.UserId)
+                            <br>
+                            @Html.Label(item.Text)
+                            <br>
+                            @Html.Label(item.Time.ToString())
+                            <hr>
                         </div>
                     }
                 }
