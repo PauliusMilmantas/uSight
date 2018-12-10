@@ -83,11 +83,91 @@ namespace Requirements
         static void Change(int x, int y)
         {
             Console.WriteLine("Changing to reflect " + x + " -> " + y);
+            DataTable dt = new DataTable("Func");
+            using (var con = new SqlConnection(connectionString))
+            {
+                try
+                {
+                    con.Open();
+                    using (var ad = new SqlDataAdapter("SELECT X, Y FROM Func", con))
+                    {
+                        var comm = new SqlCommand();
+                        comm.Connection = con;
+                        comm.CommandType = CommandType.Text;
+                        comm.CommandText = "UPDATE Func SET Y = @Y WHERE X = @X";
+                        comm.Parameters.Add(new SqlParameter("@X", SqlDbType.Int, 4, "X"));
+                        comm.Parameters.Add(new SqlParameter("@Y", SqlDbType.Int, 4, "Y"));
+                        ad.UpdateCommand = comm;
+
+                        comm = new SqlCommand();
+                        comm.Connection = con;
+                        comm.CommandType = CommandType.Text;
+                        comm.CommandText = "INSERT INTO Func (X, Y) VALUES (@X, @Y)";
+                        comm.Parameters.Add(new SqlParameter("@X", SqlDbType.Int, 4, "X"));
+                        comm.Parameters.Add(new SqlParameter("@Y", SqlDbType.Int, 4, "Y"));
+                        ad.InsertCommand = comm;
+
+                        ad.Fill(dt);
+                        dt.PrimaryKey = new DataColumn[] { dt.Columns["X"] };
+                        var row = dt.Rows.Find(x);
+                        if (row != null)
+                        {
+                            row["Y"] = y;
+                        }
+                        else
+                        {
+                            row = dt.NewRow();
+                            row["X"] = x;
+                            row["Y"] = y;
+                            dt.Rows.Add(row);
+                        }
+                        ad.Update(dt);
+                    }
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("Error:");
+                    Console.WriteLine(e.ToString());
+                    return;
+                }
+            }
         }
 
         static void Delete(int x)
         {
             Console.WriteLine("Deleting " + x);
+            DataTable dt = new DataTable("Func");
+            using (var con = new SqlConnection(connectionString))
+            {
+                try
+                {
+                    con.Open();
+                    using (var ad = new SqlDataAdapter("SELECT X, Y FROM Func", con))
+                    {
+                        var comm = new SqlCommand();
+                        comm.Connection = con;
+                        comm.CommandType = CommandType.Text;
+                        comm.CommandText = "DELETE FROM Func WHERE X = @X";
+                        comm.Parameters.Add(new SqlParameter("@X", SqlDbType.Int, 4, "X"));
+                        ad.DeleteCommand = comm;
+
+                        ad.Fill(dt);
+                        dt.PrimaryKey = new DataColumn[] { dt.Columns["X"] };
+                        var row = dt.Rows.Find(x);
+                        if (row != null)
+                        {
+                            row.Delete();
+                        }
+                        ad.Update(dt);
+                    }
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("Error:");
+                    Console.WriteLine(e.ToString());
+                    return;
+                }
+            }
         }
     }
 }
