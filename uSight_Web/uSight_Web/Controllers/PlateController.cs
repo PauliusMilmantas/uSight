@@ -26,6 +26,7 @@ namespace uSight_Web.Controllers
             }
                         
             ApplicationDbContext dbc = ApplicationDbContext.Create();
+            AchievementData ad = new AchievementData();
             
             //Comment trigger
             if (CPost == 1) {
@@ -43,8 +44,20 @@ namespace uSight_Web.Controllers
                 cmy.Time = tm;
 
                 dbc.Comments.Add(cmy);
-                dbc.SaveChanges();   
-                
+                dbc.SaveChanges();
+
+
+                string groupName = "Commenter";
+                var cQuery =
+                    from i in dbc.Comments
+                    where i.UserId == uId
+                    select i.Text;
+                int count = cQuery.Count();      // count all user comments
+                ad.RefreshUserAchievements(uId, groupName, count);
+
+                groupName = "Overall Achiever";
+                ad.RefreshUserAchievements(uId, groupName, ad.GetOverallAchieverCount(uId));
+
                 return RedirectToAction("Index");
             }
             

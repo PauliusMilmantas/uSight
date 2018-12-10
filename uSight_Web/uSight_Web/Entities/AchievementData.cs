@@ -248,8 +248,8 @@ namespace uSight_Web.Entities
             {
                 case "text searcher":
                     {
-                        return "This user has searched by text "
-                                + GetTierLevelUpValues(groupName, tier) + " times! ";
+                        return "This user has made "
+                                + GetTierLevelUpValues(groupName, tier) + " text searches! ";
                     }
                 case "image searcher":
                     {
@@ -258,8 +258,8 @@ namespace uSight_Web.Entities
                     }
                 case "commenter":
                     {
-                        return "This user has commented "
-                                + GetTierLevelUpValues(groupName, tier) + " times! ";
+                        return "This user has made "
+                                + GetTierLevelUpValues(groupName, tier) + " comments! ";
                     }
                 case "wanted plates finder":        // by both images and text searches
                     {
@@ -273,9 +273,8 @@ namespace uSight_Web.Entities
                     }
                 case "overall achiever":
                     {
-                        int points = GetTierLevelUpValues(groupName, tier) - 1;
                         return "This user has more than "
-                                + points + " uSight achievement points! ";
+                                + GetTierLevelUpValues(groupName, tier) + " uSight achievement points! ";
                     }
                 default:
                     return "";
