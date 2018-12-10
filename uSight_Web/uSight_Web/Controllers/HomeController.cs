@@ -6,6 +6,7 @@ using uSight_Web.Entities;
 using Microsoft.AspNet.Identity;
 using System.Text.RegularExpressions;
 using System.Device.Location;
+using System.Linq;
 
 namespace uSight_Web.Controllers
 {
@@ -40,7 +41,8 @@ namespace uSight_Web.Controllers
                         {
                             bool wanted = PoliceAPI.Instance.IsStolen(foundLP);
                             SetViewBagLabels(originalLP, wanted);
-                            SaveUploadSearchRecord(foundLP.ToUpper(), wanted);
+                            SaveUploadSearchRecord(foundLP.ToUpper(), wanted, true);
+                            if (Request.IsAuthenticated) RefreshImageSearchAchievements();
                         }
                     }
                 }
@@ -66,7 +68,8 @@ namespace uSight_Web.Controllers
                         bool wanted = PoliceAPI.Instance.IsStolen(foundLP);
                         SetViewBagLabels(viewLP, wanted);
                         ViewBag.ImageData = "";
-                        SaveUploadSearchRecord(foundLP.ToUpper(), wanted);
+                        SaveUploadSearchRecord(foundLP.ToUpper(), wanted, false);
+                        if (Request.IsAuthenticated) RefreshTextSearchAchievements();
                     }
                 }
                 catch (Exception ex)
@@ -116,17 +119,28 @@ namespace uSight_Web.Controllers
             ViewBag.ImageData = imgDataURL;
         }
 
-        private void SaveUploadSearchRecord (string foundLP, bool wanted)
+        private void SaveUploadSearchRecord (string foundLP, bool wanted, bool locate)
         {
-            Search s = new Search();
+            ApplicationDbContext dbc = ApplicationDbContext.Create();
             SearchRecord sr = new SearchRecord();
             sr.Time = DateTime.Now;
             sr.PlateNumber = foundLP;
             sr.Stolen = wanted;
+            sr.Latitude = null;
+            sr.Longitude = null;
             if (Request.IsAuthenticated) sr.UserId = User.Identity.GetUserId();
             else sr.UserId = null;
-            s.SearchRecords.Add(sr);
-            s.SaveChanges();
+            if (locate)
+            {
+                (string city, string region, string country, double latitude, double longitude) = GeolocationAPI.Instance.GetInfo(Request.UserHostAddress);
+                sr.City = city;
+                sr.Region = region;
+                sr.Country = country;
+                sr.Latitude = latitude;
+                sr.Longitude = longitude;
+            }
+            dbc.SearchRecords.Add(sr);
+            dbc.SaveChanges();
         }
 
         private void SetViewBagLabels (string originalLP, bool wanted)
@@ -136,10 +150,79 @@ namespace uSight_Web.Controllers
             ViewBag.Label = wanted ? "Vehicle wanted!" : "Vehicle not wanted.";
             ViewBag.LabelColor = wanted ? "red" : "green";
         }
+
         private void SetViewBagLabels ()
         {
             ViewBag.Label = "Sorry! License plate unrecognised.";
             ViewBag.LabelColor = "red";
         }
+    
+        private void RefreshTextSearchAchievements()
+        {
+            ApplicationDbContext db = ApplicationDbContext.Create();
+            SearchRecord sr = new SearchRecord();
+            AchievementData ad = new AchievementData();
+            string userID = User.Identity.GetUserId();
+
+            string groupName = "Text Searcher";
+            var srQuery =
+                from i in db.SearchRecords
+                where i.UserId == userID && i.Latitude == null
+                select i.PlateNumber;
+            int count = srQuery.Count();      // count of text searches
+            ad.RefreshUserAchievements(userID, groupName, count);
+
+
+            groupName = "Wanted Plates Finder";
+            srQuery =
+                from i in db.SearchRecords
+                where i.UserId == userID && i.Stolen == true
+                select i.PlateNumber;
+            count = srQuery.Count();      // count of all wanted plates found
+            ad.RefreshUserAchievements(userID, groupName, count);
+
+
+            groupName = "Overall Achiever";
+            ad.RefreshUserAchievements(userID, groupName, ad.GetOverallAchieverCount(userID));
+        }
+
+        private void RefreshImageSearchAchievements()
+        {
+            ApplicationDbContext db = ApplicationDbContext.Create();
+            SearchRecord sr = new SearchRecord();
+            AchievementData ad = new AchievementData();
+            string userID = User.Identity.GetUserId();
+
+            string groupName = "Image Searcher";
+            var srQuery =
+                from i in db.SearchRecords
+                where i.UserId == userID && i.Latitude != null
+                select i.PlateNumber;
+            int count = srQuery.Count();      // count of image searches
+            ad.RefreshUserAchievements(userID, groupName, count);
+
+
+            groupName = "Wanted Images Finder";
+            srQuery =
+                from i in db.SearchRecords
+                where i.UserId == userID && i.Stolen == true && i.Latitude != null
+                select i.PlateNumber;
+            count = srQuery.Count();      // count of all images with wanted plates found
+            ad.RefreshUserAchievements(userID, groupName, count);
+
+
+            groupName = "Wanted Plates Finder";
+            srQuery =
+                from i in db.SearchRecords
+                where i.UserId == userID && i.Stolen == true
+                select i.PlateNumber;
+            count = srQuery.Count();      // count of all wanted plates found
+            ad.RefreshUserAchievements(userID, groupName, count);
+
+
+            groupName = "Overall Achiever";
+            ad.RefreshUserAchievements(userID, groupName, ad.GetOverallAchieverCount(userID));
+        }
+
     }
 }

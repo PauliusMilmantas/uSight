@@ -11,7 +11,7 @@ namespace uSight_Web.Entities
     public class PoliceAPI
     {
         private static Lazy<PoliceAPI> instance = new Lazy<PoliceAPI>(delegate() { return new PoliceAPI(); });
-        public static PoliceAPI Instance { get { return instance.Value; } set { } }
+        public static PoliceAPI Instance { get { return instance.Value; } }
 
         private PoliceAPI()
         {

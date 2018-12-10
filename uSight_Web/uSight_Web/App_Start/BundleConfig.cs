@@ -25,6 +25,9 @@ namespace uSight_Web
                       "~/Scripts/chart.bundle.min.js").Include(
                       "~/Scripts/chart-renderer.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/maps").Include(
+                      "~/Scripts/map-renderer.js"));
+
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap-flatly.css",
                       "~/Content/site.css"));
