@@ -238,6 +238,7 @@
     <Compile Include="Entities\MapData.cs" />
     <Compile Include="Entities\PoliceAPI.cs" />
     <Compile Include="Controllers\DataController.cs" />
+    <Compile Include="Entities\RandomSource.cs" />
     <Compile Include="Entities\RecognitionBuilder.cs" />
     <Compile Include="Entities\UtilFunctions.cs" />
     <Compile Include="Global.asax.cs">

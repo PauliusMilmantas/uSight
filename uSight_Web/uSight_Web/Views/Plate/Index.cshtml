@@ -199,31 +199,34 @@ DateTime totalEndDate = ViewBag.totalEndDate;
                 if (Model.comment.Count<uSight_Web.Models.Comment>() == 0)
                 {
                     <h3>No comments</h3>
-                                }
-                                else
-                                {
-                                    var ll = ViewData["infm"] as List<String>;
-
-                                    foreach (var item in Model.comment)
-                                    {
-                    <div>
-                        @{ 
-                            String us = ll.ElementAt(0);
-
-                        @Html.Label(us)
-                        Boolean r = ll.Remove(us);
-                            }
-                        <br>
-                        @Html.Label(item.Text)
-                        <br>
-                        @Html.Label(item.Time.ToString())
-                        <hr>
-                    </div>
-                        }
-                        }
                 }
+                else
+                {
+                    var ll = ViewData["infm"] as List<String>;
+                    var al = ViewBag.Achievements as List<String>;
 
-             </div>
+                    foreach (var item in Model.comment)
+                    {
+                        <div>
+                            @{
+                                String us = ll.ElementAt(0);
+                                String usac = al.ElementAt(0);
+
+                                @Html.Label(us + " " + usac)
+                                Boolean r = ll.Remove(us);
+                                r = al.Remove(usac);
+                            }
+                            <br>
+                            @Html.Label(item.Text)
+                            <br>
+                            @Html.Label(item.Time.ToString())
+                            <hr>
+                        </div>
+                    }
+                }
+            }
+
+        </div>
     </div>
 </div>
 
