@@ -201,16 +201,22 @@
                 }
                 else
                 {
+                    var ll = ViewData["infm"] as List<String>;
+
                     foreach (var item in Model.comment)
                     {
-                        <div>
-                            @Html.Label(item.UserId)
-                            <br>
-                            @Html.Label(item.Text)
-                            <br>
-                            @Html.Label(item.Time.ToString())
-                            <hr>
-                        </div>
+                    <div>
+                        @{
+                            String us = ll.ElementAt(0);
+                            @Html.Label(us)
+                            Boolean r = ll.Remove(us);
+                        }
+                        <br>
+                        @Html.Label(item.Text)
+                        <br>
+                        @Html.Label(item.Time.ToString())
+                        <hr>
+                    </div>
                     }
                 }
             }
