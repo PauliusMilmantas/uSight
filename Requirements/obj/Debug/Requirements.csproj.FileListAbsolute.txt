@@ -1,0 +1,9 @@
+C:\Projects\uSight\Requirements\bin\Debug\Databases\func.mdf
+C:\Projects\uSight\Requirements\bin\Debug\Databases\func_log.ldf
+C:\Projects\uSight\Requirements\bin\Debug\Requirements.exe.config
+C:\Projects\uSight\Requirements\bin\Debug\Requirements.exe
+C:\Projects\uSight\Requirements\bin\Debug\Requirements.pdb
+C:\Projects\uSight\Requirements\obj\Debug\Requirements.csprojAssemblyReference.cache
+C:\Projects\uSight\Requirements\obj\Debug\Requirements.csproj.CoreCompileInputs.cache
+C:\Projects\uSight\Requirements\obj\Debug\Requirements.exe
+C:\Projects\uSight\Requirements\obj\Debug\Requirements.pdb
