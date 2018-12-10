@@ -63,7 +63,7 @@ namespace uSight_Web.Controllers
             
             var list = dbc.SearchRecords.ToList();
 
-            var list2 = list.DistinctBy(x => x.PlateNumber);
+            var list2 = list.DistinctBy(x => x.PlateNumber).OrderBy(sr => sr.PlateNumber);
 
             var markers = new List<MapMarker>();
             ChartData chartData = new ChartData(new List<string>(), new List<string>(), new List<List<double>>());
@@ -140,25 +140,36 @@ namespace uSight_Web.Controllers
 
             IEnumerable<Models.Comment> tre3 = dbc.Comments.ToList().FindAll(x => x.PlateNumber.Equals(plateNumber));
 
-
             List<String> sad = new List<String>();
-            foreach (Models.Comment aa in tre3)
-            {
+            List<String> achievements = new List<String>();
+
+            foreach (Models.Comment aa in tre3) {
                 String uu;
+                string ach = "";
                 try
                 {
                     var user = aa.UserId;
                     uu = dbc.Users.Find(user).UserName;
-
+                    var acQuery =
+                         from a in dbc.Achievements
+                         where a.UserId == user && a.Tier > 0
+                         select a.Name;
+                    var allAc = acQuery.ToList();
+                    if (allAc.Count != 0)
+                    {
+                        ach = "- " + allAc[RandomSource.Instance.Next(allAc.Count)];
+                    }
                 }
-                catch (Exception)
-                {
+                catch (Exception) {
                     uu = aa.UserId;
                 }
-                sad.Add(uu);
-            }
-            ViewData["infm"] = sad;
 
+                sad.Add(uu);
+                achievements.Add(ach);
+            }
+
+            ViewData["infm"] = sad;
+            ViewBag.Achievements = achievements;
 
             CommentViewModel cvm = new CommentViewModel();
 
