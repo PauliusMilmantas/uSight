@@ -9,16 +9,13 @@ namespace uSight_Web.Models
 {
     public class Achievement
     {
-        [Key]
-        [Column(Order = 1)]
+        [Key, Column(Order = 1)]
+        [ForeignKey("AspNetUsers")]
         public string UserId { get; set; }
-        [Key]
-        [Column(Order = 2)]
+        [Key, Column(Order = 2)]
+        [ForeignKey("AchievementGroups")]
         public string GroupName { get; set; }
-        [Key]
-        [Column(Order = 3)]
+        [ForeignKey("AchievementGroups"), Column(Order = 3)]
         public int Tier { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
     }
 }

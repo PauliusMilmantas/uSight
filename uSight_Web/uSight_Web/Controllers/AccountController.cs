@@ -189,8 +189,8 @@ namespace uSight_Web.Controllers
             ad.UserId = userID;
             ad.GroupName = groupName;
             ad.Tier = 0;
-            ad.Name = "Unranked";
-            ad.Description = "";
+            //ad.Name = "Unranked";
+            //ad.Description = "";
 
             db.Achievements.Add(ad);
             db.SaveChanges();

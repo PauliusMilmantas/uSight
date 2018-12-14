@@ -141,15 +141,15 @@ namespace uSight_Web.Entities
                 newAchievement.UserId = existing.UserId;
                 newAchievement.GroupName = existing.GroupName;
                 newAchievement.Tier = existing.Tier;
-                newAchievement.Name = existing.Name;
-                newAchievement.Description = existing.Description;
+                //newAchievement.Name = existing.Name;
+                //newAchievement.Description = existing.Description;
                 db.Achievements.Remove(existing);
                 db.SaveChanges();
 
                 existing = newAchievement;
                 existing.Tier = trueTier;
-                existing.Name = GetTierName(groupName, trueTier);
-                existing.Description = GetTierDescription(groupName, trueTier);
+                //existing.Name = GetTierName(groupName, trueTier);
+                //existing.Description = GetTierDescription(groupName, trueTier);
                 db.Achievements.Add(existing);
                 db.SaveChanges();
             }

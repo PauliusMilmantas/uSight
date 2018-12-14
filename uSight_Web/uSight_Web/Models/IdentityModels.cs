@@ -24,6 +24,7 @@ namespace uSight_Web.Models
         public DbSet<WantedRecord> WantedRecords { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Achievement> Achievements { get; set; }
+        public DbSet<AchievementGroup> AchievementGroups { get; set; }
 
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)

@@ -152,8 +152,9 @@ namespace uSight_Web.Controllers
                     uu = dbc.Users.Find(user).UserName;
                     var acQuery =
                          from a in dbc.Achievements
+                         join ag in dbc.AchievementGroups on new { a.GroupName, a.Tier } equals new { ag.GroupName, ag.Tier }
                          where a.UserId == user && a.Tier > 0
-                         select a.Name;
+                         select ag.Name;
                     var allAc = acQuery.ToList();
                     if (allAc.Count != 0)
                     {
