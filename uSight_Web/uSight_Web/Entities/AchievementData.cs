@@ -123,6 +123,29 @@ namespace uSight_Web.Entities
             return count;
         }
 
+        public void PrepareAchievementGroups()
+        {
+            var dbc = new ApplicationDbContext();
+            var groups = new string[] { "Text Searcher", "Image Searcher", "Commenter", "Wanted Plates Finder", "Wanted Images Finder", "Overall Achiever" };
+            foreach (var s in groups)
+            {
+                for (int t = 0;t <= nTiers;t++)
+                {
+                    var ag = dbc.AchievementGroups.Find(new object[] { s, t });
+                    if (ag == null)
+                    {
+                        ag = new AchievementGroup();
+                        ag.GroupName = s;
+                        ag.Tier = t;
+                        ag.Name = GetTierName(s, t);
+                        ag.Description = GetTierDescription(s, t);
+                        dbc.AchievementGroups.Add(ag);
+                    }
+                }
+            }
+            dbc.SaveChanges();
+        }
+
         public void RefreshUserAchievements(string userID, string groupName, int count)
         {
             ApplicationDbContext db = ApplicationDbContext.Create();
