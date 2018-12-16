@@ -141,11 +141,11 @@ namespace uSight_Web.Controllers
             IEnumerable<Models.Comment> tre3 = dbc.Comments.ToList().FindAll(x => x.PlateNumber.Equals(plateNumber));
 
             List<String> sad = new List<String>();
-            List<String> achievements = new List<String>();
+            var achievements = new List<Tuple<string, string>>();
 
             foreach (Models.Comment aa in tre3) {
                 String uu;
-                string ach = "";
+                Tuple<string, string> ach = new Tuple<string, string>("", "");
                 try
                 {
                     var user = aa.UserId;
@@ -154,11 +154,12 @@ namespace uSight_Web.Controllers
                          from a in dbc.Achievements
                          join ag in dbc.AchievementGroups on new { a.GroupName, a.Tier } equals new { ag.GroupName, ag.Tier }
                          where a.UserId == user && a.Tier > 0
-                         select ag.Name;
+                         select new { ag.Name, ag.Description};
                     var allAc = acQuery.ToList();
                     if (allAc.Count != 0)
                     {
-                        ach = "- " + allAc[RandomSource.Instance.Next(allAc.Count)];
+                        int achId = RandomSource.Instance.Next(allAc.Count);
+                        ach = new Tuple<string, string>(allAc[achId].Name, allAc[achId].Description);
                     }
                 }
                 catch (Exception) {

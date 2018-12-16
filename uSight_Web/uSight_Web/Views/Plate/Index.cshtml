@@ -191,7 +191,8 @@ DateTime totalEndDate = ViewBag.totalEndDate;
                         <div class="form-group">
                             <label for="comment">Comment:</label>
                             <textarea class="form-control" rows="5" id="comment" name="comment"></textarea>
-                            <input type="submit" value="Post">
+                            <br>
+                            <input class="btn btn-success" type="submit" value="Post">
                         </div>
                     </form>
                 }
@@ -203,24 +204,38 @@ DateTime totalEndDate = ViewBag.totalEndDate;
                 else
                 {
                     var ll = ViewData["infm"] as List<String>;
-                    var al = ViewBag.Achievements as List<String>;
+                    var al = ViewBag.Achievements as List<Tuple<string, string>>;
 
                     foreach (var item in Model.comment)
                     {
-                        <div>
-                            @{
-                                String us = ll.ElementAt(0);
-                                String usac = al.ElementAt(0);
-
-                                @Html.Label(us + " " + usac)
-                                Boolean r = ll.Remove(us);
-                                r = al.Remove(usac);
-                            }
-                            <br>
-                            @Html.Label(item.Text)
-                            <br>
-                            @Html.Label(item.Time.ToString())
-                            <hr>
+                        String us = ll.ElementAt(0);
+                        String usac = al.ElementAt(0).Item1;
+                        string dsc = al.ElementAt(0).Item2;
+                        ll.Remove(us);
+                        al.Remove(al.ElementAt(0));
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="panel panel-primary">
+                                    <div class="panel-heading">
+                                        @if (usac != "")
+                                        {
+                                            <h3 class="panel-title" data-toggle="tooltip" data-placement="right" title="@dsc">@us - @usac</h3>
+                                            <br>
+                                            <h4 class="panel-title">@item.Time</h4>
+                                        }
+                                        else
+                                        {
+                                            <h3 class="panel-title">@us</h3>
+                                            <br>
+                                            <h4 class="panel-title">@item.Time</h4>
+                                        }
+                                    </div>
+                                    <div class="panel-body">
+                                        <p>@item.Text</p>
+                                    </div>
+                                    <br>
+                                </div>
+                            </div>
                         </div>
                     }
                 }
