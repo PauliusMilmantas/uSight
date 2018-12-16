@@ -26,7 +26,15 @@
         @for (int j = 0;j < 3 && i + j < Model.Count;j++)
         {
             var wr = Model[i + j];
-            string cssc = wr.Item2.Count == 0 ? "primary" : "success";
+            string cssc = "primary";
+            if (wr.Item2.Count != 0)
+            {
+                cssc = "success";
+            }
+            if (wr.Item2.Any(x => x.Item1))
+            {
+                cssc = "danger";
+            }
             <div class="col-md-4">
                 <div class="panel panel-@cssc">
                     <div class="panel-heading">

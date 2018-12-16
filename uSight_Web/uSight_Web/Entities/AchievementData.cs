@@ -159,7 +159,7 @@ namespace uSight_Web.Entities
             int trueTier = GetTier(groupName, count);
             if (currentTier < trueTier)
             {
-                Achievement existing = db.Achievements.Find(new object[] { userID, groupName, currentTier });
+                Achievement existing = db.Achievements.Find(new object[] { userID, groupName});
                 Achievement newAchievement = new Achievement();
                 newAchievement.UserId = existing.UserId;
                 newAchievement.GroupName = existing.GroupName;
